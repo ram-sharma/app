@@ -183,7 +183,7 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 
 
 
-	function generatePage (pageName, args) {
+	function generatePage (pageName, args, pageManager) {
 		if ( !(pageName in pages) ) {
 			throw TypeError(pageName + ' is not a known page');
 		}
@@ -213,11 +213,25 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			}
 		);
 
-		pagePopulators.forEach(function (populator) {
-			populator(page, args);
+		pagePopulators.forEach(function (data) {
+			var populator = data[0];
+			populator.call(pageManager, page, args);
 		});
 
 		return page;
+	}
+
+	function destroyPage (pageName, page, args, pageManager) {
+		if ( !(pageName in pages) ) {
+			throw TypeError(pageName + ' is not a known page');
+		}
+
+		var pagePopulators = populators[pageName] || [];
+
+		pagePopulators.forEach(function (data) {
+			var unpopulator = data[1];
+			unpopulator.call(pageManager, page, args);
+		});
 	}
 
 
@@ -233,7 +247,8 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			init();
 		}
 
-		var page = generatePage(pageName, args);
+		var pageManager = {},
+			page        = generatePage(pageName, args, pageManager);
 
 		if ( !current ) {
 			document.body.appendChild(page);
@@ -249,7 +264,7 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 
 		current     = pageName;
 		currentNode = page;
-		stack.push([ pageName, page, options ]);
+		stack.push([ pageName, page, options, args, pageManager ]);
 	}
 
 
@@ -265,7 +280,8 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			throw Error('navigation stack is empty');
 		}
 
-		stack.pop();
+		var oldPage = stack.pop();
+		destroyPage(oldPage[0], oldPage[1], oldPage[3], oldPage[4]);
 
 		var data       = stack[stack.length - 1],
 			pageName   = data[0],
@@ -429,13 +445,12 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 
 
 
-	function addPopulator (pageName, populator) {
-		if ( populators[pageName] ) {
-			populators[pageName].push(populator);
+	function addPopulator (pageName, populator, unpopulator) {
+		if ( !populators[pageName] ) {
+			populators[pageName] = [];
 		}
-		else {
-			populators[pageName] = [ populator ];
-		}
+
+		populators[pageName].push([populator, unpopulator]);
 	}
 
 
@@ -479,7 +494,7 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 
 
 
-	App.populator = function (pageName, populator) {
+	App.populator = function (pageName, populator, unpopulator) {
 		if (typeof pageName !== 'string') {
 			throw TypeError('page name must be a string, got ' + pageName);
 		}
@@ -488,7 +503,19 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			throw TypeError('page populator must be a function, got ' + populator);
 		}
 
-		addPopulator(pageName, populator);
+		switch (typeof unpopulator) {
+			case 'undefined':
+				unpopulator = function () {};
+				break;
+
+			case 'function':
+				break;
+
+			default:
+				throw TypeError('page unpopulator must be a function, got ' + unpopulator);
+		}
+
+		addPopulator(pageName, populator, unpopulator);
 	};
 
 
