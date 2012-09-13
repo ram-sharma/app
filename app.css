@@ -151,7 +151,11 @@ body {
 }
 .app-page .app-content .app-section {
 	position: relative;
-	padding: 8px;
+	margin: 8px;
+}
+.app-page .app-content .app-section:first-child {
+	padding-top: 8px;
+	margin-top: 0;
 }
 
 .app-page .app-content ul.app-list {

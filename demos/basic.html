@@ -16,9 +16,9 @@
 
 			<div class="app-content">
 				<div class="app-section">
-					<div class="lists   app-button">Lists</div>
-					<div class="buttons app-button">Buttons</div>
-					<div class="inputs  app-button">Inputs</div>
+					<div class="app-button" data-target="lists">Lists</div>
+					<div class="app-button" data-target="buttons">Buttons</div>
+					<div class="app-button" data-target="inputs">Inputs</div>
 				</div>
 			</div>
 		</div>
@@ -103,31 +103,7 @@
 
 		<script src="../app.js"></script>
 		<script>
-			(function (window, document, App) {
-				App.populator('home', function (page) {
-					var lists   = page.querySelector('.lists.app-button'),
-						buttons = page.querySelector('.buttons.app-button'),
-						inputs  = page.querySelector('.inputs.app-button');
-
-					Clickable(lists  );
-					Clickable(buttons);
-					Clickable(inputs );
-
-					lists.addEventListener('click', function () {
-						App.load('lists');
-					}, false);
-
-					buttons.addEventListener('click', function () {
-						App.load('buttons');
-					}, false);
-
-					inputs.addEventListener('click', function () {
-						App.load('inputs');
-					}, false);
-				});
-
-				App.load('home');
-			})(window, document, App);
+			App.load('home');
 		</script>
 	</body>
 </html>

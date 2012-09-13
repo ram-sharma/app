@@ -201,9 +201,17 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			function (button) {
 				Clickable(button);
 
-				if ( button.getAttribute('data-back') ) {
+				var target = button.getAttribute('data-target'),
+					back   = button.getAttribute('data-back');
+
+				if (back) {
 					button.addEventListener('click', function () {
-						App.back();
+						navigateBack({}, function () {});
+					}, false);
+				}
+				else if (target) {
+					button.addEventListener('click', function () {
+						loadPage(target, {}, {}, function () {});
 					}, false);
 				}
 			}
