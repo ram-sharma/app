@@ -221,7 +221,12 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			navLock = false;
 		}
 		else {
-			performTransition(page, options, function () {
+			var newOptions = {};
+			for (var key in options) {
+				newOptions[key] = options[key];
+			}
+
+			performTransition(page, newOptions, function () {
 				finishPageGeneration(pageName, page, args, pageManager);
 				navLock = false;
 				setTimeout(processNavigationQueue, 0);
@@ -253,9 +258,17 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 		var data       = stack[stack.length - 1],
 			pageName   = data[0],
 			page       = data[1],
-			oldOptions = data[3];
+			oldOptions = oldPage[2];
 
-		performTransition(page, options, function () {
+		var newOptions = {};
+		for (var key in oldOptions) {
+			newOptions[key] = oldOptions[key];
+		}
+		for (var key in options) {
+			newOptions[key] = options[key];
+		}
+
+		performTransition(page, newOptions, function () {
 			navLock = false;
 			setTimeout(processNavigationQueue, 0);
 			callback();
@@ -301,7 +314,9 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 		var oldPage = currentNode;
 
 		if (options.transition) {
-			options.transition = REVERSE_TRANSITION[options.transition] || options.transition;
+			if (reverse) {
+				options.transition = REVERSE_TRANSITION[options.transition] || options.transition;
+			}
 			Swapper(oldPage, page, options, cleanup);
 			return;
 		}
