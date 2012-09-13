@@ -240,18 +240,3 @@
 .app-android .app-page .app-content .app-button.blue.active {
 	background-image: none;
 }
-
-.app-page .app-content .app-button {}
-.app-page .app-content .app-section .app-button {}
-.app-page .app-content .app-section .app-button:first-child {}
-.app-page .app-content .app-section .app-button:last-child {}
-.app-page .app-content .app-section .app-button:first-child:last-child {}
-.app-page .app-content .app-button.active {}
-
-.app-page .app-content .app-input {}
-.app-page .app-content .app-section .app-input {}
-.app-page .app-content .app-section .app-input:first-child {}
-.app-page .app-content .app-section .app-input:last-child {}
-.app-page .app-content .app-section .app-input:first-child:last-child {}
-.app-page .app-content input.app-input {}
-.app-page .app-content textarea.app-input {}
