@@ -44,7 +44,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-
 var Swapper=function(w,p,h,i){function q(a,b){var c=b.parentNode;c.lastchild===b?c.appendChild(a):c.insertBefore(a,b.nextSibling)}function o(a){a.parentNode&&a.parentNode.removeChild(a)}function j(a,b){a.style["-webkit-transform"]=b;a.style["-moz-transform"]=b;a.style["-ms-transform"]=b;a.style["-o-transform"]=b;a.style.transform=b}function l(a,b){b?(a.style["-webkit-transition"]="-webkit-"+b,a.style["-moz-transition"]="-moz-"+b,a.style["-ms-transition"]="-ms-"+b,a.style["-o-transition"]="-o-"+b,
 a.style.transition=b):(a.style["-webkit-transition"]="",a.style["-moz-transition"]="",a.style["-ms-transition"]="",a.style["-o-transition"]="",a.style.transition="")}function m(a,b){var c;c=b?a.style:p.defaultView.getComputedStyle(a,null);return{display:c.display,opacity:c.opacity,top:c.top,left:c.left,height:c.height,width:c.width,position:c.position}}function r(a){var b;a:if(a){try{b=a instanceof Node||a instanceof HTMLElement;break a}catch(c){}b="object"!==typeof a||"number"!==typeof a.nodeType||
 "string"!==typeof a.nodeName?!1:!0}else b=!1;if(!b)throw TypeError("element must be a DOM node, got "+a);}function f(a,b,c,g){function h(){o(a);l(a,"");l(b,"");setTimeout(function(){j(a,"");j(b,"");e[0].fade&&(b.style.opacity=k.opacity);e[1].fade&&(a.style.opacity=v.opacity);b.style.position=k.position;b.style.top=k.top;b.style.left=k.left;b.style.height=k.height;b.style.width=k.width;a._swapper=!1;b._swapper=!1;g()},0)}r(a);r(b);"function"===typeof c&&(g=c,c={});switch(typeof c){case "string":c=
@@ -201,9 +200,17 @@ a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scr
 			function (button) {
 				Clickable(button);
 
-				if ( button.getAttribute('data-back') ) {
+				var target = button.getAttribute('data-target'),
+					back   = button.getAttribute('data-back');
+
+				if (back) {
 					button.addEventListener('click', function () {
-						App.back();
+						navigateBack({}, function () {});
+					}, false);
+				}
+				else if (target) {
+					button.addEventListener('click', function () {
+						loadPage(target, {}, {}, function () {});
 					}, false);
 				}
 			}

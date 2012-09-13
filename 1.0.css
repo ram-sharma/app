@@ -4,6 +4,25 @@
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
  *
+ * swapper.js beta
+ * UI navigation and transition utility
+ * Copyright (c) 2012 Kik Interactive, http://kik.com
+ * Released under the MIT license
+ *
+ * clickable.js v1.0
+ * Seamless buttons for mobile devices
+ * Copyright (c) 2012 Kik Interactive, http://kik.com
+ * Released under the MIT license
+ *
+ * scrollable.js v1.0
+ * Seamless scrolling for mobile devices
+ * Copyright (c) 2012 Kik Interactive, http://kik.com
+ * Released under the MIT license
+ *
+ * iScroll v4.1.6
+ * Copyright (c) 2011 Matteo Spinelli, http://cubiq.org
+ * Released under the MIT license
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -25,9 +44,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-
-
-
 /* Resets */
 
 html, body, div, form, p, span, label, img {
@@ -151,7 +167,11 @@ body {
 }
 .app-page .app-content .app-section {
 	position: relative;
-	padding: 8px;
+	margin: 8px;
+}
+.app-page .app-content .app-section:first-child {
+	padding-top: 8px;
+	margin-top: 0;
 }
 
 .app-page .app-content ul.app-list {
