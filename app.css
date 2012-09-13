@@ -240,6 +240,25 @@ body {
 	background: #F3F3F3;
 }
 
+.app-page .app-content .app-button.green {
+	background: #CFC;
+}
+.app-page .app-content .app-button.green.active {
+	background: #DFD;
+}
+.app-page .app-content .app-button.red {
+	background: #FCC;
+}
+.app-page .app-content .app-button.red.active {
+	background: #FDD;
+}
+.app-page .app-content .app-button.blue {
+	background: #CCF;
+}
+.app-page .app-content .app-button.blue.active {
+	background: #DDF;
+}
+
 .app-page .app-content .app-input {
 	display: block;
 	padding: 10px 12px;
