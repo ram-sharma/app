@@ -349,12 +349,12 @@ body {
 }
 .app-page .app-content textarea.app-input {
 	height: 80px;
+	font-family: inherit;
 	resize: none;
 }
 /* Topbar */
 
 .app-page .app-topbar {
-	height: 42px;
 	background: #EEE;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#DDD));
 	background-image: -webkit-linear-gradient(top, #FFF, #DDD);
@@ -365,7 +365,6 @@ body {
 	border-top: 2px solid #7A2;
 	border-bottom: none;
 	color: #3C3C3C;
-	line-height: 42px;
 	text-shadow: 0 1px 0 #FFF;
 }
 .app-android .app-page .app-topbar {
@@ -435,6 +434,9 @@ body {
 .app-android .app-page .app-topbar .app-button.right {
 	right: 0;
 	border-left: 2px solid #CCC;
+}
+.app-android .app-page .app-topbar .app-title {
+	line-height: 44px;
 }
 
 

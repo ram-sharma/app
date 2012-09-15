@@ -349,5 +349,6 @@ body {
 }
 .app-page .app-content textarea.app-input {
 	height: 80px;
+	font-family: inherit;
 	resize: none;
 }
