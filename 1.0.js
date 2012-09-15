@@ -51,10 +51,10 @@ a.style.transition=b):(a.style["-webkit-transition"]="",a.style["-moz-transition
 c.duration);break;case "undefined":break;default:throw TypeError("duration must be a number if defined, got "+c.duration);}switch(typeof c.easing){case "string":if(!(c.easing in t))throw TypeError(c.easing+" is not a valid easing");break;case "undefined":break;default:throw TypeError("easing must be a string if defined, got "+c.easing);}var d=g;switch(typeof d){case "undefined":d=function(){};case "function":break;default:throw TypeError("callback must be a function if defined, got "+d);}g=d;if(a._swapper)throw Error("elem1 is currently being swapped");
 if(b._swapper)throw Error("elem2 is currently being swapped");a:{for(d=a;d=d.parentNode;)if(d===p){d=!0;break a}d=!1}if(!d)throw Error("elem1 must be in the DOM to be swapped");a._swapper=!0;b._swapper=!0;o(b);if("instant"===c.transition)q(b,a),o(a),a._swapper=!1,b._swapper=!1,setTimeout(function(){g()},0);else{var e=s[c.transition||"fade"],i=t[c.easing||"ease-in-out"],f=c.duration||300;q(b,a);var c=a.getBoundingClientRect(),d=m(a),u=m(b),v=m(a,!0),k=m(b,!0);"none"!==d.display&&(b.style.position=
 "fixed",b.style.top=c.top+"px",b.style.left=c.left+"px");b.style.height=u.height||d.height;b.style.width=u.width||d.width;j(a,n);j(b,e[0].transform||n);e[0].fade&&(b.style.opacity="0");e[1].fade&&(a.style.opacity="1");setTimeout(function(){var c="transform "+f/1E3+"s "+i+", opacity "+f/1E3+"s "+i;l(a,c);l(b,c);setTimeout(function(){j(a,e[1].transform||n);j(b,n);if(e[0].fade)b.style.opacity="1";if(e[1].fade)a.style.opacity="0";setTimeout(h,f)},0)},0)}}var n="translate3d(0,0,0)",s={fade:[{fade:!0},
-{fade:!0}],"scale-in":[{transform:"scale(0.01)"},{fade:!0}],"scale-out":[{fade:!0},{transform:"scale(0.01)"}],"rotate-left":[{transform:"rotateY(-180deg) perspective(360px)",fade:!0},{transform:"rotateY( 180deg) perspective(360px)",fade:!0}],"rotate-right":[{transform:"rotateY( 180deg) perspective(360px)",fade:!0},{transform:"rotateY(-180deg) perspective(360px)",fade:!0}],"cube-left":[{transform:"translate3d( 50%,0,0) rotateY(-90deg) perspective(360px)"},{transform:"translate3d(-50%,0,0) rotateY( 90deg) perspective(360px)"}],
+{fade:!0}],"scale-in":[{transform:"scale(0.01)"},{}],"scale-out":[{fade:!0},{transform:"scale(0.01)"}],"rotate-left":[{transform:"rotateY(-180deg) perspective(360px)",fade:!0},{transform:"rotateY( 180deg) perspective(360px)",fade:!0}],"rotate-right":[{transform:"rotateY( 180deg) perspective(360px)",fade:!0},{transform:"rotateY(-180deg) perspective(360px)",fade:!0}],"cube-left":[{transform:"translate3d( 50%,0,0) rotateY(-90deg) perspective(360px)"},{transform:"translate3d(-50%,0,0) rotateY( 90deg) perspective(360px)"}],
 "cube-right":[{transform:"translate3d(-50%,0,0) rotateY( 90deg) perspective(360px)"},{transform:"translate3d( 50%,0,0) rotateY(-90deg) perspective(360px)"}],"swap-left":[{transform:"translate3d( 65%,0,0) rotateY( 90deg) perspective(360px)"},{transform:"translate3d(-65%,0,0) rotateY(-90deg) perspective(360px)"}],"swap-right":[{transform:"translate3d(-65%,0,0) rotateY(-90deg) perspective(360px)"},{transform:"translate3d( 65%,0,0) rotateY( 90deg) perspective(360px)"}],"explode-in":[{fade:!0,transform:"scale(1.25)"},
-{fade:!0}],"explode-out":[{fade:!0},{fade:!0,transform:"scale(1.25)"}],"slide-left":[{transform:"translate3d( 100%,0,0)"},{transform:"translate3d(-100%,0,0)"}],"slide-right":[{transform:"translate3d(-100%,0,0)"},{transform:"translate3d( 100%,0,0)"}],"slide-up":[{transform:"translate3d(0, 100%,0)"},{transform:"translate3d(0,-100%,0)"}],"slide-down":[{transform:"translate3d(0,-100%,0)"},{transform:"translate3d(0, 100%,0)"}]},t={linear:"linear",ease:"ease","ease-in":"ease-in","ease-out":"ease-out","ease-in-out":"ease-in-out",
-"step-start":"step-start","step-end":"step-end"};h&&h.extend(h.fn,{swapper:function(a,b,c){a=h(a)[0];this.forEach(function(g){f(g,a,b,c)});return this}});i&&(i.fn.swapper=function(a,b,c){a=i(a)[0];this.each(function(){f(this,a,b,c)});return this});return f}(window,document,window.Zepto,window.jQuery);
+{}],"explode-out":[{fade:!0},{transform:"scale(1.25)"}],"implode-in":[{fade:!0},{transform:"scale(0.60)"}],"implode-out":[{fade:!0,transform:"scale(0.70)"},{}],"slide-left":[{transform:"translate3d( 100%,0,0)"},{transform:"translate3d(-100%,0,0)"}],"slide-right":[{transform:"translate3d(-100%,0,0)"},{transform:"translate3d( 100%,0,0)"}],"slide-up":[{transform:"translate3d(0, 100%,0)"},{transform:"translate3d(0,-100%,0)"}],"slide-down":[{transform:"translate3d(0,-100%,0)"},{transform:"translate3d(0, 100%,0)"}]},
+t={linear:"linear",ease:"ease","ease-in":"ease-in","ease-out":"ease-out","ease-in-out":"ease-in-out","step-start":"step-start","step-end":"step-end"};h&&h.extend(h.fn,{swapper:function(a,b,c){a=h(a)[0];this.forEach(function(g){f(g,a,b,c)});return this}});i&&(i.fn.swapper=function(a,b,c){a=i(a)[0];this.each(function(){f(this,a,b,c)});return this});return f}(window,document,window.Zepto,window.jQuery);
 
 var Clickable=function(q,u,n,l,o){function g(a,h){function e(){a.addEventListener("touchstart",n,!1);a.addEventListener("touchmove",p,!1);a.addEventListener("touchend",o,!1);a.addEventListener("touchcancel",p,!1)}function i(){a.removeEventListener("touchstart",n);a.removeEventListener("touchmove",p);a.removeEventListener("touchend",o);a.removeEventListener("touchcancel",p)}function g(){var b=a,c;c=a.className.replace(w,"");c=String(c).replace(x,"");b.className=c}function j(a,c){do{if(a===c)return!0;
 if(a._clickable)break}while(a=a.parentNode);return!1}function k(b){c=!1;a.disabled||!j(b.target,a)?(b.preventDefault(),f=!1):(f=!0,a.className+=" "+h)}function r(a){a.preventDefault();c=f=!1;g()}function l(b){a.disabled?(b.preventDefault(),c=f=!1):(f?c=!0:(b.preventDefault(),c=!1),f=!1,g())}function n(b){c=!1;if(a.disabled||!j(b.target,a))f=!1;else{f=!0;var d=s=+new Date;setTimeout(function(){f&&d===s&&(a.className+=" "+h)},v)}}function p(){f=c=!1;a.disabled||g()}function o(b){function d(){c=!0;var b=
@@ -121,12 +121,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		APP_ANDROID                    = 'app-android',
 		APP_LOADED                     = 'app-loaded',
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
-		DEFAULT_TRANSITION_ANDROID     = 'explode-in',
+		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
 		DEFAULT_TRANSITION_ANDROID_OLD = 'fade',
 		REVERSE_TRANSITION         = {
 			'fade'         : 'fade'         ,
-			'scale-in'     : 'slice-out'    ,
-			'scale-out'    : 'slice-in'     ,
+			'scale-in'     : 'scale-out'    ,
+			'scale-out'    : 'scale-in'     ,
 			'rotate-left'  : 'rotate-right' ,
 			'rotate-right' : 'rotate-left'  ,
 			'cube-left'    : 'cube-right'   ,
@@ -135,6 +135,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			'swap-right'   : 'swap-left'    ,
 			'explode-in'   : 'explode-out'  ,
 			'explode-out'  : 'explode-in'   ,
+			'implode-in'   : 'implode-out'  ,
+			'implode-out'  : 'implode-in'   ,
 			'slide-left'   : 'slide-right'  ,
 			'slide-right'  : 'slide-left'   ,
 			'slide-up'     : 'slide-down'   ,
