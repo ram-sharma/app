@@ -71,7 +71,7 @@ b)});return this},scrollableNode:function(){return $(this.map(function(){return 
 return c&&a._scrollLeft?a._scrollLeft():I?U.apply(this,arguments):c?a.scrollLeft:null}this.forEach(function(a){var c=r(a);if(c&&a._scrollLeft)a._scrollLeft(b);else if(U)U.call(u(a),b);else if(c)a.scrollLeft=b});return this}}if(v){v.fn.scrollable=function(b){this.each(function(){J(this,b)});return this};v.fn.scrollableNode=function(){return $(this.map(function(){return L(this)}))};var ea=v.fn.scrollTop,fa=v.fn.scrollLeft;v.fn.scrollTop=function(b){if(typeof b==="undefined"){var a=this[0];return r(a)&&
 a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this)&&this._scrollTop?this._scrollTop(b):ea.call(v(this),b)});return this};v.fn.scrollLeft=function(b){if(typeof b==="undefined"){var a=this[0];return r(a)&&a._scrollLeft?a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scrollLeft?this._scrollLeft(b):fa.call(v(this),b)});return this}}x.node=function(){return L.apply(this,arguments)};return x}(window,document,window.clik,window.Zepto,window.jQuery);
 
-(function (window, document, picard) {
+(function (window, document, picard, clik) {
 	var PAGE_CLASS                     = 'app-page',
 		PAGE_NAME                      = 'data-page',
 		APP_IOS                        = 'app-ios',
@@ -589,6 +589,15 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				}
 			});
 		}
+
+		if (clik && clik.plugin && clik.plugin.back) {
+			clik.plugin.back(function () {
+				if (stack.length > 1) {
+					App.back();
+					return false;
+				}
+			});
+		}
 	}
 
 
@@ -744,4 +753,4 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	setupListeners();
 
 	window.App = App;
-})(window, document, window.picard);
+})(window, document, window.picard, window.clik);
