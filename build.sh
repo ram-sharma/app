@@ -21,6 +21,7 @@ compressCSS () {
 	cat ${REGULAR} | yuicompressor --type css >> ${MINIFIED}
 }
 
-cat app.js | compressJS ${VERSION}
-cat app.css | compressCSS ${VERSION}
+cat app.js              | compressJS  ${VERSION}
+cat app.css             | compressCSS ${VERSION}
 cat app.css default.css | compressCSS ${VERSION}-default
+cat app.css dim.css     | compressCSS ${VERSION}-dim
