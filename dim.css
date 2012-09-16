@@ -16,9 +16,9 @@ body.app-android {
 	background-image: linear-gradient(top, #535353, #1C1C1C);
 	border-top-color: #797979;
 	border-bottom-color: #2A2A2A;
-	-webkit-border-radius: 8px 8px 0 0;
-	-moz-border-radius: 8px 8px 0 0;
-	border-radius: 8px 8px 0 0;
+	-webkit-border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	border-radius: 6px 6px 0 0;
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
 	box-shadow: 0 1px 3px rgba(0,0,0,0.5);

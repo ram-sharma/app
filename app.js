@@ -77,6 +77,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		APP_IOS                        = 'app-ios',
 		APP_ANDROID                    = 'app-android',
 		APP_LOADED                     = 'app-loaded',
+		NAV_LOCK_TIMEOUT               = 300,
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
 		DEFAULT_TRANSITION_ANDROID_OLD = 'fade-on',
@@ -180,12 +181,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 				if (back) {
 					stickyButton(button, function (callback) {
-						navigateBack({}, callback);
+						return navigateBack({}, callback);
 					});
 				}
 				else if (target) {
 					stickyButton(button, function (callback) {
-						loadPage(target, {}, {}, callback);
+						return loadPage(target, {}, {}, callback);
 					});
 				}
 			}
@@ -235,14 +236,19 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	function stickyButton (button, holdFunction) {
 		button.addEventListener('click', function () {
 			var lock        = false,
-				activeClass = button.getAttribute('data-clickable-class') || 'active';
+				activeClass = button.getAttribute('data-clickable-class') || 'active',
+				value;
 			button.disabled = true;
 			button.className += ' ' + activeClass;
 
 			try {
-				holdFunction(cleanUp);
+				value = holdFunction(cleanUp);
 			}
 			catch (err) {
+				cleanUp();
+			}
+
+			if (value === false) {
 				cleanUp();
 			}
 
@@ -262,10 +268,15 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 	function loadPage (pageName, args, options, callback) {
 		if (navLock) {
-			navQueue.push(['load', pageName, args, options, callback]);
-			return;
+			if (+new Date() > navLock+NAV_LOCK_TIMEOUT) {
+				navQueue.push(['load', pageName, args, options, callback]);
+				return;
+			}
+			else {
+				return false;
+			}
 		}
-		navLock = true;
+		navLock = +new Date();
 
 		if ( !current ) {
 			init();
@@ -303,15 +314,20 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 	function navigateBack (options, callback) {
 		if (navLock) {
-			navQueue.push(['back', options, callback]);
-			return;
+			if (+new Date() > navLock+NAV_LOCK_TIMEOUT) {
+				navQueue.push(['back', options, callback]);
+				return;
+			}
+			else {
+				return false;
+			}
 		}
 
 		if (stack.length < 2) {
 			throw Error('navigation stack is empty');
 		}
 
-		navLock = true;
+		navLock = +new Date();
 
 		var oldPage    = stack.pop(),
 			data       = stack[stack.length - 1],
