@@ -87,8 +87,12 @@ body {
 
 .app-page {
 	display: none;
+	position: relative;
 	height: 100%;
 	width: 100%;
+	-webkit-box-shadow: 0 0 4px #000;
+	-moz-box-shadow: 0 0 4px #000;
+	box-shadow: 0 0 4px #000;
 	overflow: hidden;
 }
 .app-loaded .app-page {
@@ -143,6 +147,7 @@ body {
 	background: #E7E7E7;
 }
 .app-page .app-topbar .app-title {
+	margin: 0 auto;
 	height: 42px;
 	font-size: 22px;
 	font-weight: bold;
@@ -306,6 +311,7 @@ body {
 }
 
 .app-page .app-content .app-input {
+	position: relative;
 	display: block;
 	padding: 10px 12px;
 	width: 100%;
@@ -351,6 +357,28 @@ body {
 	height: 80px;
 	font-family: inherit;
 	resize: none;
+}
+.app-page .app-content .app-input input,
+.app-page .app-content .app-input textarea {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: none;
+	border: none;
+	outline: none;
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+	resize: none;
+	-webkit-appearance: none;
+}
+.app-page .app-content .app-input input {
+	height: 20px;
+}
+.app-page .app-content .app-input textarea {
+	height: 60px;
 }
 /* Topbar */
 
