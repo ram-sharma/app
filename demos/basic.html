@@ -5,11 +5,10 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<link rel="stylesheet" href="../app.css">
-		<link rel="stylesheet" href="../default.css">
 	</head>
 
 	<body>
-		<div class="home app-page" data-page="home">
+		<div class="app-page" data-page="home">
 			<div class="app-topbar">
 				<div class="app-title">Basic App</div>
 			</div>
@@ -23,7 +22,7 @@
 			</div>
 		</div>
 
-		<div class="lists app-page" data-page="lists">
+		<div class="app-page" data-page="lists">
 			<div class="app-topbar">
 				<div class="left app-button" data-back="true">Back</div>
 				<div class="app-title">Lists</div>
@@ -51,7 +50,7 @@
 			</div>
 		</div>
 
-		<div class="buttons app-page" data-page="buttons">
+		<div class="app-page" data-page="buttons">
 			<div class="app-topbar">
 				<div class="left app-button" data-back="true">Back</div>
 				<div class="app-title">Buttons</div>
@@ -78,7 +77,7 @@
 			</div>
 		</div>
 
-		<div class="inputs app-page" data-page="inputs">
+		<div class="app-page" data-page="inputs">
 			<div class="app-topbar">
 				<div class="left app-button" data-back="true">Back</div>
 				<div class="app-title">Inputs</div>
@@ -94,16 +93,26 @@
 				</div>
 
 				<div class="app-section">
-					<input class="app-input" placeholder="Subject">
-					<textarea class="app-input" placeholder="Message"></textarea>
+					<input class="app-input" placeholder="Input">
+					<textarea class="app-input" placeholder="Textarea"></textarea>
 					<div class="app-button">Send</div>
 				</div>
 			</div>
 		</div>
 
+		<script>
+			(function (window, document) {
+				var style = (window.location.href.split('?')[1] || 'default'),
+					link  = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = '../'+style+'.css';
+				document.querySelector('head').appendChild(link);
+			})(window, document);
+		</script>
 		<script src="../app.js"></script>
 		<script>
 			App.load('home');
 		</script>
+		<script src="http://cdn.picardthis.com/picard/v0-dev/picard.js"></script>
 	</body>
 </html>
