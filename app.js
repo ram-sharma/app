@@ -121,6 +121,11 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function setDefaultTransition (transition) {
+		defaultTransition = transition;
+		reverseTransition = REVERSE_TRANSITION[defaultTransition];
+	}
+
 	function init () {
 		var pageNodes = document.getElementsByClassName(PAGE_CLASS),
 			page, pageName, match;
@@ -139,17 +144,18 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			platform = 'ios';
 			version = parseFloat( match[1] );
 			document.body.className += ' ' + APP_IOS;
-			defaultTransition = DEFAULT_TRANSITION_IOS;
+			setDefaultTransition(DEFAULT_TRANSITION_IOS);
 		}
 		else if (match = /\bAndroid (\d+(\.\d+)?)/.exec(navigator.userAgent)) {
 			platform = 'android';
 			version = parseFloat( match[1] );
 			document.body.className += ' ' + APP_ANDROID;
-			defaultTransition = (version >= 4) ? DEFAULT_TRANSITION_ANDROID : DEFAULT_TRANSITION_ANDROID_OLD;
+			setDefaultTransition((version >= 4) ? DEFAULT_TRANSITION_ANDROID : DEFAULT_TRANSITION_ANDROID_OLD);
 		}
 
+		App.platform = platform;
+		App.platformVersion = version;
 		document.body.className += ' ' + APP_LOADED;
-		reverseTransition = REVERSE_TRANSITION[defaultTransition];
 	}
 
 
@@ -534,6 +540,11 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	App.platform = null;
+	App.platformVersion = null;
+
+
+
 	App.current = function () {
 		return current;
 	};
@@ -663,6 +674,16 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		navigateBack(options, callback);
+	};
+
+
+
+	App.setDefaultTransition = function (transition) {
+		if ( !(transition in REVERSE_TRANSITION) ) {
+			throw TypeError('invalid transition type, got ' + transition);
+		}
+
+		setDefaultTransition(transition);
 	};
 
 
