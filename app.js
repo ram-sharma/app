@@ -128,6 +128,32 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function isNode (elem) {
+		if ( !elem ) {
+			return false;
+		}
+
+		try {
+			return (elem instanceof Node) || (elem instanceof HTMLElement);
+		} catch (err) {}
+
+		if (typeof elem !== 'object') {
+			return false;
+		}
+
+		if (typeof elem.nodeType !== 'number') {
+			return false;
+		}
+
+		if (typeof elem.nodeName !== 'string') {
+			return false;
+		}
+
+		return true;
+	}
+
+
+
 	function setDefaultTransition (transition) {
 		defaultTransition = transition;
 		reverseTransition = REVERSE_TRANSITION[defaultTransition];
@@ -138,13 +164,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			page, pageName, match;
 
 		for (var i=pageNodes.length; i--;) {
-			page     = pageNodes[i];
-			pageName = page.getAttribute(PAGE_NAME);
-
-			if ((typeof pageName === 'string') && (pageName.length !== 0)) {
-				page.parentNode.removeChild(page);
-				pages[pageName] = page.cloneNode(true);
-			}
+			addPage( pageNodes[i] );
 		}
 
 		if (match = /\bCPU.*OS (\d+(_\d+)?)/i.exec(navigator.userAgent)) {
@@ -163,6 +183,20 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		App.platform = platform;
 		App.platformVersion = version;
 		document.body.className += ' ' + APP_LOADED;
+	}
+
+	function addPage (page, pageName) {
+		if (pageName) {
+			page.setAttribute(PAGE_NAME, pageName);
+		}
+		else {
+			pageName = page.getAttribute(PAGE_NAME);
+		}
+
+		if ((typeof pageName === 'string') && (pageName.length !== 0)) {
+			page.parentNode.removeChild(page);
+			pages[pageName] = page.cloneNode(true);
+		}
 	}
 
 
@@ -671,6 +705,21 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 	App.current = function () {
 		return current;
+	};
+
+
+
+	App.add = function (pageName, page) {
+		if (typeof pageName !== 'string') {
+			page     = pageName;
+			pageName = undefined;
+		}
+
+		if ( !isNode(page) ) {
+			throw TypeError('page template node must be a DOM node, got ' + page);
+		}
+
+		addPage(page, pageName);
 	};
 
 
