@@ -359,7 +359,9 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			setTimeout(finish, 0);
 		}
 		else {
-			saveCurrentScrollPosition();
+			savePageScrollPosition(currentNode);
+			savePageScrollStyle(currentNode);
+
 			var newOptions = {};
 			for (var key in options) {
 				newOptions[key] = options[key];
@@ -408,7 +410,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		destroyPage(oldPage[0], oldPage[1], oldPage[3], oldPage[4]);
 
-		setTimeout(restoreCurrentScrollPosition, 0);
+		restorePageScrollPosition(page);
 
 		var newOptions = {};
 		for (var key in oldOptions) {
@@ -419,6 +421,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		performTransition(page, newOptions, function () {
+			restorePageScrollStyle(page);
 			setTimeout(processNavigationQueue, 0);
 			finishPageDestruction(oldPage[0], oldPage[1], oldPage[3], oldPage[4]);
 			navLock = false;
@@ -576,12 +579,14 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		return cleanup;
 	}
 
-	function getScrollContent () {
-		if ( !currentNode ) {
+	function getScrollContent (page) {
+		page = page || currentNode;
+
+		if ( !page ) {
 			return;
 		}
 
-		var content = currentNode.querySelector('.app-content');
+		var content = page.querySelector('.app-content');
 
 		if (!content || !content._scrollable) {
 			return;
@@ -590,8 +595,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		return content;
 	}
 
-	function saveCurrentScrollPosition () {
-		var content = getScrollContent();
+	function savePageScrollPosition (page) {
+		var content = getScrollContent(page);
 
 		if (!content || content._iScroll) {
 			return;
@@ -599,21 +604,47 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		var scrollTop = content._scrollTop();
 
-		currentNode.setAttribute('data-last-scroll', scrollTop+'');
+		(page || currentNode).setAttribute('data-last-scroll', scrollTop+'');
 	}
 
-	function restoreCurrentScrollPosition () {
-		var content = getScrollContent();
+	function savePageScrollStyle (page) {
+		var content = getScrollContent(page);
 
 		if (!content || content._iScroll) {
 			return;
 		}
 
-		var scrollTop = parseInt( currentNode.getAttribute('data-last-scroll') );
+		var scrollStyle = content.style['-webkit-overflow-scrolling'] || '';
+
+		content.style['-webkit-overflow-scrolling'] = '';
+
+		(page || currentNode).setAttribute('data-scroll-style', scrollStyle);
+	}
+
+	function restorePageScrollPosition (page) {
+		var content = getScrollContent(page);
+
+		if (!content || content._iScroll) {
+			return;
+		}
+
+		var scrollTop = parseInt( (page || currentNode).getAttribute('data-last-scroll') );
 
 		if (scrollTop) {
 			content._scrollTop(scrollTop);
 		}
+	}
+
+	function restorePageScrollStyle (page) {
+		var content = getScrollContent(page);
+
+		if (!content || content._iScroll) {
+			return;
+		}
+
+		var scrollStyle = (page || currentNode).getAttribute('data-scroll-style') || '';
+
+		content.style['-webkit-overflow-scrolling'] = scrollStyle;
 	}
 
 
