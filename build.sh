@@ -3,17 +3,16 @@
 VERSION="1.0.0"
 LICENSE="LICENSE.txt"
 
+JS_COMPILER="closure-compiler"
+CSS_COMPILER="yuicompressor --type css"
+
 mkdir -p ${VERSION}
 
-compressJS () {
-	cat ${LICENSE} ${2} | closure-compiler > ${VERSION}/${1}
+compress () {
+	cat ${LICENSE} ${3} | ${1} > ${VERSION}/${2}
 }
 
-compressCSS () {
-	cat ${LICENSE} ${2} | yuicompressor --type css > ${VERSION}/${1}
-}
-
-compressJS  app.js      "app.js"
-compressCSS app.css     "app.css"
-compressCSS default.css "app.css default.css"
-compressCSS dim.css     "app.css dim.css"
+compress "${JS_COMPILER} " "app.js"      "app.js"
+compress "${CSS_COMPILER}" "app.css"     "app.css"
+compress "${CSS_COMPILER}" "default.css" "app.css default.css"
+compress "${CSS_COMPILER}" "dim.css"     "app.css dim.css"
