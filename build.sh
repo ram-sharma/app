@@ -1,27 +1,19 @@
 #!/bin/sh
 
-VERSION="1.0"
+VERSION="1.0.0"
 LICENSE="LICENSE.txt"
 
+mkdir -p ${VERSION}
+
 compressJS () {
-	REGULAR="${1}.js"
-	MINIFIED="${1}.min.js"
-	cp ${LICENSE} ${REGULAR}
-	cp ${LICENSE} ${MINIFIED}
-	cat - >> ${REGULAR}
-	cat ${REGULAR} | closure-compiler >> ${MINIFIED}
+	cat ${LICENSE} ${2} | closure-compiler > ${VERSION}/${1}
 }
 
 compressCSS () {
-	REGULAR="${1}.css"
-	MINIFIED="${1}.min.css"
-	cp ${LICENSE} ${REGULAR}
-	cp ${LICENSE} ${MINIFIED}
-	cat - >> ${REGULAR}
-	cat ${REGULAR} | yuicompressor --type css >> ${MINIFIED}
+	cat ${LICENSE} ${2} | yuicompressor --type css > ${VERSION}/${1}
 }
 
-cat app.js              | compressJS  ${VERSION}
-cat app.css             | compressCSS ${VERSION}
-cat app.css default.css | compressCSS ${VERSION}-default
-cat app.css dim.css     | compressCSS ${VERSION}-dim
+compressJS  app.js      "app.js"
+compressCSS app.css     "app.css"
+compressCSS default.css "app.css default.css"
+compressCSS dim.css     "app.css dim.css"
