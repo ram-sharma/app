@@ -864,4 +864,4 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	setupListeners();
 
 	window.App = App;
-})(window, document, ImageLoader, Swapper, Clickable, Scrollable, window.picard, window.clik);
+})(window, document, ImageLoader, Swapper, Clickable, Scrollable, window.cards, window.clik);
