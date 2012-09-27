@@ -677,7 +677,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			currentNode && setContentHeight(currentNode);
 		});
 
-		if (picard && picard.browser.back) {
+		if (picard && picard.browser && picard.browser.back) {
 			picard.browser.back(function () {
 				if (stack.length > 1) {
 					App.back();
