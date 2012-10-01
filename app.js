@@ -266,6 +266,15 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				}
 			}
 		);
+
+		Array.prototype.forEach.call(
+			page.querySelectorAll('[data-scrollable]'),
+			function (elem) {
+				//TODO: is this a good idea?
+				// Scrollable(elem, (platform === 'android'));
+				Scrollable(elem);
+			}
+		);
 	}
 
 	function destroyPage (pageName, page, args, pageManager) {
