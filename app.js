@@ -682,9 +682,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	}
 
 	function setupListeners () {
-		window.addEventListener('resize', function () {
+		function fixSizing () {
 			currentNode && setContentHeight(currentNode);
-		});
+		}
+
+		window.addEventListener('resize', fixSizing);
+		window.addEventListener('load'  , fixSizing);
 
 		if (clik && clik.plugin && clik.plugin.back) {
 			clik.plugin.back(function () {
