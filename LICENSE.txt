@@ -1,10 +1,10 @@
 /**
- * App.js v1.0
+ * App.js v1.0.4
  * Instant mobile web app creation
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
  *
- * swapper.js beta
+ * swapper.js 1.0.1
  * UI navigation and transition utility
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
