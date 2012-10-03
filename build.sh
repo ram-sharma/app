@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION="1.0.4"
+VERSION="1.0.5"
 LICENSE="LICENSE.txt"
 
 JS_COMPILER="closure-compiler"
