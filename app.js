@@ -86,8 +86,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		NAV_LOCK_TIMEOUT               = 300,
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
+		DEFAULT_TRANSITION_ANDROID_401 = 'instant',
 		DEFAULT_TRANSITION_ANDROID_OLD = 'fade-on',
 		REVERSE_TRANSITION             = {
+			'instant'        : 'instant'        ,
 			'fade'           : 'fade'           ,
 			'fade-on'        : 'fade-off'       ,
 			'fade-off'       : 'fade-on'        ,
@@ -117,12 +119,13 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			'slideoff-down'  : 'slideon-down'
 		};
 
-	var App        = {},
-		pages      = {},
-		populators = {},
-		stack      = [],
-		navQueue   = [],
-		navLock    = false,
+	var App          = {},
+		pages        = {},
+		populators   = {},
+		stack        = [],
+		navQueue     = [],
+		navLock      = false,
+		isAndroid401 = false,
 		platform, version, defaultTransition, reverseTransition,
 		current, currentNode;
 
@@ -173,11 +176,16 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			document.body.className += ' ' + APP_IOS;
 			setDefaultTransition(DEFAULT_TRANSITION_IOS);
 		}
-		else if (match = /\bAndroid (\d+(\.\d+)?)/.exec(navigator.userAgent)) {
+		else if (match = /\bAndroid (\d+(\.\d+(\.\d+)?)?)/.exec(navigator.userAgent)) {
 			platform = 'android';
 			version = parseFloat( match[1] );
 			document.body.className += ' ' + APP_ANDROID;
 			setDefaultTransition((version >= 4) ? DEFAULT_TRANSITION_ANDROID : DEFAULT_TRANSITION_ANDROID_OLD);
+
+			if (match[1] === '4.0.1') {
+				isAndroid401 = true;
+				setDefaultTransition(DEFAULT_TRANSITION_ANDROID_401);
+			}
 		}
 
 		App.platform = platform;
@@ -252,16 +260,24 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			}
 		);
 
+		if (isAndroid401) {
+			setupScrollers(page);
+		}
+
 		return page;
 	}
 
 	function finishPageGeneration (pageName, page, args, pageManager) {
+		if ( !isAndroid401 ) {
+			setupScrollers(page);
+		}
+	}
+
+	function setupScrollers (page) {
 		Array.prototype.forEach.call(
 			page.querySelectorAll('.app-content'),
 			function (content) {
 				if ( !content.getAttribute('data-no-scroll') ) {
-					//TODO: is this a good idea?
-					// Scrollable(content, (platform === 'android'));
 					Scrollable(content);
 				}
 			}
@@ -270,9 +286,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		Array.prototype.forEach.call(
 			page.querySelectorAll('[data-scrollable]'),
 			function (elem) {
-				//TODO: is this a good idea?
-				// Scrollable(elem, (platform === 'android'));
-				Scrollable(elem);
+				Scrollable(content);
 			}
 		);
 	}
