@@ -83,6 +83,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		APP_IOS                        = 'app-ios',
 		APP_ANDROID                    = 'app-android',
 		APP_LOADED                     = 'app-loaded',
+		STACK_KEY                      = '__APP_JS_STACK__',
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
 		DEFAULT_TRANSITION_ANDROID_401 = 'instant',
@@ -373,6 +374,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		handler(function () {
 			navLock = false;
 			setTimeout(processNavigationQueue, 0);
+			saveStack();
 		});
 	}
 
@@ -384,6 +386,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				page        = startPageGeneration(pageName, args, pageManager);
 
 			if ( !current ) {
+				App.restore = null;
 				document.body.appendChild(page);
 				setTimeout(finish, 0);
 			}
@@ -745,6 +748,34 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function saveStack () {
+		try {
+			var storedStack = stack.map(function (pageData) {
+				return [ pageData[0], pageData[3] ];
+			});
+
+			localStorage[STACK_KEY] = JSON.stringify(storedStack);
+		}
+		catch (err) {}
+	}
+
+	function setupRestoreFunction () {
+		try {
+			var storedStack = JSON.parse( localStorage[STACK_KEY] ),
+				lastPage    = storedStack.pop();
+
+			return function () {
+				addToStack(0, storedStack);
+				loadPage(lastPage[0], lastPage[1], {}, function () {});
+			};
+		}
+		catch (err) {}
+
+		return null;
+	}
+
+
+
 	App.platform = null;
 	App.platformVersion = null;
 
@@ -1017,6 +1048,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		addToStack(index, newPages);
 	};
+
+
+
+	App.restore = setupRestoreFunction();
 
 
 
