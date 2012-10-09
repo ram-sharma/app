@@ -765,6 +765,18 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				lastPage    = storedStack.pop();
 
 			return function () {
+				init();
+
+				if ( !(lastPage[0] in pages) ) {
+					throw TypeError(lastPage[0] + ' is not a known page');
+				}
+
+				storedStack.forEach(function (pageData) {
+					if ( !(pageData[0] in pages) ) {
+						throw TypeError(pageData[0] + ' is not a known page');
+					}
+				});
+
 				addToStack(0, storedStack);
 				loadPage(lastPage[0], lastPage[1], {}, function () {});
 			};
