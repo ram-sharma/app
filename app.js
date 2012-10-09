@@ -83,7 +83,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		APP_IOS                        = 'app-ios',
 		APP_ANDROID                    = 'app-android',
 		APP_LOADED                     = 'app-loaded',
-		NAV_LOCK_TIMEOUT               = 300,
+		NAV_LOCK_TIMEOUT               = 0,
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
 		DEFAULT_TRANSITION_ANDROID_401 = 'instant',
@@ -348,12 +348,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 	function loadPage (pageName, args, options, callback) {
 		if (navLock) {
-			if (+new Date() > navLock+NAV_LOCK_TIMEOUT) {
+			if (+new Date() >= navLock+NAV_LOCK_TIMEOUT) {
 				navQueue.push(['load', pageName, args, options, callback]);
 				return;
 			}
 			else {
-				return false;
+				throw Error('cannot load multiple pages at a time');
 			}
 		}
 		navLock = +new Date();
@@ -396,12 +396,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 	function navigateBack (options, callback) {
 		if (navLock) {
-			if (+new Date() > navLock+NAV_LOCK_TIMEOUT) {
+			if (+new Date() >= navLock+NAV_LOCK_TIMEOUT) {
 				navQueue.push(['back', options, callback]);
 				return;
 			}
 			else {
-				return false;
+				throw Error('cannot go back multiple pages at a time');
 			}
 		}
 
