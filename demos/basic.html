@@ -112,10 +112,10 @@
 		<script src="http://cdn.picardthis.com/cards/v0-dev/cards.js"></script>
 		<script src="../app.js"></script>
 		<script>
-			if (App.restore) {
+			try {
 				App.restore();
 			}
-			else {
+			catch (err) {
 				App.load('home');
 			}
 		</script>
