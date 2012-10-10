@@ -302,7 +302,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		Array.prototype.forEach.call(
 			page.querySelectorAll('[data-scrollable]'),
-			function (elem) {
+			function (content) {
 				Scrollable(content);
 			}
 		);
