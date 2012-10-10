@@ -485,7 +485,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 				finishPageGeneration(pageData[0], page, pageData[1], pageManager);
 
-				pageDatas.push([pageData[0], page, {}, pageData[1], pageManager]);
+				pageDatas.push([pageData[0], page, pageData[2], pageData[1], pageManager]);
 			});
 
 			pageDatas.unshift(0);
@@ -759,7 +759,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	function saveStack () {
 		try {
 			var storedStack = stack.map(function (pageData) {
-				return [ pageData[0], pageData[3] ];
+				return [ pageData[0], pageData[3], pageData[2] ];
 			});
 
 			localStorage[STACK_KEY] = JSON.stringify(storedStack);
@@ -786,7 +786,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				});
 
 				addToStack(0, storedStack);
-				loadPage(lastPage[0], lastPage[1], {}, function () {});
+				loadPage(lastPage[0], lastPage[1], lastPage[2], function () {});
 			};
 		}
 		catch (err) {}
@@ -1061,6 +1061,18 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 				default:
 					throw TypeError('page arguments must be an object if defined, got ' + page[1]);
+			}
+
+			switch (typeof page[2]) {
+				case 'undefined':
+					page[2] = {};
+					break;
+
+				case 'object':
+					break;
+
+				default:
+					throw TypeError('page options must be an object if defined, got ' + page[2]);
 			}
 
 			newPages[i] = page;
