@@ -366,7 +366,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	function navigate (handler) {
 		if (navLock) {
 			navQueue.push(handler);
-			return;
+			return false;
 		}
 
 		navLock = true;
@@ -376,6 +376,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			setTimeout(processNavigationQueue, 0);
 			saveStack();
 		});
+
+		return true;
 	}
 
 
@@ -414,7 +416,9 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 	}
 
 	function navigateBack (options, callback) {
-		navigate(function (unlock) {
+		var stackLength = stack.length;
+
+		var navigatedImmediately = navigate(function (unlock) {
 			if (stack.length < 2) {
 				unlock();
 				return;
@@ -450,6 +454,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			current     = pageName;
 			currentNode = page;
 		});
+
+		if (navigatedImmediately && (stackLength < 2)) {
+			return false;
+		}
 	}
 
 
@@ -936,7 +944,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				throw TypeError('callback must be a function if defined, got ' + callback);
 		}
 
-		navigateBack(options, callback);
+		return navigateBack(options, callback);
 	};
 
 
