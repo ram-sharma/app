@@ -1,6 +1,7 @@
 #!/bin/sh
 
 PROJECT="app"
+LICENSE="LICENSE.txt"
 MAJOR_VERSION="1"
 MINOR_VERSION="2"
 BUG_VERSION="0"
@@ -19,8 +20,6 @@ buildProject () {
 
 
 
-# Build code
-
 if [ -z "${BUILD_NUMBER}" ] ; then
 	BUILD_NUMBER="SNAPSHOT"
 fi
@@ -37,6 +36,10 @@ JS_COMPILER="yui-compressor --type js"
 CSS_COMPILER="yui-compressor --type css"
 # CSS_COMPILER="yuicompressor --type css"
 
+S3CMD="s3cmd -c ${AWS_CFG}"
+NO_CACHE="--add-header=Cache-Control:no-cache"
+FULL_CACHE="--add-header=Cache-Control:max-age=31557600"
+
 clean () {
 	echo "Cleaning builds"
 	rm -rf "${BUILD_DIR}" "${BUILD_ZIP}"
@@ -47,19 +50,31 @@ createBuildDir () {
 	mkdir -p "${BUILD_DIR}"
 }
 
+preprendLicense () {
+	if [ -n "${LICENSE}" ] ; then
+		cat "${LICENSE}" "${1}" | cat - | tee "${1}" >/dev/null
+	fi
+}
+
 buildJS () {
 	echo "Building ${1}"
-	cat ${2} | sed "s/^[ 	]*;;;.*$//" | sed "s/DEVBUILD/${VERSION}/" | ${JS_COMPILER} > "${BUILD_DIR}/${1}"
+	fileName="${BUILD_DIR}/${1}"
+	cat ${2} | sed "s/^[ 	]*;;;.*$//" | sed "s/DEVBUILD/${VERSION}/" | ${JS_COMPILER} > "${fileName}"
+	preprendLicense "${fileName}"
 }
 
 buildDebugJS () {
 	echo "Building ${1}"
-	cat ${2} | sed "s/DEVBUILD/${VERSION}/" > "${BUILD_DIR}/${1}"
+	fileName="${BUILD_DIR}/${1}"
+	cat ${2} | sed "s/DEVBUILD/${VERSION}/" > "${fileName}"
+	preprendLicense "${fileName}"
 }
 
 buildCSS () {
 	echo "Building ${1}"
-	cat ${2} | ${CSS_COMPILER} > "${BUILD_DIR}/${1}"
+	fileName="${BUILD_DIR}/${1}"
+	cat ${2} | ${CSS_COMPILER} > "${fileName}"
+	preprendLicense "${fileName}"
 }
 
 build () {
@@ -73,18 +88,9 @@ gzipDir () {
 	echo "Gziping files"
 	files="`find ${BUILD_DIR} -name '*' | sed 's/.*\/\..*//' | grep -I './'`"
 	for file in ${files}; do
-		# gzip -c "$file" | tee "$file" >/dev/null
 		cat "$file" | gzip -fc - | tee "$file" >/dev/null
 	done
 }
-
-
-
-# Deploy code
-
-S3CMD="s3cmd -c ${AWS_CFG}"
-NO_CACHE="--add-header=Cache-Control:no-cache"
-FULL_CACHE="--add-header=Cache-Control:max-age=31557600"
 
 deployToFolder () {
 	${S3CMD} put --recursive --acl-public --guess-mime-type --add-header "Content-Encoding:gzip" ${2} "${BUILD_DIR}/" "s3://${AWS_BUCKET}/${PROJECT}/${1}"
@@ -104,10 +110,6 @@ promote () {
 	deployToFolder "${MAJOR_VERSION}.${MINOR_VERSION}/" "${NO_CACHE}"
 	deployToFolder "${MAJOR_VERSION}/"                  "${NO_CACHE}"
 }
-
-
-
-# Perform commands
 
 if [ "$1" = "clean" ] ; then
 	clean &&
