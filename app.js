@@ -382,6 +382,15 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function generatePage (pageName, args) {
+		var pageManager = {},
+			page        = startPageGeneration(pageName, args, pageManager);
+
+		finishPageGeneration(pageName, page, args, pageManager);
+
+		return page;
+	}
+
 	function loadPage (pageName, args, options, callback) {
 		navigate(function (unlock) {
 			var pageManager = {},
@@ -945,6 +954,28 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		return navigateBack(options, callback);
+	};
+
+
+
+	App.generate = function (pageName, args) {
+		if (typeof pageName !== 'string') {
+			throw TypeError('page name must be a string, got ' + pageName);
+		}
+
+		switch (typeof args) {
+			case 'undefined':
+				args = {};
+				break;
+
+			case 'object':
+				break;
+
+			default:
+				throw TypeError('page arguments must be an object if defined, got ' + args);
+		}
+
+		return generatePage(pageName, args);
 	};
 
 
