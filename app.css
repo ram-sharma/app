@@ -53,7 +53,7 @@ body {
 	display: block;
 }
 
-.app-page .app-topbar {
+.app-topbar {
 	z-index: 3000;
 	position: relative;
 	height: 44px;
@@ -70,10 +70,10 @@ body {
 	color: #FFF;
 	text-shadow: 0 1px 0 #000;
 }
-.app-android .app-page .app-topbar {
+.app-android .app-topbar {
 	height: 48px;
 }
-.app-page .app-topbar .app-button {
+.app-topbar .app-button {
 	position: absolute;
 	top: 7px;
 	padding: 6px 8px;
@@ -88,19 +88,19 @@ body {
 	line-height: 16px;
 	text-shadow: 0 1px 0 #FFF;
 }
-.app-android .app-page .app-topbar .app-button {
+.app-android .app-topbar .app-button {
 	top: 9px;
 }
-.app-page .app-topbar .app-button.left {
+.app-topbar .app-button.left {
 	left: 8px;
 }
-.app-page .app-topbar .app-button.right {
+.app-topbar .app-button.right {
 	right: 8px;
 }
-.app-page .app-topbar .app-button.active {
+.app-topbar .app-button.active {
 	background: #E7E7E7;
 }
-.app-page .app-topbar .app-title {
+.app-title {
 	margin: 0 auto;
 	height: 42px;
 	font-size: 22px;
@@ -108,16 +108,16 @@ body {
 	line-height: 42px;
 	text-align: center;
 }
-.app-android .app-page .app-topbar .app-title {
+.app-android .app-title {
 	padding: 2px 0;
 }
 
-.app-page .app-content {
+.app-content {
 	z-index: 2000;
 	position: relative;
 	background: #F3F3F3;
 }
-.app-ios .app-page .app-content * {
+.app-ios .app-content * {
 	/*
 		terrible hack to make elements render
 		properly in scrollable regions
@@ -125,21 +125,21 @@ body {
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
-.app-page .app-content .app-section {
+.app-section {
 	position: relative;
 	margin: 8px;
 }
-.app-page .app-content .app-section:first-child {
+.app-section:first-child {
 	padding-top: 8px;
 	margin-top: 0;
 }
 
-.app-page .app-content ul.app-list {
+ul.app-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-.app-page .app-content ul.app-list > li {
+ul.app-list > li {
 	padding: 0 8px 0 20px;
 	height: 43px;
 	background: #FFF;
@@ -153,33 +153,33 @@ body {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.app-android .app-page .app-content ul.app-list > li {
+.app-android ul.app-list > li {
 	padding: 2px 8px 2px 20px;
 }
-.app-page .app-content .app-section ul.app-list > li {
+.app-section ul.app-list > li {
 	border-left-width: 1px;
 	border-right-width: 1px;
 }
-.app-page .app-content .app-section ul.app-list > li:first-child {
+.app-section ul.app-list > li:first-child {
 	border-top-width: 1px;
 	-webkit-border-radius: 6px 6px 0 0;
 	-moz-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
 }
-.app-page .app-content .app-section ul.app-list > li:last-child {
+.app-section ul.app-list > li:last-child {
 	-webkit-border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
 	border-radius: 0 0 6px 6px;
 }
-.app-page .app-content .app-section ul.app-list > li:first-child:last-child {
+.app-section ul.app-list > li:first-child:last-child {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
-.app-page .app-content ul.app-list > li.active {
+ul.app-list > li.active {
 	background: #F3F3F3;
 }
-.app-page .app-content ul.app-list > label {
+ul.app-list > label {
 	display: block;
 	padding-left: 12px;
 	height: 24px;
@@ -190,23 +190,23 @@ body {
 	line-height: 24px;
 	text-shadow: 0 1px 0 #000;
 }
-.app-page .app-content .app-section ul.app-list > label:first-child {
+.app-section ul.app-list > label:first-child {
 	-webkit-border-radius: 6px 6px 0 0;
 	-moz-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
 }
-.app-page .app-content .app-section ul.app-list > label:last-child {
+.app-section ul.app-list > label:last-child {
 	-webkit-border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
 	border-radius: 0 0 6px 6px;
 }
-.app-page .app-content .app-section ul.app-list > label:first-child:last-child {
+.app-section ul.app-list > label:first-child:last-child {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
 
-.app-page .app-content .app-button {
+.app-content .app-button {
 	margin: 0 auto;
 	padding: 10px 12px;
 	height: 20px;
@@ -222,50 +222,50 @@ body {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.app-page .app-content .app-section .app-button {
+.app-section .app-button {
 	border-left-width: 1px;
 	border-right-width: 1px;
 }
-.app-page .app-content .app-section .app-button:first-child {
+.app-section .app-button:first-child {
 	border-top-width: 1px;
 	-webkit-border-radius: 6px 6px 0 0;
 	-moz-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
 }
-.app-page .app-content .app-section .app-button:last-child {
+.app-section .app-button:last-child {
 	-webkit-border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
 	border-radius: 0 0 6px 6px;
 }
-.app-page .app-content .app-section .app-button:first-child:last-child {
+.app-section .app-button:first-child:last-child {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
-.app-page .app-content .app-button.active {
+.app-content .app-button.active {
 	background: #F3F3F3;
 }
 
-.app-page .app-content .app-button.green {
+.app-content .app-button.green {
 	background: #CFC;
 }
-.app-page .app-content .app-button.green.active {
+.app-content .app-button.green.active {
 	background: #DFD;
 }
-.app-page .app-content .app-button.red {
+.app-content .app-button.red {
 	background: #FCC;
 }
-.app-page .app-content .app-button.red.active {
+.app-content .app-button.red.active {
 	background: #FDD;
 }
-.app-page .app-content .app-button.blue {
+.app-content .app-button.blue {
 	background: #CCF;
 }
-.app-page .app-content .app-button.blue.active {
+.app-content .app-button.blue.active {
 	background: #DDF;
 }
 
-.app-page .app-content .app-input {
+.app-input {
 	position: relative;
 	display: block;
 	padding: 10px 12px;
@@ -285,36 +285,36 @@ body {
 	line-height: 20px;
 	-webkit-appearance: none;
 }
-.app-page .app-content .app-section .app-input {
+.app-section .app-input {
 	border-left-width: 1px;
 	border-right-width: 1px;
 }
-.app-page .app-content .app-section .app-input:first-child {
+.app-section .app-input:first-child {
 	border-top-width: 1px;
 	-webkit-border-radius: 6px 6px 0 0;
 	-moz-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
 }
-.app-page .app-content .app-section .app-input:last-child {
+.app-section .app-input:last-child {
 	-webkit-border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
 	border-radius: 0 0 6px 6px;
 }
-.app-page .app-content .app-section .app-input:first-child:last-child {
+.app-section .app-input:first-child:last-child {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
-.app-page .app-content input.app-input {
+input.app-input {
 	height: 40px;
 }
-.app-page .app-content textarea.app-input {
+textarea.app-input {
 	height: 80px;
 	font-family: inherit;
 	resize: none;
 }
-.app-page .app-content .app-input input,
-.app-page .app-content .app-input textarea {
+.app-input input,
+.app-input textarea {
 	display: inline-block;
 	margin: 0;
 	padding: 0;
@@ -329,9 +329,9 @@ body {
 	resize: none;
 	-webkit-appearance: none;
 }
-.app-page .app-content .app-input input {
+.app-input input {
 	height: 20px;
 }
-.app-page .app-content .app-input textarea {
+.app-input textarea {
 	height: 60px;
 }
