@@ -973,7 +973,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 					throw TypeError('absolute start index cannot be greater than stack size, got ' + startIndex);
 				}
 				if (startIndex < 0) {
-					startIndex = stackSize - startIndex;
+					startIndex = stackSize + startIndex;
 				}
 				break;
 
@@ -991,7 +991,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 					throw TypeError('absolute end index cannot be greater than stack size, got ' + endIndex);
 				}
 				if (endIndex < 0) {
-					endIndex = stackSize - endIndex;
+					endIndex = stackSize + endIndex;
 				}
 				break;
 
@@ -1022,7 +1022,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 					throw TypeError('absolute index cannot be greater than stack size, got ' + index);
 				}
 				if (index < 0) {
-					index = stackSize - index;
+					index = stackSize + index;
 				}
 				break;
 
