@@ -1,0 +1,135 @@
+#!/bin/sh
+
+PROJECT="app"
+MAJOR_VERSION="1"
+MINOR_VERSION="2"
+BUG_VERSION="0"
+AWS_BUCKET="cdn.kik.com"
+AWS_CFG="${HOME}/.s3cfg-kik"
+
+buildProject () {
+	buildJS  "app.js"      "app.js"
+	buildCSS "app.css"     "app.css"
+	buildCSS "default.css" "app.css default.css"
+	buildCSS "dim.css"     "app.css dim.css"
+}
+
+
+
+
+
+
+# Build code
+
+if [ -z "${BUILD_NUMBER}" ] ; then
+	BUILD_NUMBER="SNAPSHOT"
+fi
+
+VERSION="${MAJOR_VERSION}.${MINOR_VERSION}.${BUG_VERSION}"
+DEV_VERSION="${MAJOR_VERSION}-DEV"
+BUILD_VERSION="${VERSION}.${BUILD_NUMBER}"
+
+BUILD_DIR="builds"
+BUILD_ZIP="${PROJECT}.zip"
+JS_COMPILER="yui-compressor --type js"
+# JS_COMPILER="yuicompressor --type js"
+# JS_COMPILER="closure-compiler"
+CSS_COMPILER="yui-compressor --type css"
+# CSS_COMPILER="yuicompressor --type css"
+
+clean () {
+	echo "Cleaning builds"
+	rm -rf "${BUILD_DIR}" "${BUILD_ZIP}"
+}
+
+createBuildDir () {
+	clean
+	mkdir -p "${BUILD_DIR}"
+}
+
+buildJS () {
+	echo "Building ${1}"
+	cat ${2} | sed "s/^[ 	]*;;;.*$//" | sed "s/DEVBUILD/${VERSION}/" | ${JS_COMPILER} > "${BUILD_DIR}/${1}"
+}
+
+buildDebugJS () {
+	echo "Building ${1}"
+	cat ${2} | sed "s/DEVBUILD/${VERSION}/" > "${BUILD_DIR}/${1}"
+}
+
+buildCSS () {
+	echo "Building ${1}"
+	cat ${2} | ${CSS_COMPILER} > "${BUILD_DIR}/${1}"
+}
+
+build () {
+	buildProject
+
+	echo "Building zip"
+	zip -r "${BUILD_ZIP}" "${BUILD_DIR}" >/dev/null
+}
+
+gzipDir () {
+	echo "Gziping files"
+	files="`find ${BUILD_DIR} -name '*' | sed 's/.*\/\..*//' | grep -I './'`"
+	for file in ${files}; do
+		# gzip -c "$file" | tee "$file" >/dev/null
+		cat "$file" | gzip -fc - | tee "$file" >/dev/null
+	done
+}
+
+
+
+# Deploy code
+
+S3CMD="s3cmd -c ${AWS_CFG}"
+NO_CACHE="--add-header=Cache-Control:no-cache"
+FULL_CACHE="--add-header=Cache-Control:max-age=31557600"
+
+deployToFolder () {
+	${S3CMD} put --recursive --acl-public --guess-mime-type --add-header "Content-Encoding:gzip" ${2} "${BUILD_DIR}/" "s3://${AWS_BUCKET}/${PROJECT}/${1}"
+}
+
+deploy () {
+	echo "Deploying build ${BUILD_VERSION}..."
+	gzipDir
+	deployToFolder "${BUILD_VERSION}/" "${FULL_CACHE}"
+	deployToFolder "${DEV_VERSION}/"   "${NO_CACHE}"
+}
+
+promote () {
+	echo "Promoting version ${VERSION}..."
+	gzipDir
+	deployToFolder "${VERSION}/"                        "${FULL_CACHE}"
+	deployToFolder "${MAJOR_VERSION}.${MINOR_VERSION}/" "${NO_CACHE}"
+	deployToFolder "${MAJOR_VERSION}/"                  "${NO_CACHE}"
+}
+
+
+
+# Perform commands
+
+if [ "$1" = "clean" ] ; then
+	clean &&
+	exit 0
+	exit 1
+elif [ "$1" = "deploy" ] ; then
+	createBuildDir &&
+	build &&
+	deploy &&
+	clean &&
+	exit 0
+	exit 1
+elif [ "$1" = "promote" ] ; then
+	createBuildDir &&
+	build &&
+	promote &&
+	clean &&
+	exit 0
+	exit 1
+else
+	createBuildDir &&
+	build &&
+	exit 0
+	exit 1
+fi
