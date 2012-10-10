@@ -342,6 +342,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				value = holdFunction(cleanUp);
 			}
 			catch (err) {
+				if (window.console && window.console.error) {
+					window.console.error(err + '');
+				}
+
 				cleanUp();
 			}
 
@@ -422,6 +426,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				callback();
 			}
 		});
+
+		if ( !(pageName in pages) ) {
+			return false;
+		}
 	}
 
 	function navigateBack (options, callback) {
