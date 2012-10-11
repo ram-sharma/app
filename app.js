@@ -174,19 +174,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		reverseTransition = REVERSE_TRANSITION[defaultTransition];
 	}
 
-	function init () {
-		if (initialised) {
-			return;
-		}
-		initialised = true;
-
-		var pageNodes = document.getElementsByClassName(PAGE_CLASS),
-			page, pageName, match;
-
-		for (var i=pageNodes.length; i--;) {
-			addPage( pageNodes[i] );
-		}
-
+	function config () {
 		if (match = /\bCPU.*OS (\d+(_\d+)?)/i.exec(navigator.userAgent)) {
 			platform = 'ios';
 			version = parseFloat( match[1] );
@@ -207,6 +195,21 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		App.platform = platform;
 		App.platformVersion = version;
+	}
+
+	function init () {
+		if (initialised) {
+			return;
+		}
+		initialised = true;
+
+		var pageNodes = document.getElementsByClassName(PAGE_CLASS),
+			page, pageName, match;
+
+		for (var i=pageNodes.length; i--;) {
+			addPage( pageNodes[i] );
+		}
+
 		document.body.className += ' ' + APP_LOADED;
 	}
 
@@ -1017,6 +1020,36 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 	App.setDefaultTransition = function (transition) {
+		if (typeof transition === 'object') {
+			switch (platform) {
+				case 'android':
+					transition = transition.android;
+					if ((isAndroid401 || version < 4) && transition.androidFallback) {
+						transition = transition.androidFallback;
+					}
+					break;
+
+				case 'ios':
+					transition = transition.ios;
+					if ((version < 5) && transition.iosFallback) {
+						transition = transition.iosFallback;
+					}
+					break;
+
+				default:
+					transition = transition.fallback;
+					break;
+			}
+
+			if ( !transition ) {
+				return;
+			}
+		}
+
+		if (typeof transition !== 'string') {
+			throw TypeError('transition must be a string if defined, got ' + transition);
+		}
+
 		if ( !(transition in REVERSE_TRANSITION) ) {
 			throw TypeError('invalid transition type, got ' + transition);
 		}
@@ -1154,6 +1187,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	config();
 	setupListeners();
 
 	window.App = App;
