@@ -139,7 +139,8 @@ ul.app-list {
 	padding: 0;
 	list-style: none;
 }
-ul.app-list > li {
+ul.app-list > li,
+ul.app-list > li.app-button {
 	padding: 0 8px 0 20px;
 	height: 43px;
 	background: #FFF;
@@ -150,33 +151,40 @@ ul.app-list > li {
 	font-weight: bold;
 	line-height: 43px;
 	overflow: hidden;
+	text-align: left;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.app-android ul.app-list > li {
+.app-android ul.app-list > li,
+.app-android ul.app-list > li.app-button {
 	padding: 2px 8px 2px 20px;
 }
-.app-section ul.app-list > li {
+.app-section ul.app-list > li,
+.app-section ul.app-list > li.app-button {
 	border-left-width: 1px;
 	border-right-width: 1px;
 }
-.app-section ul.app-list > li:first-child {
+.app-section ul.app-list > li:first-child,
+.app-section ul.app-list > li.app-button:first-child {
 	border-top-width: 1px;
 	-webkit-border-radius: 6px 6px 0 0;
 	-moz-border-radius: 6px 6px 0 0;
 	border-radius: 6px 6px 0 0;
 }
-.app-section ul.app-list > li:last-child {
+.app-section ul.app-list > li:last-child,
+.app-section ul.app-list > li.app-button:last-child {
 	-webkit-border-radius: 0 0 6px 6px;
 	-moz-border-radius: 0 0 6px 6px;
 	border-radius: 0 0 6px 6px;
 }
-.app-section ul.app-list > li:first-child:last-child {
+.app-section ul.app-list > li:first-child:last-child,
+.app-section ul.app-list > li.app-button:first-child:last-child {
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 }
-ul.app-list > li.active {
+ul.app-list > li.active,
+ul.app-list > li.app-button.active {
 	background: #F3F3F3;
 }
 ul.app-list > label {
