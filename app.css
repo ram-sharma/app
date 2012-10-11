@@ -1,6 +1,6 @@
 /* Resets */
 
-html, body, div, form, p, span, label, img {
+html, body, div, form, p, ul, li, span, label, img {
 	margin: 0;
 	padding: 0;
 	outline: none;
@@ -20,7 +20,7 @@ body {
 	user-select: none;
 	overflow: hidden;
 }
-body.app-android {
+.app-android {
 	font-family: "Roboto", sans-serif;
 }
 .clear {
@@ -45,9 +45,6 @@ body.app-android {
 	position: relative;
 	height: 100%;
 	width: 100%;
-	-webkit-box-shadow: 0 0 4px #000;
-	-moz-box-shadow: 0 0 4px #000;
-	box-shadow: 0 0 4px #000;
 	overflow: hidden;
 }
 .app-loaded .app-page {
@@ -59,64 +56,42 @@ body.app-android {
 	position: relative;
 	height: 44px;
 	width: 100%;
-	background: #1C1C1C;
-	border-top: 1px solid #3C3C3C;
-	border-bottom: 1px solid #0C0C0C;
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.7);
-	box-shadow: 0 0 4px rgba(0,0,0,0.7);
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	background: #000;
 	color: #FFF;
-	text-shadow: 0 1px 0 #000;
 }
 .app-android .app-topbar {
 	height: 48px;
 }
 .app-topbar .app-button {
 	position: absolute;
-	top: 7px;
-	padding: 6px 8px;
-	height: 16px;
-	background: #F3F3F3;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	color: #2C2C2C;
-	font-size: 16px;
-	font-weight: bold;
-	line-height: 16px;
-	text-shadow: 0 1px 0 #FFF;
+	top: 0;
+	padding: 0 8px;
+	height: 100%;
+	line-height: 44px;
 }
 .app-android .app-topbar .app-button {
-	top: 9px;
+	line-height: 48px;
 }
 .app-topbar .app-button.left {
-	left: 8px;
+	left: 0;
 }
 .app-topbar .app-button.right {
-	right: 8px;
-}
-.app-topbar .app-button.active {
-	background: #E7E7E7;
+	right: 0;
 }
 .app-title {
 	margin: 0 auto;
-	height: 42px;
-	font-size: 22px;
-	font-weight: bold;
-	line-height: 42px;
+	height: 100%;
+	line-height: 44px;
 	text-align: center;
 }
 .app-android .app-title {
-	padding: 2px 0;
+	line-height: 48px;
 }
 
 .app-content {
 	z-index: 2000;
 	position: relative;
-	background: #F3F3F3;
+	background: #FFF;
 }
 .app-ios .app-content * {
 	/*
@@ -129,149 +104,64 @@ body.app-android {
 .app-section {
 	position: relative;
 	margin: 8px;
-}
-.app-section:first-child {
-	padding-top: 8px;
-	margin-top: 0;
+	border: 1px solid #AAA;
 }
 
-ul.app-list {
-	margin: 0;
-	padding: 0;
+.app-list {
 	list-style: none;
 }
-ul.app-list > li,
-ul.app-list > li.app-button {
-	padding: 0 8px 0 20px;
+.app-list > li,
+.app-list > li.app-button {
+	padding-left: 20px;
+	padding-right: 8px;
 	height: 43px;
-	background: #FFF;
-	border: 0 solid #DDD;
-	border-bottom-width: 1px;
-	color: #333;
-	font-size: 18px;
-	font-weight: bold;
+	border-bottom: 1px solid #CCC;
 	line-height: 43px;
 	overflow: hidden;
 	text-align: left;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.app-android ul.app-list > li,
-.app-android ul.app-list > li.app-button {
-	padding: 2px 8px 2px 20px;
+.app-android .app-list > li,
+.app-android .app-list > li.app-button {
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
-.app-section ul.app-list > li,
-.app-section ul.app-list > li.app-button {
-	border-left-width: 1px;
-	border-right-width: 1px;
+.app-section .app-list > li:last-child,
+.app-section .app-list > li.app-button:last-child {
+	border-bottom: none;
 }
-.app-section ul.app-list > li:first-child,
-.app-section ul.app-list > li.app-button:first-child {
-	border-top-width: 1px;
-	-webkit-border-radius: 6px 6px 0 0;
-	-moz-border-radius: 6px 6px 0 0;
-	border-radius: 6px 6px 0 0;
-}
-.app-section ul.app-list > li:last-child,
-.app-section ul.app-list > li.app-button:last-child {
-	-webkit-border-radius: 0 0 6px 6px;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
-}
-.app-section ul.app-list > li:first-child:last-child,
-.app-section ul.app-list > li.app-button:first-child:last-child {
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-}
-ul.app-list > li.active,
-ul.app-list > li.app-button.active {
-	background: #F3F3F3;
-}
-ul.app-list > label {
+.app-list > label {
 	display: block;
 	padding-left: 12px;
 	height: 24px;
-	background: #2C2C2C;
-	color: #F3F3F3;
-	font-size: 14px;
-	font-weight: bold;
+	background: #000;
+	color: #FFF;
 	line-height: 24px;
-	text-shadow: 0 1px 0 #000;
-}
-.app-section ul.app-list > label:first-child {
-	-webkit-border-radius: 6px 6px 0 0;
-	-moz-border-radius: 6px 6px 0 0;
-	border-radius: 6px 6px 0 0;
-}
-.app-section ul.app-list > label:last-child {
-	-webkit-border-radius: 0 0 6px 6px;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
-}
-.app-section ul.app-list > label:first-child:last-child {
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
 }
 
 .app-content .app-button {
 	margin: 0 auto;
-	padding: 10px 12px;
-	height: 20px;
-	background: #FFF;
-	border: 0 solid #DDD;
-	border-bottom-width: 1px;
-	color: #222;
-	font-size: 20px;
-	font-weight: bold;
-	line-height: 20px;
+	height: 40px;
+	border-bottom: 1px solid #AAA;
+	line-height: 40px;
 	overflow: hidden;
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.app-section .app-button {
-	border-left-width: 1px;
-	border-right-width: 1px;
-}
-.app-section .app-button:first-child {
-	border-top-width: 1px;
-	-webkit-border-radius: 6px 6px 0 0;
-	-moz-border-radius: 6px 6px 0 0;
-	border-radius: 6px 6px 0 0;
-}
-.app-section .app-button:last-child {
-	-webkit-border-radius: 0 0 6px 6px;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
-}
-.app-section .app-button:first-child:last-child {
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-}
-.app-content .app-button.active {
-	background: #F3F3F3;
+.app-button:last-child {
+	border-bottom: none;
 }
 
 .app-content .app-button.green {
-	background: #CFC;
-}
-.app-content .app-button.green.active {
-	background: #DFD;
+	background: #7F7;
 }
 .app-content .app-button.red {
-	background: #FCC;
-}
-.app-content .app-button.red.active {
-	background: #FDD;
+	background: #F77;
 }
 .app-content .app-button.blue {
-	background: #CCF;
-}
-.app-content .app-button.blue.active {
-	background: #DDF;
+	background: #77F;
 }
 
 .app-input {
@@ -280,7 +170,7 @@ ul.app-list > label {
 	padding: 10px 12px;
 	width: 100%;
 	background: #FFF;
-	border: 0 solid #DDD;
+	border: 0 solid #CCC;
 	border-bottom-width: 1px;
 	outline: none;
 	-webkit-border-radius: 0;
@@ -289,7 +179,7 @@ ul.app-list > label {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	color: #222;
+	color: #000;
 	font-size: 18px;
 	line-height: 20px;
 	-webkit-appearance: none;
@@ -300,19 +190,6 @@ ul.app-list > label {
 }
 .app-section .app-input:first-child {
 	border-top-width: 1px;
-	-webkit-border-radius: 6px 6px 0 0;
-	-moz-border-radius: 6px 6px 0 0;
-	border-radius: 6px 6px 0 0;
-}
-.app-section .app-input:last-child {
-	-webkit-border-radius: 0 0 6px 6px;
-	-moz-border-radius: 0 0 6px 6px;
-	border-radius: 0 0 6px 6px;
-}
-.app-section .app-input:first-child:last-child {
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
 }
 input.app-input {
 	height: 40px;

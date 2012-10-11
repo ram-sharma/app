@@ -1,3 +1,11 @@
+.app-page {
+	-webkit-box-shadow: 0 0 4px #000;
+	-moz-box-shadow: 0 0 4px #000;
+	box-shadow: 0 0 4px #000;
+}
+
+
+
 /* Topbar */
 
 .app-page .app-topbar {
@@ -9,7 +17,12 @@
 	background-image: -o-linear-gradient(top, #FFF, #DDD);
 	background-image: linear-gradient(top, #FFF, #DDD);
 	border-top: 2px solid #7A2;
-	border-bottom: none;
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.7);
+	box-shadow: 0 0 4px rgba(0,0,0,0.7);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 	color: #3C3C3C;
 	text-shadow: 0 1px 0 #FFF;
 }
