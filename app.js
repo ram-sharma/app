@@ -83,6 +83,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		APP_IOS                        = 'app-ios',
 		APP_ANDROID                    = 'app-android',
 		APP_LOADED                     = 'app-loaded',
+		PAGE_SHOW_EVENT                = 'appShow',
+		PAGE_HIDE_EVENT                = 'appHide',
 		STACK_KEY                      = '__APP_JS_STACK__' + window.location.pathname,
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
@@ -416,14 +418,22 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				performTransition(page, newOptions, finish);
 			}
 
+			var oldNode = currentNode;
+
 			current     = pageName;
 			currentNode = page;
 			stack.push([ pageName, page, options, args, pageManager ]);
 
 			function finish () {
 				finishPageGeneration(pageName, page, args, pageManager);
+
 				unlock();
 				callback();
+
+				if (oldNode) {
+					firePageEvent(oldNode, PAGE_HIDE_EVENT);
+				}
+				firePageEvent(page, PAGE_SHOW_EVENT);
 			}
 		});
 
@@ -463,9 +473,16 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 			performTransition(page, newOptions, function () {
 				restorePageScrollStyle(page);
-				finishPageDestruction(oldPage[0], oldPage[1], oldPage[3], oldPage[4]);
-				unlock();
-				callback();
+
+				firePageEvent(oldPage[1], PAGE_HIDE_EVENT);
+				firePageEvent(page, PAGE_SHOW_EVENT);
+
+				setTimeout(function () {
+					finishPageDestruction(oldPage[0], oldPage[1], oldPage[3], oldPage[4]);
+
+					unlock();
+					callback();
+				}, 0);
 			}, true);
 
 			current     = pageName;
@@ -520,6 +537,17 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			navigate( navQueue.shift() );
 		}
 
+	}
+
+
+
+	function firePageEvent (page, eventName) {
+		try {
+			var event = document.createEvent('CustomEvent');
+			event.initEvent(eventName, false, true);
+			page.dispatchEvent(event);
+		}
+		catch (err) {}
 	}
 
 
