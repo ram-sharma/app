@@ -3,7 +3,6 @@ body {
 }
 body.app-android {
 	background: #CCC;
-	font-family: "Roboto", sans-serif;
 }
 
 .app-page .app-topbar {

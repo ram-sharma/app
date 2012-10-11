@@ -22,6 +22,9 @@ body {
 	user-select: none;
 	overflow: hidden;
 }
+body.app-android {
+	font-family: "Roboto", sans-serif;
+}
 .clear {
 	clear: both;
 }
