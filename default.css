@@ -1,3 +1,5 @@
+/* Page */
+
 .app-page {
 	-webkit-box-shadow: 0 0 4px #000;
 	-moz-box-shadow: 0 0 4px #000;
@@ -8,219 +10,279 @@
 
 /* Topbar */
 
-.app-page .app-topbar {
+.app-topbar {
 	background: #EEE;
+	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7),
+		inset 0 2px 0 #7A2;
+	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.7),
+		inset 0 2px 0 #7A2;
+	box-shadow: 0 0 4px rgba(0,0,0,0.7),
+		inset 0 2px 0 #7A2;
+	color: #3C3C3C;
+}
+.app-ios .app-topbar {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#DDD));
 	background-image: -webkit-linear-gradient(top, #FFF, #DDD);
 	background-image: -moz-linear-gradient(top, #FFF, #DDD);
 	background-image: -ms-linear-gradient(top, #FFF, #DDD);
 	background-image: -o-linear-gradient(top, #FFF, #DDD);
 	background-image: linear-gradient(top, #FFF, #DDD);
-	border-top: 2px solid #7A2;
-	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7);
-	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.7);
-	box-shadow: 0 0 4px rgba(0,0,0,0.7);
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	color: #3C3C3C;
-	text-shadow: 0 1px 0 #FFF;
-}
-.app-android .app-page .app-topbar {
-	background-image: none;
 }
 
-.app-page .app-topbar .app-button {
-	padding: 6px 8px;
-	height: 16px;
-	background: #444;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
-	background-image: -webkit-linear-gradient(top, #555, #333);
-	background-image: -moz-linear-gradient(top, #555, #333);
-	background-image: -ms-linear-gradient(top, #555, #333);
-	background-image: -o-linear-gradient(top, #555, #333);
-	background-image: linear-gradient(top, #555, #333);
-	-webkit-box-shadow: inset 0 0 1px #000;
-	-moz-box-shadow: inset 0 0 1px #000;
-	box-shadow: inset 0 0 1px #000;
-	color: #FFF;
+.app-topbar .app-button {
+	padding-left: 16px;
+	padding-right: 16px;
 	font-size: 16px;
 	font-weight: bold;
-	line-height: 16px;
-	text-shadow: 0 1px 0 #000;
 }
-.app-android .app-page .app-topbar .app-button {
-	top: 0;
-	margin: 8px 0;
-	padding: 0 16px;
-	height: 32px;
-	background: none;
-	border: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-	color: #2C2C2C;
-	line-height: 32px;
+.app-topbar .app-button.left {
+	border-width: 0 2px 0 0;
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+}
+.app-ios .app-topbar .app-button.left {
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+}
+.app-topbar .app-button.right {
+	border-width: 0 0 0 2px;
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+}
+.app-ios .app-topbar .app-button.right {
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+}
+.app-topbar .app-button.active {
+	background: rgba(255,255,255,0.5);
+	background-image: -webkit-linear-gradient(top, #7A2, #7A2 2px, #FFF 2.1px, #FFF);
+	background-image: -moz-linear-gradient(top, #7A2, #7A2 2px, #FFF 2.1px, #FFF);
+	background-image: -ms-linear-gradient(top, #7A2, #7A2 2px, #FFF 2.1px, #FFF);
+	background-image: -o-linear-gradient(top, #7A2, #7A2 2px, #FFF 2.1px, #FFF);
+	background-image: linear-gradient(top, #7A2, #7A2 2px, #FFF 2.1px, #FFF);
+}
+.app-ios .app-topbar .app-button.active {
+	background-image: -webkit-linear-gradient(top, #7A2, #7A2 2px, #DDD 2.1px, #F5F5F5);
+	background-image: -moz-linear-gradient(top, #7A2, #7A2 2px, #DDD 2.1px, #F5F5F5);
+	background-image: -ms-linear-gradient(top, #7A2, #7A2 2px, #DDD 2.1px, #F5F5F5);
+	background-image: -o-linear-gradient(top, #7A2, #7A2 2px, #DDD 2.1px, #F5F5F5);
+	background-image: linear-gradient(top, #7A2, #7A2 2px, #DDD 2.1px, #F5F5F5);
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+	border-width: 0;
+	-webkit-border-image: none;
+	-moz-border-image: none;
+	-o-border-image: none;
+	border-image: none;
+}
+
+.app-title {
+	font-size: 22px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 #E5E5E5;
+}
+.app-ios .app-title {
 	text-shadow: 0 1px 0 #FFF;
-}
-.app-page .app-topbar .app-button.active {
-	padding: 7px 8px 5px;
-	background: #444;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#555));
-	background-image: -webkit-linear-gradient(top, #333, #555);
-	background-image: -moz-linear-gradient(top, #333, #555);
-	background-image: -ms-linear-gradient(top, #333, #555);
-	background-image: -o-linear-gradient(top, #333, #555);
-	background-image: linear-gradient(top, #333, #555);
-	-webkit-box-shadow: inset 0 1px 3px #000;
-	-moz-box-shadow: inset 0 1px 3px #000;
-	box-shadow: inset 0 1px 3px #000;
-}
-.app-android .app-page .app-topbar .app-button.active {
-	padding: 0 16px;
-	background: #FFF;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-}
-.app-android .app-page .app-topbar .app-button.left {
-	left: 0;
-	border-right: 2px solid #CCC;
-}
-.app-android .app-page .app-topbar .app-button.right {
-	right: 0;
-	border-left: 2px solid #CCC;
-}
-.app-android .app-page .app-topbar .app-title {
-	line-height: 44px;
 }
 
 
 
 /* Content */
 
+.app-page,
 .app-page .app-content {
 	background: #F7F7F7;
 }
 
-.app-page .app-content ul.app-list > li.active {
-	background: #E6EEE8;
+.app-section,
+.app-list > li,
+.app-list > li.app-button,
+.app-content .app-button,
+.app-input {
+	border-color: #CCC;
 }
-.app-page .app-content ul.app-list > label {
+.app-section {
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	overflow: hidden;
+}
+.app-section > :first-child {
+	-webkit-border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	border-radius: 6px 6px 0 0;
+}
+.app-section > :last-child {
+	-webkit-border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	border-radius: 0 0 6px 6px;
+}
+.app-section > :first-child:last-child {
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+
+
+/* Lists */
+
+.app-list > li {
+	background: #FFF;
+	color: #333;
+	font-size: 20px;
+	font-weight: bold;
+}
+.app-list > label {
+	padding-top: 2px;
+	padding-bottom: 2px;
 	height: 21px;
 	background: #444;
+	border-top: 1px solid #555;
+	border-bottom: 1px solid #333;
+	color: #FFF;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 21px;
+	text-shadow: 0 1px 0 #000;
+}
+.app-ios .app-list > label {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#555));
 	background-image: -webkit-linear-gradient(top, #333, #555);
 	background-image: -moz-linear-gradient(top, #333, #555);
 	background-image: -ms-linear-gradient(top, #333, #555);
 	background-image: -o-linear-gradient(top, #333, #555);
 	background-image: linear-gradient(top, #333, #555);
-	border-top: 2px solid #555;
-	border-bottom: 1px solid #333;
-	color: #FFF;
-	line-height: 21px;
-	text-shadow: 0 1px 0 #000;
-}
-.app-android .app-page .app-content ul.app-list > label {
-	background-image: none;
-	border-top-width: 1px;
+	border-top-width: 2px;
 }
 
-.app-page .app-content .app-button.green {
+
+
+/* Buttons */
+
+.app-content .app-button {
+	background: #FFF;
+	color: #333;
+	font-size: 20px;
+	font-weight: bold;
+}
+.app-content .app-button.active {
+	background: #E6EEE8;
+}
+.app-ios .app-content .app-button.active {
+	background: #0374EE;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#058CF5), to(#015DE6));
+	background-image: -webkit-linear-gradient(top, #058CF5, #015DE6);
+	background-image: -moz-linear-gradient(top, #058CF5, #015DE6);
+	background-image: -ms-linear-gradient(top, #058CF5, #015DE6);
+	background-image: -o-linear-gradient(top, #058CF5, #015DE6);
+	background-image: linear-gradient(top, #058CF5, #015DE6);
+	color: #FFF;
+}
+.app-content .app-button.green {
 	background: #6A7;
+	border-color: #485;
+	color: #FFF;
+	text-shadow: 0 1px 0 #374;
+}
+.app-ios .app-content .app-button.green {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#7B8), to(#596));
 	background-image: -webkit-linear-gradient(top, #7B8, #596);
 	background-image: -moz-linear-gradient(top, #7B8, #596);
 	background-image: -ms-linear-gradient(top, #7B8, #596);
 	background-image: -o-linear-gradient(top, #7B8, #596);
 	background-image: linear-gradient(top, #7B8, #596);
-	border-color: #485;
-	color: #FFF;
-	text-shadow: 0 1px 0 #374;
 }
-.app-android .app-page .app-content .app-button.green {
-	background-image: none;
-}
-.app-page .app-content .app-button.green.active {
-	padding: 11px 12px 9px;
+.app-content .app-button.green.active {
+	padding-top: 1px;
+	height: 39px;
 	background: #596;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+.app-ios .app-content .app-button.green.active {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#6A7), to(#485));
 	background-image: -webkit-linear-gradient(top, #6A7, #485);
 	background-image: -moz-linear-gradient(top, #6A7, #485);
 	background-image: -ms-linear-gradient(top, #6A7, #485);
 	background-image: -o-linear-gradient(top, #6A7, #485);
 	background-image: linear-gradient(top, #6A7, #485);
-	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-	box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
 }
-.app-android .app-page .app-content .app-button.green.active {
-	background-image: none;
-}
-
-.app-page .app-content .app-button.red {
+.app-content .app-button.red {
 	background: #C55;
+	border-color: #A33;
+	color: #FFF;
+	text-shadow: 0 1px 0 #922;
+}
+.app-ios .app-content .app-button.red {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#D66), to(#B44));
 	background-image: -webkit-linear-gradient(top, #D66, #B44);
 	background-image: -moz-linear-gradient(top, #D66, #B44);
 	background-image: -ms-linear-gradient(top, #D66, #B44);
 	background-image: -o-linear-gradient(top, #D66, #B44);
 	background-image: linear-gradient(top, #D66, #B44);
-	border-color: #A33;
-	color: #FFF;
-	text-shadow: 0 1px 0 #922;
 }
-.app-android .app-page .app-content .app-button.red {
-	background-image: none;
-}
-.app-page .app-content .app-button.red.active {
-	padding: 11px 12px 9px;
+.app-content .app-button.red.active {
+	padding-top: 1px;
+	height: 39px;
 	background: #B44;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+.app-ios .app-content .app-button.red.active {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#C55), to(#A33));
 	background-image: -webkit-linear-gradient(top, #C55, #A33);
 	background-image: -moz-linear-gradient(top, #C55, #A33);
 	background-image: -ms-linear-gradient(top, #C55, #A33);
 	background-image: -o-linear-gradient(top, #C55, #A33);
 	background-image: linear-gradient(top, #C55, #A33);
-	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-	box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
 }
-.app-android .app-page .app-content .app-button.red.active {
-	background-image: none;
-}
-
-.app-page .app-content .app-button.blue {
+.app-content .app-button.blue {
 	background: #45A;
+	border-color: #238;
+	color: #FFF;
+	text-shadow: 0 1px 0 #127;
+}
+.app-ios .app-content .app-button.blue {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#56B), to(#349));
 	background-image: -webkit-linear-gradient(top, #56B, #349);
 	background-image: -moz-linear-gradient(top, #56B, #349);
 	background-image: -ms-linear-gradient(top, #56B, #349);
 	background-image: -o-linear-gradient(top, #56B, #349);
 	background-image: linear-gradient(top, #56B, #349);
-	border-color: #238;
-	color: #FFF;
-	text-shadow: 0 1px 0 #127;
 }
-.app-android .app-page .app-content .app-button.blue {
-	background-image: none;
-}
-.app-page .app-content .app-button.blue.active {
-	padding: 11px 12px 9px;
+.app-content .app-button.blue.active {
+	padding-top: 1px;
+	height: 39px;
 	background: #349;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+.app-ios .app-content .app-button.blue.active {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#45A), to(#238));
 	background-image: -webkit-linear-gradient(top, #45A, #238);
 	background-image: -moz-linear-gradient(top, #45A, #238);
 	background-image: -ms-linear-gradient(top, #45A, #238);
 	background-image: -o-linear-gradient(top, #45A, #238);
 	background-image: linear-gradient(top, #45A, #238);
-	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-	box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
 }
-.app-android .app-page .app-content .app-button.blue.active {
-	background-image: none;
+
+
+
+/* Inputs */
+
+.app-input {
+	background: #FFF;
 }

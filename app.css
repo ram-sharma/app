@@ -17,6 +17,7 @@ body {
 	text-rendering: optimizeLegibility;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	-webkit-user-select: none;
+	-moz-user-select: none;
 	user-select: none;
 	overflow: hidden;
 }
@@ -28,6 +29,8 @@ body {
 }
 
 
+
+/* Page */
 
 .app-clickblocker {
 	z-index: 9000;
@@ -45,11 +48,16 @@ body {
 	position: relative;
 	height: 100%;
 	width: 100%;
+	background: #FFF;
 	overflow: hidden;
 }
 .app-loaded .app-page {
 	display: block;
 }
+
+
+
+/* Topbar */
 
 .app-topbar {
 	z-index: 3000;
@@ -88,6 +96,10 @@ body {
 	line-height: 48px;
 }
 
+
+
+/* Content */
+
 .app-content {
 	z-index: 2000;
 	position: relative;
@@ -99,6 +111,9 @@ body {
 		properly in scrollable regions
 	*/
 	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
 .app-section {
@@ -106,6 +121,10 @@ body {
 	margin: 8px;
 	border: 1px solid #AAA;
 }
+
+
+
+/* Lists */
 
 .app-list {
 	list-style: none;
@@ -140,6 +159,10 @@ body {
 	line-height: 24px;
 }
 
+
+
+/* Buttons */
+
 .app-content .app-button {
 	margin: 0 auto;
 	height: 40px;
@@ -163,6 +186,10 @@ body {
 .app-content .app-button.blue {
 	background: #77F;
 }
+
+
+
+/* Inputs */
 
 .app-input {
 	position: relative;
