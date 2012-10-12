@@ -1,5 +1,9 @@
 /* Page */
 
+html, body {
+	background: #000;
+}
+
 .app-page {
 	-webkit-box-shadow: 0 0 4px #000;
 	-moz-box-shadow: 0 0 4px #000;
