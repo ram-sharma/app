@@ -721,7 +721,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		(page || currentNode).setAttribute('data-scroll-style', scrollStyle);
 	}
 
-	function restorePageScrollPosition (page) {
+	function restorePageScrollPosition (page, noTimeout) {
 		var content = getScrollContent(page);
 
 		if (!content || content._iScroll) {
@@ -731,7 +731,14 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		var scrollTop = parseInt( (page || currentNode).getAttribute('data-last-scroll') );
 
 		if (scrollTop) {
-			content._scrollTop(scrollTop);
+			if (noTimeout) {
+				content._scrollTop(scrollTop);
+			}
+			else {
+				setTimeout(function () {
+					content._scrollTop(scrollTop);
+				}, 0);
+			}
 		}
 	}
 
@@ -745,6 +752,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		var scrollStyle = (page || currentNode).getAttribute('data-scroll-style') || '';
 
 		content.style['-webkit-overflow-scrolling'] = scrollStyle;
+
+		restorePageScrollPosition(page, true);
 	}
 
 
@@ -791,6 +800,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		window.addEventListener('resize', fixSizing);
 		window.addEventListener('load'  , fixSizing);
+		setTimeout(fixSizing, 0);
 
 		if (clik && clik.plugin && clik.plugin.back) {
 			clik.plugin.back(function () {
