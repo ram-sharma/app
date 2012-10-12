@@ -13,7 +13,6 @@ buildProject () {
 	buildDebugJS "app-DEBUG.js" "app.js"
 	buildCSS     "app.css"      "app.css"
 	buildCSS     "default.css"  "app.css default.css"
-	buildCSS     "dim.css"      "app.css dim.css"
 }
 
 
