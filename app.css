@@ -158,6 +158,9 @@ body {
 	color: #FFF;
 	line-height: 24px;
 }
+.app-list > li + label {
+	margin-top: -1px;
+}
 
 
 
