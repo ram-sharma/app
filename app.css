@@ -86,13 +86,13 @@ body {
 .app-topbar .app-button.right {
 	right: 0;
 }
-.app-title {
+.app-topbar .app-title {
 	margin: 0 auto;
 	height: 100%;
 	line-height: 44px;
 	text-align: center;
 }
-.app-android .app-title {
+.app-android .app-topbar .app-title {
 	line-height: 48px;
 }
 

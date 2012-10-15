@@ -89,12 +89,12 @@ html, body {
 	border-image: none;
 }
 
-.app-title {
+.app-topbar .app-title {
 	font-size: 22px;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #E5E5E5;
 }
-.app-ios .app-title {
+.app-ios .app-topbar .app-title {
 	text-shadow: 0 1px 0 #FFF;
 }
 
