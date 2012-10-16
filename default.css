@@ -95,29 +95,29 @@ html, body {
 }
 .app-topbar .app-button.left {
 	border-width: 0 2px 0 0;
-	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
-	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
-	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
-	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 214 0 0 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 214 0 0 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 214 0 0 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 214 0 0 stretch;
 }
 .app-ios .app-topbar .app-button.left {
-	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
-	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
-	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
-	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 100 0 0 stretch;
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 214 0 0 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 214 0 0 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 214 0 0 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 214 0 0 stretch;
 }
 .app-topbar .app-button.right {
 	border-width: 0 0 0 2px;
-	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
-	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
-	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
-	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 214 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 214 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 214 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 19%, rgb(192,192,192) 20%, rgb(192,192,192) 50%, rgb(192,192,192) 80%, rgba(192,192,192,0) 81%, rgba(192,192,192,0)) 0 0 0 214 stretch;
 }
 .app-ios .app-topbar .app-button.right {
-	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
-	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
-	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
-	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 100 stretch;
+	-webkit-border-image: -webkit-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 214 stretch;
+	-moz-border-image: -moz-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 214 stretch;
+	-o-border-image: -o-linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 214 stretch;
+	border-image: linear-gradient(top, rgba(192,192,192,0), rgba(192,192,192,0) 20%, rgb(192,192,192) 50%, rgba(192,192,192,0) 80%, rgba(192,192,192,0)) 0 0 0 214 stretch;
 }
 .app-topbar .app-button.active {
 	background: rgba(255,255,255,0.5);
