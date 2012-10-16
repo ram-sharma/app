@@ -130,7 +130,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		initialised  = false,
 		isAndroid401 = false,
 		platform, version, defaultTransition, reverseTransition,
-		current, currentNode;
+		current, currentNode, dialogQueue;
 
 
 
@@ -768,6 +768,125 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function createDialog (options, callback) {
+		var dialogContainer = document.createElement('div');
+		dialogContainer.className = 'app-dialog-container';
+
+		dialogContainer.addEventListener('touchstart', function (e) {
+			e.preventDefault();
+		}, false);
+
+		var dialog = document.createElement('div');
+		dialog.className = 'app-dialog';
+		dialogContainer.appendChild(dialog);
+
+		if (options.title) {
+			var title = document.createElement('div');
+			title.className = 'app-title';
+			title.textContent = options.title;
+			dialog.appendChild(title);
+		}
+
+		if (options.text) {
+			var text = document.createElement('div');
+			text.className = 'app-text';
+			text.textContent = options.text;
+			dialog.appendChild(text);
+		}
+
+		if (options.successButton || options.cancelButton) {
+			var buttons = document.createElement('div');
+			buttons.className = 'app-buttons';
+			dialog.appendChild(buttons);
+
+			if (options.successButton) {
+				var successButton = document.createElement('div');
+				successButton.className = 'app-button';
+				successButton.textContent = options.successButton || 'Ok';
+
+				Clickable(successButton);
+				successButton.addEventListener('click', function () {
+					callback(true);
+				}, false);
+			}
+
+			if (options.cancelButton) {
+				var cancelButton = document.createElement('div');
+				cancelButton.className = 'app-button';
+				cancelButton.textContent = options.cancelButton || 'Cancel';
+				buttons.appendChild(cancelButton);
+
+				Clickable(cancelButton);
+				cancelButton.addEventListener('click', function () {
+					callback(false);
+				}, false);
+
+				if (options.successButton) {
+					successButton.className += ' right';
+					cancelButton.className  += ' left';
+				}
+			}
+
+			if (options.successButton) {
+				buttons.appendChild(successButton);
+			}
+
+			var clear = document.createElement('div');
+			clear.className = 'clear';
+			buttons.appendChild(clear);
+		}
+
+		return dialogContainer;
+	}
+
+	function showDialog (options, callback, force) {
+		if (!force && dialogQueue) {
+			dialogQueue.push([ options, callback ]);
+			return;
+		}
+
+		dialogQueue = dialogQueue || [];
+
+		var dialogLock = false;
+
+		var dialog = createDialog(options, function (status) {
+			if (dialogLock) {
+				return;
+			}
+			dialogLock = true;
+
+			dialog.className = dialog.className.replace(/\bactive\b/g, '');
+
+			setTimeout(function () {
+				processDialogQueue();
+				callback(status);
+			}, 0);
+		});
+
+		document.body.appendChild(dialog);
+
+		setTimeout(function () {
+			dialog.className += ' active';
+		}, 0);
+	}
+
+	function processDialogQueue () {
+		if ( !dialogQueue ) {
+			return;
+		}
+
+		if ( !dialogQueue.length ) {
+			dialogQueue = null;
+			return;
+		}
+
+		var args = dialogQueue.shift();
+		args.push(true);
+		showDialog.apply(window, args);
+	}
+
+
+
 	function setContentHeight (page) {
 		var topbar  = page.querySelector('.app-topbar'),
 			content = page.querySelector('.app-content');
@@ -1065,6 +1184,76 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		setDefaultTransition(transition);
+	};
+
+
+
+	App.dialog = function (options, callback) {
+		switch (typeof options) {
+			case 'string':
+				options = { text : options };
+				break;
+
+			case 'object':
+				break;
+
+			default:
+				throw TypeError('dialog options must be an object, got ' + options);
+		}
+
+		switch (typeof options.title) {
+			case 'string':
+				break;
+
+			case 'undefined':
+				options.title = '';
+				break;
+
+			default:
+				throw TypeError('dialog title must a string if defined, got ' + options.title);
+		}
+
+		if (typeof options.text !== 'string') {
+			throw TypeError('dialog text must a string, got ' + options.text);
+		}
+
+		switch (typeof options.successButton) {
+			case 'string':
+				break;
+
+			case 'undefined':
+				options.successButton = 'Ok';
+				break;
+
+			default:
+				throw TypeError('success button must a string if defined, got ' + options.successButton);
+		}
+
+		switch (typeof options.cancelButton) {
+			case 'string':
+				break;
+
+			case 'undefined':
+				options.cancelButton = '';
+				break;
+
+			default:
+				throw TypeError('cancel button must a string if defined, got ' + options.cancelButton);
+		}
+
+		switch (typeof callback) {
+			case 'undefined':
+				callback = function () {};
+				break;
+
+			case 'function':
+				break;
+
+			default:
+				throw TypeError('callback must be a function if defined, got ' + callback);
+		}
+
+		showDialog(options, callback);
 	};
 
 
