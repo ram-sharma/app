@@ -858,9 +858,13 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			dialog.className = dialog.className.replace(/\bactive\b/g, '');
 
 			setTimeout(function () {
+				try {
+					document.body.removeChild(dialog);
+				}
+				catch (err) {}
 				processDialogQueue();
 				callback(status);
-			}, 0);
+			}, 600);
 		});
 
 		document.body.appendChild(dialog);
