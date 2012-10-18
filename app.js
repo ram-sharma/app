@@ -751,7 +751,9 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		var scrollStyle = (page || currentNode).getAttribute('data-scroll-style') || '';
 
-		content.style['-webkit-overflow-scrolling'] = scrollStyle;
+		if (scrollStyle) {
+			content.style['-webkit-overflow-scrolling'] = scrollStyle;
+		}
 
 		restorePageScrollPosition(page, true);
 	}
