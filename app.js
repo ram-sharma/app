@@ -647,6 +647,28 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		options.transition = reverse ? reverseTransition : defaultTransition;
 
+		if ((platform !== 'ios') || ((options.transition !== 'slide-left') && (options.transition !== 'slide-right'))) {
+			Swapper(oldPage, page, options, cleanup);
+			return;
+		}
+
+		var currentBar     = oldPage.querySelector('.app-topbar'),
+			currentContent = oldPage.querySelector('.app-content'),
+			currentTitle   = oldPage.querySelector('.app-topbar .app-title'),
+			currentLeft    = oldPage.querySelector('.app-topbar .left.app-button'),
+			currentRight   = oldPage.querySelector('.app-topbar .right.app-button'),
+			newBar         = page.querySelector('.app-topbar'),
+			newContent     = page.querySelector('.app-content'),
+			newTitle       = page.querySelector('.app-topbar .app-title'),
+			newLeft        = page.querySelector('.app-topbar .left.app-button'),
+			newRight       = page.querySelector('.app-topbar .right.app-button');
+
+		if (!currentBar || !newBar || !currentContent || !newContent) {
+			Swapper(oldPage, page, options, cleanup);
+			return;
+		}
+
+		//TODO: custom ios transition
 		Swapper(oldPage, page, options, cleanup);
 	}
 
