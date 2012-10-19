@@ -318,9 +318,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		var topbar = page.querySelector('.app-topbar');
-		page.addEventListener('DOMNodeInsertedIntoDocument', function () {
-			fixPageTitle(topbar);
-		}, false);
+
+		if (topbar) {
+			topbar.addEventListener('DOMNodeInsertedIntoDocument', function () {
+				fixPageTitle(this);
+			}, false);
+		}
 
 		return page;
 	}
@@ -654,22 +657,31 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		var currentBar     = oldPage.querySelector('.app-topbar'),
 			currentContent = oldPage.querySelector('.app-content'),
-			currentTitle   = oldPage.querySelector('.app-topbar .app-title'),
-			currentLeft    = oldPage.querySelector('.app-topbar .left.app-button'),
-			currentRight   = oldPage.querySelector('.app-topbar .right.app-button'),
 			newBar         = page.querySelector('.app-topbar'),
-			newContent     = page.querySelector('.app-content'),
-			newTitle       = page.querySelector('.app-topbar .app-title'),
-			newLeft        = page.querySelector('.app-topbar .left.app-button'),
-			newRight       = page.querySelector('.app-topbar .right.app-button');
+			newContent     = page.querySelector('.app-content');
 
 		if (!currentBar || !newBar || !currentContent || !newContent) {
 			Swapper(oldPage, page, options, cleanup);
 			return;
 		}
 
-		//TODO: custom ios transition
-		Swapper(oldPage, page, options, cleanup);
+		var count = 0;
+
+		Swapper(currentBar    , newBar    , 'fade' , swapDone);
+		Swapper(currentContent, newContent, options, swapDone);
+
+		function swapDone () {
+			if (++count !== 2) {
+				return;
+			}
+
+			page.appendChild(newBar);
+			page.appendChild(newContent);
+			oldPage.appendChild(currentBar);
+			oldPage.appendChild(currentContent);
+
+			Swapper(oldPage, page, 'instant', cleanup);
+		}
 	}
 
 	function getScrollContent (page) {
