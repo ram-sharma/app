@@ -167,6 +167,31 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		return true;
 	}
 
+	function getStyles (elem, notComputed) {
+		var styles;
+
+		if (notComputed) {
+			styles = elem.style;
+		}
+		else {
+			styles = document.defaultView.getComputedStyle(elem, null);
+		}
+
+		return {
+			display  : styles.display  ,
+			opacity  : styles.opacity  ,
+			top      : styles.top      ,
+			left     : styles.left     ,
+			height   : styles.height   ,
+			width    : styles.width    ,
+			position : styles.position
+		};
+	}
+
+	function getTotalWidth (styles) {
+		return parseInt(styles.width || 0) + parseInt(styles.paddingLeft || 0) + parseInt(styles.paddingRight || 0) + parseInt(styles.borderLeftWidth || 0) + parseInt(styles.borderRightWidth || 0) + parseInt(styles.marginLeft || 0) + parseInt(styles.marginRight || 0);
+	}
+
 
 
 	function setDefaultTransition (transition) {
@@ -286,7 +311,48 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			setupScrollers(page);
 		}
 
+		//TODO: this wont work because iphone has mutiple
+		//TODO: titles, buttons in bar as it transitions
+		// var topbar = page.querySelector('.app-topbar');
+		// page.addEventListener('DOMNodeInsertedIntoDocument', function () {
+		// 	fixPageTitle(topbar);
+		// }, false);
+
 		return page;
+	}
+
+	function fixPageTitle (topbar) {
+		if ( !topbar ) {
+			return;
+		}
+
+		var title = topbar.querySelector('.app-title');
+
+		if ( !title ) {
+			return;
+		}
+
+		if ( !title.getAttribute('data-autosize') ) {
+			return;
+		}
+
+		var margin      = 0,
+			leftButton  = topbar.querySelector('.left.app-button'),
+			rightButton = topbar.querySelector('.right.app-button');
+
+		if (leftButton) {
+			var leftStyles = getStyles(leftButton),
+				leftPos    = getTotalWidth(leftStyles) + parseInt(leftStyles.left || 0) + 4;
+			margin = Math.max(margin, leftPos);
+		}
+
+		if (rightButton) {
+			var rightStyles = getStyles(rightButton),
+				rightPos    = getTotalWidth(rightStyles) + parseInt(rightStyles.right || 0) + 4;
+			margin = Math.max(margin, rightPos);
+		}
+
+		title.style.width      = (window.innerWidth-margin)/2 + 'px';
 	}
 
 	function finishPageGeneration (pageName, page, args, pageManager) {
@@ -770,13 +836,15 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function preventDefault (e) {
+		e.preventDefault();
+	}
+
 	function createDialog (options, callback) {
 		var dialogContainer = document.createElement('div');
 		dialogContainer.className = 'app-dialog-container';
 
-		dialogContainer.addEventListener('touchstart', function (e) {
-			e.preventDefault();
-		}, false);
+		dialogContainer.addEventListener('touchstart', preventDefault, false);
 
 		var dialog = document.createElement('div');
 		dialog.className = 'app-dialog';
@@ -808,6 +876,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 				Clickable(successButton);
 				successButton.addEventListener('click', function () {
+					dialogContainer.removeEventListener('touchstart', preventDefault);
 					callback(true);
 				}, false);
 			}
@@ -820,6 +889,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 				Clickable(cancelButton);
 				cancelButton.addEventListener('click', function () {
+					dialogContainer.removeEventListener('touchstart', preventDefault);
 					callback(false);
 				}, false);
 
@@ -876,7 +946,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		setTimeout(function () {
 			dialog.className += ' active';
-		}, 0);
+		}, 10);
 	}
 
 	function processDialogQueue () {

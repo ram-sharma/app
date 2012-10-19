@@ -160,8 +160,12 @@ body {
 .app-topbar .app-title {
 	margin: 0 auto;
 	height: 100%;
+	width: 100%;
 	line-height: 44px;
 	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .app-android .app-topbar .app-title {
 	line-height: 48px;
