@@ -577,10 +577,11 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		options.transition = reverse ? reverseTransition : defaultTransition;
 
-		if ((platform !== 'ios') || ((options.transition !== 'slide-left') && (options.transition !== 'slide-right'))) {
+		//TODO: fix ios transitions
+		// if ((platform !== 'ios') || ((options.transition !== 'slide-left') && (options.transition !== 'slide-right'))) {
 			Swapper(oldPage, page, options, cleanup);
 			return;
-		}
+		// }
 
 		var currentBar     = oldPage.querySelector('.app-topbar'),
 			currentContent = oldPage.querySelector('.app-content'),
