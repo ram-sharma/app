@@ -178,19 +178,19 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		return {
-			display  : styles.display  ,
-			opacity  : styles.opacity  ,
-			paddingRight : styles.paddingRight ,
-			paddingLeft  : styles.paddingLeft  ,
-			marginRight : styles.marginRight ,
-			marginLeft  : styles.marginLeft  ,
+			display          : styles.display          ,
+			opacity          : styles.opacity          ,
+			paddingRight     : styles.paddingRight     ,
+			paddingLeft      : styles.paddingLeft      ,
+			marginRight      : styles.marginRight      ,
+			marginLeft       : styles.marginLeft       ,
 			borderRightWidth : styles.borderRightWidth ,
 			borderLeftWidth  : styles.borderLeftWidth  ,
-			top      : styles.top      ,
-			left     : styles.left     ,
-			height   : styles.height   ,
-			width    : styles.width    ,
-			position : styles.position
+			top              : styles.top              ,
+			left             : styles.left             ,
+			height           : styles.height           ,
+			width            : styles.width            ,
+			position         : styles.position
 		};
 	}
 
