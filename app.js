@@ -180,6 +180,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		return {
 			display  : styles.display  ,
 			opacity  : styles.opacity  ,
+			paddingRight : styles.paddingRight ,
+			paddingLeft  : styles.paddingLeft  ,
+			marginRight : styles.marginRight ,
+			marginLeft  : styles.marginLeft  ,
+			borderRightWidth : styles.borderRightWidth ,
+			borderLeftWidth  : styles.borderLeftWidth  ,
 			top      : styles.top      ,
 			left     : styles.left     ,
 			height   : styles.height   ,
@@ -311,12 +317,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			setupScrollers(page);
 		}
 
-		//TODO: this wont work because iphone has mutiple
-		//TODO: titles, buttons in bar as it transitions
-		// var topbar = page.querySelector('.app-topbar');
-		// page.addEventListener('DOMNodeInsertedIntoDocument', function () {
-		// 	fixPageTitle(topbar);
-		// }, false);
+		var topbar = page.querySelector('.app-topbar');
+		page.addEventListener('DOMNodeInsertedIntoDocument', function () {
+			fixPageTitle(topbar);
+		}, false);
 
 		return page;
 	}
@@ -352,7 +356,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			margin = Math.max(margin, rightPos);
 		}
 
-		title.style.width      = (window.innerWidth-margin)/2 + 'px';
+		title.style.width = (window.innerWidth-margin*2) + 'px';
 	}
 
 	function finishPageGeneration (pageName, page, args, pageManager) {
