@@ -27,6 +27,8 @@ a.addEventListener("click",t,!1),m.ios){a.addEventListener("DOMNodeInsertedIntoD
 a.attachEvent("onmouseout",r),a.attachEvent("onmouseup",l),a.attachEvent("onclick",t))}}var x=/^\s+|\s+$/g,v=40,m,i=q.navigator.userAgent,e,j,k;if(k=/\bCPU.*OS (\d+(_\d+)?)/i.exec(i))e="ios",j=k[1].replace("_",".");else if(k=/\bAndroid (\d+(\.\d+)?)/.exec(i))e="android",j=k[1];i={name:e,version:j&&q.parseFloat(j)};i[e]=!0;m=i;e=function(){g.apply(this,arguments)};n&&n.plugin("clickable",function(){g.apply(this,arguments)});l&&l.extend(l.fn,{clickable:function(a){this.forEach(function(e){g(e,a)});
 return this}});o&&(o.fn.clickable=function(a){this.each(function(){g(this,a)});return this});e.touchable=function(){return m.ios||m.android};return e}(window,document,window.clik,window.Zepto,window.jQuery);
 
+var Dialog=function(f,h,l){var j=h.querySelector("head"),d=[],k,a,g;if(match=/\bCPU.*OS (\d+(_\d+)?)/i.exec(navigator.userAgent)){a="ios";g=parseFloat(match[1])}else{if(match=/\bAndroid (\d+(\.\d+(\.\d+)?)?)/.exec(navigator.userAgent)){a="android";g=parseFloat(match[1])}}function e(o){o.preventDefault()}function c(p){var o=d.splice(0);setTimeout(function(){o.forEach(function(q){try{j.removeChild(q)}catch(r){}})},p||0)}function m(r){var o=h.createElement("div");o.style.margin="0 4%";o.style.padding="12px 0";o.style.border="1px solid #060607";o.style["-webkit-border-radius"]="3px";o.style["-moz-border-radius"]="3px";o.style["border-radius"]="3px";o.style["-webkit-box-sizing"]="border-box";o.style["-moz-box-sizing"]="border-box";o.style["box-sizing"]="border-box";o.style.color="#FFF";o.style.fontSize="18px";o.style.fontWeight="bold";o.style.lineHeight="20px";o.style.textShadow="0 -1px 0 #1C1C1C";o.style.textAlign="center";var q="color: #EEE !important;background-image: -webkit-gradient(linear, left top, left bottom, from(#15171D), to(#1D1E25)) !important;background-image: -webkit-linear-gradient(top, #15171D, #1D1E25) !important;background-image: -moz-linear-gradient(top, #15171D, #1D1E25) !important;background-image: -ms-linear-gradient(top, #15171D, #1D1E25) !important;background-image: -o-linear-gradient(top, #15171D, #1D1E25) !important;background-image: linear-gradient(top, #15171D, #1D1E25) !important;";if(a==="ios"){o.style.backgroundImage="-webkit-gradient(linear, left top, left bottom, from(#3D3E45), to(#191A22))";o.style.backgroundImage="-webkit-linear-gradient(top, #3D3E45, #191A22)";o.style.backgroundImage="-moz-linear-gradient(top, #3D3E45, #191A22)";o.style.backgroundImage="-ms-linear-gradient(top, #3D3E45, #191A22)";o.style.backgroundImage="-o-linear-gradient(top, #3D3E45, #191A22)";o.style.backgroundImage="linear-gradient(top, #3D3E45, #191A22)";o.style["-webkit-box-shadow"]="inset 0 1px 1px #5C5E63";o.style["-moz-box-shadow"]="inset 0 1px 1px #5C5E63";o.style["box-shadow"]="inset 0 1px 1px #5C5E63";o.style["-webkit-border-radius"]="6px";o.style["-moz-border-radius"]="6px";o.style["border-radius"]="6px";q+="-webkit-box-shadow: inset 0 1px 2px #070814 !important;-moz-box-shadow: inset 0 1px 2px #070814 !important;box-shadow: inset 0 1px 2px #070814 !important;"}else{o.style.backgroundImage="-webkit-gradient(linear, left top, left bottom, from(#3D3E45), to(#15171D))";o.style.backgroundImage="-webkit-linear-gradient(top, #3D3E45, #15171D)";o.style.backgroundImage="-moz-linear-gradient(top, #3D3E45, #15171D)";o.style.backgroundImage="-ms-linear-gradient(top, #3D3E45, #15171D)";o.style.backgroundImage="-o-linear-gradient(top, #3D3E45, #15171D)";o.style.backgroundImage="linear-gradient(top, #3D3E45, #15171D)"}o.id=("x"+Math.random()).replace(/\-|\./g,"");var p=h.createElement("link");p.rel="stylesheet";p.href="data:text/css,#"+o.id+".active{"+q+"}";j.appendChild(p);d.push(p);l&&l(o);o.addEventListener("click",r,false);return o}function n(x,v){var s=h.createElement("div");s.style.position="fixed";s.style.zIndex="5000";s.style.top="0";s.style.left="0";s.style.margin="0";s.style.padding="0";s.style.height="100%";s.style.width="100%";s.style.background="rgba(0,0,0, 0.8)";s.style.overflow="hidden";s.addEventListener("touchstart",e,false);var r=h.createElement("div");r.style.position="absolute";r.style.bottom="0";r.style.left="0";r.style.margin="0";r.style.padding="0";r.style.width="100%";r.style.background="#000";r.style.borderTop="1px solid rgba(124,125,127, 0.2)";r.style["-webkit-box-shadow"]="0 -1px 3px rgba(0,0,0, 0.5)";r.style["-moz-box-shadow"]="0 -1px 3px rgba(0,0,0, 0.5)";r.style["box-shadow"]="0 -1px 3px rgba(0,0,0, 0.5)";r.style.color="#FFF";if(a==="android"){r.style.fontFamily='"Roboto", sans-serif'}else{r.style.fontFamily='"Helvetica Neue", Helvetica, Arial, sans-serif'}s.appendChild(r);if(x.title){var u=h.createElement("div");u.textContent=x.title;u.style.position="relative";u.style.padding="12px 8px";u.style.margin="0";u.style.background="rgba(26,27,31, 0.97)";u.style.borderBottom="1px solid rgba(18,18,21, 0.97)";u.style["-webkit-box-shadow"]="0 1px 0 rgba(49,50,55, 0.97)";u.style["-moz-box-shadow"]="0 1px 0 rgba(49,50,55, 0.97)";u.style["box-shadow"]="0 1px 0 rgba(49,50,55, 0.97)";u.style.fontSize="17px";u.style.fontWeight="bold";u.style.lineHeight="18px";u.style.textAlign="center";r.appendChild(u)}if(x.text){var w=h.createElement("div");w.textContent=x.text;w.style.padding="12px 32px 0";w.style.margin="0";w.style.backgroundImage="-webkit-gradient(linear, left top, left bottom, from(rgba(27,29,34, 0.97)), to(rgba(24,26,31, 0.97)))";w.style.backgroundImage="-webkit-linear-gradient(top, rgba(27,29,34, 0.97), rgba(24,26,31, 0.97))";w.style.backgroundImage="-moz-linear-gradient(top, rgba(27,29,34, 0.97), rgba(24,26,31, 0.97))";w.style.backgroundImage="-ms-linear-gradient(top, rgba(27,29,34, 0.97), rgba(24,26,31, 0.97))";w.style.backgroundImage="-o-linear-gradient(top, rgba(27,29,34, 0.97), rgba(24,26,31, 0.97))";w.style.backgroundImage="linear-gradient(top, rgba(27,29,34, 0.97), rgba(24,26,31, 0.97))";w.style.color="#A6A7A9";w.style.fontSize="16px";w.style.lineHeight="17px";w.style.textAlign="center";r.appendChild(w)}if(x.success||x.cancel){var t=h.createElement("div");t.style.padding="12px 0";t.style.margin="0";t.style.backgroundImage="-webkit-gradient(linear, left top, left bottom, from(rgba(24,26,31, 0.97)), to(rgba(20,22,28, 0.97)))";t.style.backgroundImage="-webkit-linear-gradient(top, rgba(24,26,31, 0.97), rgba(20,22,28, 0.97))";t.style.backgroundImage="-moz-linear-gradient(top, rgba(24,26,31, 0.97), rgba(20,22,28, 0.97))";t.style.backgroundImage="-ms-linear-gradient(top, rgba(24,26,31, 0.97), rgba(20,22,28, 0.97))";t.style.backgroundImage="-o-linear-gradient(top, rgba(24,26,31, 0.97), rgba(20,22,28, 0.97))";t.style.backgroundImage="linear-gradient(top, rgba(24,26,31, 0.97), rgba(20,22,28, 0.97))";r.appendChild(t);if(x.success){var p=m(function(){v(true)});p.textContent=x.success||"Ok"}if(x.cancel){var o=m(function(){v(false)});o.textContent=x.cancel||"Cancel"}if(x.success&&x.cancel){p.style.width="44%";p.style["float"]="right";p.style.marginLeft="0";o.style.width="44%";o.style["float"]="left";o.style.marginRight="0"}if(x.cancel){t.appendChild(o)}if(x.success){t.appendChild(p)}var q=h.createElement("div");q.style.margin="0";q.style.padding="0";q.style.clear="both";t.appendChild(q)}return s}function i(p,t,r){if(!r&&k){k.push([p,t]);return}k=k||[];var s=false;var q=n(p,function(u){if(s){return}s=true;if(a==="ios"){q.style.background="rgba(0,0,0, 0)";o.style["-webkit-transform"]="translate3d(0,100%,0)";o.style["-moz-transform"]="translate3d(0,100%,0)";o.style["-ms-transform"]="translate3d(0,100%,0)";o.style["-o-transform"]="translate3d(0,100%,0)";o.style.transform="translate3d(0,100%,0)"}else{q.style.opacity="0"}c(600);setTimeout(function(){b();t(u)},0);setTimeout(function(){try{h.body.removeChild(q)}catch(v){}},600)});var o=q.firstChild;if(a==="ios"){q.style.background="rgba(0,0,0, 0)";o.style["-webkit-transform"]="translate3d(0,100%,0)";o.style["-moz-transform"]="translate3d(0,100%,0)";o.style["-ms-transform"]="translate3d(0,100%,0)";o.style["-o-transform"]="translate3d(0,100%,0)";o.style.transform="translate3d(0,100%,0)"}else{q.style.opacity="0"}h.body.appendChild(q);setTimeout(function(){if(a==="ios"){q.style["-webkit-transition"]="background 0.2s ease-in-out";q.style["-moz-transition"]="background 0.2s ease-in-out";q.style["-ms-transition"]="background 0.2s ease-in-out";q.style["-o-transition"]="background 0.2s ease-in-out";q.style.transition="background 0.2s ease-in-out";o.style["-webkit-transition"]="-webkit-transform 0.2s ease-in-out";o.style["-moz-transition"]="-moz-transform 0.2s ease-in-out";o.style["-ms-transition"]="-ms-transform 0.2s ease-in-out";o.style["-o-transition"]="-o-transform 0.2s ease-in-out";o.style.transition="transform 0.2s ease-in-out"}else{q.style["-webkit-transition"]="opacity 0.2s ease-in-out";q.style["-moz-transition"]="opacity 0.2s ease-in-out";q.style["-ms-transition"]="opacity 0.2s ease-in-out";q.style["-o-transition"]="opacity 0.2s ease-in-out";q.style.transition="opacity 0.2s ease-in-out"}},0);setTimeout(function(){if(a==="ios"){q.style.background="rgba(0,0,0, 0.8)";o.style["-webkit-transform"]="translate3d(0,0,0)";o.style["-moz-transform"]="translate3d(0,0,0)";o.style["-ms-transform"]="translate3d(0,0,0)";o.style["-o-transform"]="translate3d(0,0,0)";o.style.transform="translate3d(0,0,0)"}else{q.style.opacity="1"}},10)}function b(){if(!k){return}if(!k.length){k=null;return}var o=k.shift();o.push(true);i.apply(f,o)}return function(o,p){switch(typeof o){case"string":o={text:o};break;case"object":break;default:throw TypeError("dialog options must be an object, got "+o)}switch(typeof o.title){case"string":break;case"undefined":o.title="";break;default:throw TypeError("dialog title must a string if defined, got "+o.title)}if(typeof o.text!=="string"){throw TypeError("dialog text must a string, got "+o.text)}switch(typeof o.success){case"string":break;case"undefined":o.success="Ok";break;default:throw TypeError("success button must a string if defined, got "+o.success)}switch(typeof o.cancel){case"string":break;case"undefined":o.cancel="";break;default:throw TypeError("cancel button must a string if defined, got "+o.cancel)}switch(typeof p){case"undefined":p=function(){};break;case"function":break;default:throw TypeError("callback must be a function if defined, got "+p)}return i(o,p)}}(window,document,window.Clickable);
+
 var Scrollable=function(C,q,V,u,v){function r(b){if(!b)return!1;try{return b instanceof Node||b instanceof HTMLElement}catch(a){}return"object"!==typeof b||"number"!==typeof b.nodeType||"string"!==typeof b.nodeName?!1:!0}function W(b,a,c){if(Array.prototype.forEach)Array.prototype.forEach.call(b,a,c);else for(var d=0,e=b.length;d<e;d++)d in b&&a.call(c,b[d],d,b)}function M(b){N?setTimeout(b,0):X.push(b)}function Y(b){try{q.documentElement.doScroll("left")}catch(a){setTimeout(function(){Y(b)},1);return}b()}
 function J(b,a){function c(){var a=b._scrollTop(),c=b._scrollLeft();a===g&&c===k||(g=a,k=c,b.dispatchEvent&&(a=q.createEvent("MouseEvents"),a.initMouseEvent("scroll",!1,!1,C,0,0,0,0,0,!1,!1,!1,!1,0,null),b.dispatchEvent(a)))}if(!r(b))throw b+" is not a DOM element";if(!b._scrollable){b._scrollable=!0;b.style.overflow="scroll";b._scrollTop=function(a){if("undefined"===typeof a)return f?Math.max(parseInt(-f.y),0):b.scrollTop;!f&&(!O||K)?b.scrollTop=a:M(function(){f.scrollTo(f.x,Math.min(-a,0),1)})};
 b._scrollLeft=function(a){if("undefined"===typeof a)return f?Math.max(parseInt(-f.x),0):b.scrollLeft;!f&&(!O||K)?b.scrollLeft=a:M(function(){f.scrollTo(Math.min(-a,0),f.y,1)})};if(!a){if(!O)return;if(K){b.style["-webkit-overflow-scrolling"]="touch";return}}var d=q.createElement("div"),e=Array.prototype.slice.call(b.childNodes||[]);W(e,function(a){a=b.removeChild(a);d.appendChild(a)});b.appendChild(d);var f,g,k;b._iScroll=!0;M(function(){f=new Z(b,{checkDOMChanges:!0,useTransform:!0,useTransition:!0,
@@ -77,7 +79,7 @@ b)});return this},scrollableNode:function(){return $(this.map(function(){return 
 return c&&a._scrollLeft?a._scrollLeft():I?U.apply(this,arguments):c?a.scrollLeft:null}this.forEach(function(a){var c=r(a);if(c&&a._scrollLeft)a._scrollLeft(b);else if(U)U.call(u(a),b);else if(c)a.scrollLeft=b});return this}}if(v){v.fn.scrollable=function(b){this.each(function(){J(this,b)});return this};v.fn.scrollableNode=function(){return $(this.map(function(){return L(this)}))};var ea=v.fn.scrollTop,fa=v.fn.scrollLeft;v.fn.scrollTop=function(b){if(typeof b==="undefined"){var a=this[0];return r(a)&&
 a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this)&&this._scrollTop?this._scrollTop(b):ea.call(v(this),b)});return this};v.fn.scrollLeft=function(b){if(typeof b==="undefined"){var a=this[0];return r(a)&&a._scrollLeft?a._scrollLeft():fa.apply(this,arguments)}this.each(function(){r(this)&&this._scrollLeft?this._scrollLeft(b):fa.call(v(this),b)});return this}}x.node=function(){return L.apply(this,arguments)};return x}(window,document,window.clik,window.Zepto,window.jQuery);
 
-(function (window, document, ImageLoader, Swapper, Clickable, Scrollable, clik) {
+(function (window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable, clik) {
 	var PAGE_CLASS                     = 'app-page',
 		PAGE_NAME                      = 'data-page',
 		APP_IOS                        = 'app-ios',
@@ -130,7 +132,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		initialised  = false,
 		isAndroid401 = false,
 		platform, version, defaultTransition, reverseTransition,
-		current, currentNode, dialogQueue;
+		current, currentNode;
 
 
 
@@ -775,136 +777,6 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
-	function preventDefault (e) {
-		e.preventDefault();
-	}
-
-	function createDialog (options, callback) {
-		var dialogContainer = document.createElement('div');
-		dialogContainer.className = 'app-dialog-container';
-
-		dialogContainer.addEventListener('touchstart', preventDefault, false);
-
-		var dialog = document.createElement('div');
-		dialog.className = 'app-dialog';
-		dialogContainer.appendChild(dialog);
-
-		if (options.title) {
-			var title = document.createElement('div');
-			title.className = 'app-title';
-			title.textContent = options.title;
-			dialog.appendChild(title);
-		}
-
-		if (options.text) {
-			var text = document.createElement('div');
-			text.className = 'app-text';
-			text.textContent = options.text;
-			dialog.appendChild(text);
-		}
-
-		if (options.successButton || options.cancelButton) {
-			var buttons = document.createElement('div');
-			buttons.className = 'app-buttons';
-			dialog.appendChild(buttons);
-
-			if (options.successButton) {
-				var successButton = document.createElement('div');
-				successButton.className = 'app-button';
-				successButton.textContent = options.successButton || 'Ok';
-
-				Clickable(successButton);
-				successButton.addEventListener('click', function () {
-					dialogContainer.removeEventListener('touchstart', preventDefault);
-					callback(true);
-				}, false);
-			}
-
-			if (options.cancelButton) {
-				var cancelButton = document.createElement('div');
-				cancelButton.className = 'app-button';
-				cancelButton.textContent = options.cancelButton || 'Cancel';
-				buttons.appendChild(cancelButton);
-
-				Clickable(cancelButton);
-				cancelButton.addEventListener('click', function () {
-					dialogContainer.removeEventListener('touchstart', preventDefault);
-					callback(false);
-				}, false);
-
-				if (options.successButton) {
-					successButton.className += ' right';
-					cancelButton.className  += ' left';
-				}
-			}
-
-			if (options.successButton) {
-				buttons.appendChild(successButton);
-			}
-
-			var clear = document.createElement('div');
-			clear.className = 'clear';
-			buttons.appendChild(clear);
-		}
-
-		return dialogContainer;
-	}
-
-	function showDialog (options, callback, force) {
-		if (!force && dialogQueue) {
-			dialogQueue.push([ options, callback ]);
-			return;
-		}
-
-		dialogQueue = dialogQueue || [];
-
-		var dialogLock = false;
-
-		var dialog = createDialog(options, function (status) {
-			if (dialogLock) {
-				return;
-			}
-			dialogLock = true;
-
-			dialog.className = dialog.className.replace(/\bactive\b/g, '');
-
-			setTimeout(function () {
-				processDialogQueue();
-				callback(status);
-			}, 0);
-
-			setTimeout(function () {
-				try {
-					document.body.removeChild(dialog);
-				}
-				catch (err) {}
-			}, 600);
-		});
-
-		document.body.appendChild(dialog);
-
-		setTimeout(function () {
-			dialog.className += ' active';
-		}, 10);
-	}
-
-	function processDialogQueue () {
-		if ( !dialogQueue ) {
-			return;
-		}
-
-		if ( !dialogQueue.length ) {
-			dialogQueue = null;
-			return;
-		}
-
-		var args = dialogQueue.shift();
-		args.push(true);
-		showDialog.apply(window, args);
-	}
-
-
-
 	function setContentHeight (page) {
 		var topbar  = page.querySelector('.app-topbar'),
 			content = page.querySelector('.app-content');
@@ -1206,76 +1078,6 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
-	App.dialog = function (options, callback) {
-		switch (typeof options) {
-			case 'string':
-				options = { text : options };
-				break;
-
-			case 'object':
-				break;
-
-			default:
-				throw TypeError('dialog options must be an object, got ' + options);
-		}
-
-		switch (typeof options.title) {
-			case 'string':
-				break;
-
-			case 'undefined':
-				options.title = '';
-				break;
-
-			default:
-				throw TypeError('dialog title must a string if defined, got ' + options.title);
-		}
-
-		if (typeof options.text !== 'string') {
-			throw TypeError('dialog text must a string, got ' + options.text);
-		}
-
-		switch (typeof options.successButton) {
-			case 'string':
-				break;
-
-			case 'undefined':
-				options.successButton = 'Ok';
-				break;
-
-			default:
-				throw TypeError('success button must a string if defined, got ' + options.successButton);
-		}
-
-		switch (typeof options.cancelButton) {
-			case 'string':
-				break;
-
-			case 'undefined':
-				options.cancelButton = '';
-				break;
-
-			default:
-				throw TypeError('cancel button must a string if defined, got ' + options.cancelButton);
-		}
-
-		switch (typeof callback) {
-			case 'undefined':
-				callback = function () {};
-				break;
-
-			case 'function':
-				break;
-
-			default:
-				throw TypeError('callback must be a function if defined, got ' + callback);
-		}
-
-		showDialog(options, callback);
-	};
-
-
-
 	App.removeFromStack = function (startIndex, endIndex) {
 		// minus 1 because last item on stack is current page (which is untouchable)
 		var stackSize = stack.length - 1;
@@ -1404,8 +1206,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	App.dialog = Dialog;
+
+
+
 	config();
 	setupListeners();
 
 	window.App = App;
-})(window, document, ImageLoader, Swapper, Clickable, Scrollable, window.clik);
+})(window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable, window.clik);
