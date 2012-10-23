@@ -376,6 +376,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			function (content) {
 				if ( !content.getAttribute('data-no-scroll') ) {
 					Scrollable(content);
+					content.className += ' app-scrollable';
 				}
 			}
 		);
@@ -384,6 +385,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			page.querySelectorAll('[data-scrollable]'),
 			function (content) {
 				Scrollable(content);
+				content.className += ' app-scrollable';
 			}
 		);
 	}
