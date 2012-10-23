@@ -51,8 +51,10 @@ createBuildDir () {
 }
 
 preprendLicense () {
+	tmpFile="${1}.tmp"
 	if [ -n "${LICENSE}" ] ; then
-		cat "${LICENSE}" "${1}" | cat - | tee "${1}" >/dev/null
+		cat "${LICENSE}" "${1}" > "${tmpFile}"
+		mv "${tmpFile}" "${1}"
 	fi
 }
 
