@@ -87,6 +87,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		APP_LOADED                     = 'app-loaded',
 		PAGE_SHOW_EVENT                = 'appShow',
 		PAGE_HIDE_EVENT                = 'appHide',
+		PAGE_BACK_EVENT                = 'appBack',
 		STACK_KEY                      = '__APP_JS_STACK__' + window.location.pathname,
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
@@ -273,7 +274,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		var page           = pages[pageName].cloneNode(true),
 			pagePopulators = populators[pageName] || [];
 
-		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT]);
+		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT]);
 
 		setContentHeight(page);
 
@@ -539,6 +540,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				pageName   = data[0],
 				page       = data[1],
 				oldOptions = oldPage[2];
+
+			firePageEvent(oldPage[1], PAGE_BACK_EVENT);
 
 			setContentHeight(page);
 

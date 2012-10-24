@@ -120,13 +120,17 @@
 
 <script src="../app.js"></script>
 <script>
-	App.populator('home', function (page) {
+	App.populator('lists', function (page) {
 		page.addEventListener('appShow', function () {
-			console.log('home page is visible');
+			console.log('lists page is visible');
 		}, false);
 
 		page.addEventListener('appHide', function () {
-			console.log('home page is invisible');
+			console.log('lists page is invisible');
+		}, false);
+
+		page.addEventListener('appBack', function () {
+			console.log('lists page is going back');
 		}, false);
 	});
 
