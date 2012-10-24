@@ -131,6 +131,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		navLock      = false,
 		initialised  = false,
 		isAndroid401 = false,
+		customEvents = null,
 		platform, version, defaultTransition, reverseTransition,
 		current, currentNode;
 
@@ -271,6 +272,8 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 		var page           = pages[pageName].cloneNode(true),
 			pagePopulators = populators[pageName] || [];
+
+		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT]);
 
 		setContentHeight(page);
 
@@ -621,13 +624,87 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
-	function firePageEvent (page, eventName) {
-		try {
-			var event = document.createEvent('CustomEvent');
-			event.initEvent(eventName, false, true);
-			page.dispatchEvent(event);
+	function supportsCustomEventing () {
+		if (customEvents === null) {
+			try {
+				var elem = document.createElement('div'),
+					evt  = document.createEvent('CustomEvent');
+				evt.initEvent('fooBarFace', false, true);
+				elem.dispatchEvent(evt);
+				customEvents = true;
+			}
+			catch (err) {
+				customEvents = false;
+			}
 		}
-		catch (err) {}
+
+		return customEvents;
+	}
+
+	function insureCustomEventing (page, names) {
+		if (page._brokenEvents || supportsCustomEventing()) {
+			return;
+		}
+
+		page._brokenEvents = true;
+		page._addEventListener    = page.addEventListener;
+		page._removeEventListener = page.removeEventListener;
+
+		var listeners = {};
+
+		names.forEach(function (name) {
+			listeners[name] = [];
+		});
+
+		page.addEventListener = function (name, listener) {
+			if (names.indexOf(name) === -1) {
+				page._addEventListener.apply(this, arguments);
+				return;
+			}
+
+			var eventListeners = listeners[name];
+
+			if (eventListeners.indexOf(listener) === -1) {
+				eventListeners.push(listener);
+			}
+		};
+
+		page.removeEventListener = function (name, listener) {
+			if (names.indexOf(name) === -1) {
+				page._removeEventListener.apply(this, arguments);
+				return;
+			}
+
+			var eventListeners = listeners[name],
+				index          = eventListeners.indexOf(listener);
+
+			if (index !== -1) {
+				eventListeners.splice(index, 1);
+			}
+		};
+
+		page._trigger = function (name) {
+			if (names.indexOf(name) === -1) {
+				return;
+			}
+
+			listeners[name].forEach(function (listener) {
+				setTimeout(function () {
+					listener.call(page, {});
+				}, 0);
+			});
+		};
+	}
+
+	function firePageEvent (page, eventName) {
+		if (page._brokenEvents) {
+			page._trigger(eventName);
+			return;
+		}
+
+		var event = document.createEvent('CustomEvent');
+		event.initEvent(eventName, false, true);
+		page.dispatchEvent(event);
 	}
 
 

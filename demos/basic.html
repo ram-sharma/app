@@ -120,6 +120,16 @@
 
 <script src="../app.js"></script>
 <script>
+	App.populator('home', function (page) {
+		page.addEventListener('appShow', function () {
+			console.log('home page is visible');
+		}, false);
+
+		page.addEventListener('appHide', function () {
+			console.log('home page is invisible');
+		}, false);
+	});
+
 	try {
 		App.restore();
 	}
