@@ -582,6 +582,19 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 
 
 
+	function fetchStack () {
+		return stack.slice().map(function (pageData) {
+			var pageName = pageData[0],
+				pageArgs = {};
+
+			for (var key in pageData[3]) {
+				pageArgs[key] = pageData[3][key];
+			}
+
+			return [ pageName, pageArgs ];
+		});
+	}
+
 	function removeFromStack (startIndex, endIndex) {
 		navigate(function (unlock) {
 			var deadPages = stack.splice(startIndex, endIndex - startIndex);
@@ -1156,6 +1169,12 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 		}
 
 		setDefaultTransition(transition);
+	};
+
+
+
+	App.getStack = function () {
+		return fetchStack();
 	};
 
 
