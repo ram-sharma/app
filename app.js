@@ -1087,6 +1087,10 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				options  = {};
 				break;
 
+			case 'string':
+				options = { transition : options };
+				break;
+
 			case 'object':
 				break;
 
