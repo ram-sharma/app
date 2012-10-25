@@ -934,7 +934,17 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 			var storedStack = JSON.parse( localStorage[STACK_KEY] ),
 				lastPage    = storedStack.pop();
 
-			return function () {
+			return function (callback) {
+				switch (typeof callback) {
+					case 'undefined':
+						callback = function () {};
+					case 'function':
+						break;
+
+					default:
+						throw TypeError('restore callback must be a function if defined, got ' + callback):
+				}
+
 				init();
 
 				if ( !(lastPage[0] in pages) ) {
@@ -948,7 +958,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 				});
 
 				addToStack(0, storedStack);
-				loadPage(lastPage[0], lastPage[1], lastPage[2], function () {});
+				loadPage(lastPage[0], lastPage[1], lastPage[2], callback);
 			};
 		}
 		catch (err) {}
