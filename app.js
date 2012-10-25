@@ -942,7 +942,7 @@ a._scrollTop?a._scrollTop():ea.apply(this,arguments)}this.each(function(){r(this
 						break;
 
 					default:
-						throw TypeError('restore callback must be a function if defined, got ' + callback):
+						throw TypeError('restore callback must be a function if defined, got ' + callback);
 				}
 
 				init();
