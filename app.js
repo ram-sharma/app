@@ -40,6 +40,7 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 		PAGE_SHOW_EVENT                = 'appShow',
 		PAGE_HIDE_EVENT                = 'appHide',
 		PAGE_BACK_EVENT                = 'appBack',
+		PAGE_FORWARD_EVENT             = 'appForward',
 		STACK_KEY                      = '__APP_JS_STACK__' + window.location.pathname,
 		DEFAULT_TRANSITION_IOS         = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID     = 'implode-out',
@@ -226,7 +227,7 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 		var page           = pages[pageName].cloneNode(true),
 			pagePopulators = populators[pageName] || [];
 
-		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT]);
+		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT]);
 
 		setContentHeight(page);
 
@@ -459,6 +460,8 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 			current     = pageName;
 			currentNode = page;
 			stack.push([ pageName, page, options, args, pageManager ]);
+
+			firePageEvent(oldNode, PAGE_FORWARD_EVENT);
 
 			function finish () {
 				finishPageGeneration(pageName, page, args, pageManager);
