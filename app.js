@@ -552,36 +552,44 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 		});
 	}
 
+	// you must manually save the stack if you choose to use this method
+	function removeFromStackNow (startIndex, endIndex) {
+		var deadPages = stack.splice(startIndex, endIndex - startIndex);
+
+		deadPages.forEach(function (pageData) {
+			startPageDestruction(pageData[0], pageData[1], pageData[3], pageData[4]);
+			finishPageDestruction(pageData[0], pageData[1], pageData[3], pageData[4]);
+		});
+	}
+
 	function removeFromStack (startIndex, endIndex) {
 		navigate(function (unlock) {
-			var deadPages = stack.splice(startIndex, endIndex - startIndex);
-
-			deadPages.forEach(function (pageData) {
-				startPageDestruction(pageData[0], pageData[1], pageData[3], pageData[4]);
-				finishPageDestruction(pageData[0], pageData[1], pageData[3], pageData[4]);
-			});
-
+			removeFromStackNow(startIndex, endIndex);
 			unlock();
 		});
 	}
 
+	// you must manually save the stack if you choose to use this method
+	function addToStackNow (index, newPages) {
+		var pageDatas = [];
+
+		newPages.forEach(function (pageData) {
+			var pageManager = {},
+				page        = startPageGeneration(pageData[0], pageData[1], pageManager);
+
+			finishPageGeneration(pageData[0], page, pageData[1], pageManager);
+
+			pageDatas.push([pageData[0], page, pageData[2], pageData[1], pageManager]);
+		});
+
+		pageDatas.unshift(0);
+		pageDatas.unshift(index);
+		Array.prototype.splice.apply(stack, pageDatas);
+	}
+
 	function addToStack (index, newPages) {
 		navigate(function (unlock) {
-			var pageDatas = [];
-
-			newPages.forEach(function (pageData) {
-				var pageManager = {},
-					page        = startPageGeneration(pageData[0], pageData[1], pageManager);
-
-				finishPageGeneration(pageData[0], page, pageData[1], pageManager);
-
-				pageDatas.push([pageData[0], page, pageData[2], pageData[1], pageManager]);
-			});
-
-			pageDatas.unshift(0);
-			pageDatas.unshift(index);
-			Array.prototype.splice.apply(stack, pageDatas);
-
+			addToStackNow(index, newPages);
 			unlock();
 		});
 	}
@@ -921,17 +929,23 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 			});
 
 			try {
-				addToStack(0, storedStack);
+				addToStackNow(0, storedStack);
+			}
+			catch (err) {
+				removeFromStackNow(0, stack.length);
+				throw Error('failed to restore stack');
+			}
+
+			saveStack();
+
+			try {
 				loadPage(lastPage[0], lastPage[1], lastPage[2], callback);
 			}
 			catch (err) {
-				if (window.console && window.console.error) {
-					window.console.error(err + '');
-				}
+				removeFromStackNow(0, stack.length);
+				throw Error('failed to restore stack');
 			}
 		};
-
-		return null;
 	}
 
 
