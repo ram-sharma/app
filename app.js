@@ -461,7 +461,9 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 			currentNode = page;
 			stack.push([ pageName, page, options, args, pageManager ]);
 
-			firePageEvent(oldNode, PAGE_FORWARD_EVENT);
+			if (oldNode) {
+				firePageEvent(oldNode, PAGE_FORWARD_EVENT);
+			}
 
 			function finish () {
 				finishPageGeneration(pageName, page, args, pageManager);
@@ -885,38 +887,49 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 	}
 
 	function setupRestoreFunction () {
+		var storedStack, lastPage;
+
 		try {
-			var storedStack = JSON.parse( localStorage[STACK_KEY] ),
-				lastPage    = storedStack.pop();
+			storedStack = JSON.parse( localStorage[STACK_KEY] );
+			lastPage    = storedStack.pop();
+		}
+		catch (err) {
+			return;
+		}
 
-			return function (callback) {
-				switch (typeof callback) {
-					case 'undefined':
-						callback = function () {};
-					case 'function':
-						break;
+		return function (callback) {
+			switch (typeof callback) {
+				case 'undefined':
+					callback = function () {};
+				case 'function':
+					break;
 
-					default:
-						throw TypeError('restore callback must be a function if defined, got ' + callback);
+				default:
+					throw TypeError('restore callback must be a function if defined, got ' + callback);
+			}
+
+			init();
+
+			if ( !(lastPage[0] in pages) ) {
+				throw TypeError(lastPage[0] + ' is not a known page');
+			}
+
+			storedStack.forEach(function (pageData) {
+				if ( !(pageData[0] in pages) ) {
+					throw TypeError(pageData[0] + ' is not a known page');
 				}
+			});
 
-				init();
-
-				if ( !(lastPage[0] in pages) ) {
-					throw TypeError(lastPage[0] + ' is not a known page');
-				}
-
-				storedStack.forEach(function (pageData) {
-					if ( !(pageData[0] in pages) ) {
-						throw TypeError(pageData[0] + ' is not a known page');
-					}
-				});
-
+			try {
 				addToStack(0, storedStack);
 				loadPage(lastPage[0], lastPage[1], lastPage[2], callback);
-			};
-		}
-		catch (err) {}
+			}
+			catch (err) {
+				if (window.console && window.console.error) {
+					window.console.error(err + '');
+				}
+			}
+		};
 
 		return null;
 	}
