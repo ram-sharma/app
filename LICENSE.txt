@@ -1,5 +1,5 @@
 /**
- * App.js v1.0.6
+ * App.js v1.7.0
  * Instant mobile web app creation
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
@@ -14,7 +14,7 @@
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
  *
- * dialog.js v1.0.1
+ * dialog.js v1.1.0
  * Modal dialogs for mobile web apps
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
