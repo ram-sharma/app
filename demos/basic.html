@@ -132,6 +132,10 @@
 		page.addEventListener('appBack', function () {
 			console.log('lists page is going back');
 		}, false);
+
+		page.addEventListener('appForward', function () {
+			console.log('lists page is going forward');
+		}, false);
 	});
 
 	try {
@@ -141,5 +145,3 @@
 		App.load('home');
 	}
 </script>
-
-<!-- <script src="http://cdn.kik.com/cards/0/cards.js"></script> -->
