@@ -25,7 +25,6 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 		STACK_KEY                         = '__APP_JS_STACK__' + window.location.pathname,
 		DEFAULT_TRANSITION_IOS            = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID        = 'implode-out',
-		DEFAULT_TRANSITION_ANDROID_401    = 'instant',
 		DEFAULT_TRANSITION_ANDROID_OLD    = 'fade-on',
 		DEFAULT_TRANSITION_ANDROID_GHETTO = 'instant',
 		REVERSE_TRANSITION                = {
@@ -158,13 +157,13 @@ var iScroll=function(an,Z){function ah(f){if(""===am){return f}f=f.charAt(0).toU
 
 			if (match[1] === '4.0.1') {
 				isAndroid401 = true;
-				setDefaultTransition(DEFAULT_TRANSITION_ANDROID_401);
+				setDefaultTransition(DEFAULT_TRANSITION_ANDROID_GHETTO);
 			}
-			// else if ( isXperia? ) {
-			// 	setDefaultTransition(DEFAULT_TRANSITION_ANDROID_GHETTO);
-			// }
 			else if (version >= 4) {
 				setDefaultTransition(DEFAULT_TRANSITION_ANDROID);
+			}
+			else if ((version < 2.3) || /SonyEricsson/i.test(navigator.userAgent)) {
+				setDefaultTransition(DEFAULT_TRANSITION_ANDROID_GHETTO);
 			}
 			else {
 				setDefaultTransition(DEFAULT_TRANSITION_ANDROID_OLD);
