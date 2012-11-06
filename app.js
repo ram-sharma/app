@@ -883,8 +883,9 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 			setTimeout(fixSizing, 100);
 		}
 
-		window.addEventListener('resize', triggerSizeFix);
-		window.addEventListener('load'  , triggerSizeFix);
+		window.addEventListener('orientationchange', triggerSizeFix);
+		window.addEventListener('resize'           , triggerSizeFix);
+		window.addEventListener('load'             , triggerSizeFix);
 		setTimeout(triggerSizeFix, 0);
 
 		if (clik && clik.plugin && clik.plugin.back) {
@@ -895,6 +896,8 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 				}
 			});
 		}
+
+		return triggerSizeFix;
 	}
 
 
@@ -1315,16 +1318,16 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 
 
 
-	App.restore = setupRestoreFunction();
-
-
-
 	App.dialog = Dialog;
 
 
 
+
+
 	config();
-	setupListeners();
+
+	App.restore = setupRestoreFunction();
+	App._layout = setupListeners();
 
 	window.App = App;
 })(window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable, window.clik);
