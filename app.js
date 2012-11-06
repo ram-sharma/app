@@ -876,10 +876,16 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 		function fixSizing () {
 			currentNode && setContentHeight(currentNode);
 		}
+		function triggerSizeFix () {
+			fixSizing();
+			setTimeout(fixSizing, 0);
+			setTimeout(fixSizing, 10);
+			setTimeout(fixSizing, 100);
+		}
 
-		window.addEventListener('resize', fixSizing);
-		window.addEventListener('load'  , fixSizing);
-		setTimeout(fixSizing, 0);
+		window.addEventListener('resize', triggerSizeFix);
+		window.addEventListener('load'  , triggerSizeFix);
+		setTimeout(triggerSizeFix, 0);
 
 		if (clik && clik.plugin && clik.plugin.back) {
 			clik.plugin.back(function () {
