@@ -436,7 +436,6 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 			}
 			else {
 				savePageScrollPosition(currentNode);
-				savePageScrollStyle(currentNode);
 
 				var newOptions = {};
 				for (var key in options) {
@@ -456,6 +455,7 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 			}
 
 			function finish () {
+				savePageScrollStyle(oldNode);
 				finishPageGeneration(pageName, page, args, pageManager);
 
 				unlock();
