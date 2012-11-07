@@ -724,8 +724,8 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 
 		var count = 0;
 
-		Swapper(currentBar    , newBar    , 'fade' , swapDone);
-		Swapper(currentContent, newContent, options, swapDone);
+		Swapper(currentBar    , newBar    , 'fade-off', swapDone);
+		Swapper(currentContent, newContent, options   , swapDone);
 
 		function swapDone () {
 			if (++count !== 2) {
