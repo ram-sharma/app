@@ -737,7 +737,9 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 			oldPage.appendChild(currentBar);
 			oldPage.appendChild(currentContent);
 
-			Swapper(oldPage, page, 'instant', cleanup);
+			Swapper(oldPage, page, 'instant');
+
+			cleanup();
 		}
 	}
 
