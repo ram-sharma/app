@@ -163,7 +163,7 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 			else if (version >= 4) {
 				setDefaultTransition(DEFAULT_TRANSITION_ANDROID);
 			}
-			else if ((version < 2.3) || /SonyEricsson/i.test(navigator.userAgent)) {
+			else if ((version < 2.3) || /LT15a/i.test(navigator.userAgent)) {
 				setDefaultTransition(DEFAULT_TRANSITION_ANDROID_GHETTO);
 			}
 			else {
