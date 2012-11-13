@@ -779,7 +779,10 @@
 			return;
 		}
 
-		performNativeIOSTitleTransition(currentTitle, newTitle, (options.transition === 'slide-left'));
+		var finishTitleTransition = performNativeIOSTitleTransition(
+			currentTitle, newTitle,
+			(options.transition === 'slide-left')
+		);
 
 		var count = 2;
 
@@ -801,28 +804,23 @@
 			oldPage.parentNode.insertBefore(page, oldPage);
 			oldPage.parentNode.removeChild(oldPage);
 
-			callback();
+			finishTitleTransition(function () {
+				callback();
+			});
 		}
 	}
 
 	function performNativeIOSTitleTransition (currentTitle, newTitle, reverse) {
-		var slideLength = window.innerWidth * 0.5,
-			oldStyles, newStyles;
+		var slideTimeout  = 300,
+			slideLength   = window.innerWidth * 0.5,
+			currentStyles = currentTitle && getStyles(currentTitle, true),
+			newStyles     = newTitle && getStyles(newTitle, true);
 
-		// setTimeout so that titles are in DOM when styles are calculated
-		setTimeout(function () {
-			if (currentTitle) {
-				oldStyles = getStyles(currentTitle);
-			}
-			if (newTitle) {
-				newStyles = getStyles(newTitle);
-			}
+		setInitialStyles(function () {
+			triggerAnimation();
+		});
 
-			setInitialStyles(function () {
-				triggerAnimation();
-				setTimeout(clearStyles, 300);
-			});
-		}, 0);
+		return clearStyles;
 
 		function setInitialStyles (callback) {
 			if (currentTitle) {
@@ -834,9 +832,8 @@
 				newTitle.style['opacity'] = '0';
 			}
 
-			// setTimeout to prevent animation of initial positions
 			setTimeout(function () {
-				var transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out';
+				var transition = 'transform '+(slideTimeout/1000)+'s ease-in-out, opacity 0.3s ease-in-out';
 				if (currentTitle) {
 					setTransition(currentTitle, transition);
 				}
@@ -861,7 +858,7 @@
 			}
 		}
 
-		function clearStyles () {
+		function clearStyles (callback) {
 			if (currentTitle) {
 				setTransition(currentTitle, '');
 			}
@@ -872,12 +869,14 @@
 			setTimeout(function () {
 				if (currentTitle) {
 					setTransform(currentTitle, '');
-					currentTitle.style['opacity'] = oldStyles.opacity;
+					currentTitle.style['opacity'] = currentStyles.opacity;
 				}
 				if (newTitle) {
 					setTransform(newTitle, '');
 					newTitle.style['opacity'] = newStyles.opacity;
 				}
+
+				callback();
 			}, 0);
 		}
 	}
