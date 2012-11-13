@@ -91,6 +91,31 @@
 		return true;
 	}
 
+	function setTransform (elem, transform) {
+		elem.style['-webkit-transform'] = transform;
+		elem.style[   '-moz-transform'] = transform;
+		elem.style[    '-ms-transform'] = transform;
+		elem.style[     '-o-transform'] = transform;
+		elem.style[        'transform'] = transform;
+	}
+
+	function setTransition (elem, transition) {
+		if (transition) {
+			elem.style['-webkit-transition'] = '-webkit-'+transition;
+			elem.style[   '-moz-transition'] =    '-moz-'+transition;
+			elem.style[    '-ms-transition'] =     '-ms-'+transition;
+			elem.style[     '-o-transition'] =      '-o-'+transition;
+			elem.style[        'transition'] =            transition;
+		}
+		else {
+			elem.style['-webkit-transition'] = '';
+			elem.style[   '-moz-transition'] = '';
+			elem.style[    '-ms-transition'] = '';
+			elem.style[     '-o-transition'] = '';
+			elem.style[        'transition'] = '';
+		}
+	}
+
 	function getStyles (elem, notComputed) {
 		var styles;
 
@@ -718,10 +743,8 @@
 			options.transition = REVERSE_TRANSITION[options.transition] || options.transition;
 		}
 
-		var useNativeIOSTransition = shouldUseNativeIOSTransition(options);
-
 		uiBlockedTask(function (unblockUI) {
-			if ( !shouldUseNativeIOSTransition ) {
+			if ( !shouldUseNativeIOSTransition(options) ) {
 				Swapper(currentNode, page, options, cleanup);
 			}
 			else {
@@ -737,10 +760,12 @@
 
 	function performNativeIOSTransition (page, options, callback) {
 		var oldPage        = currentNode,
-			currentBar     = oldPage.querySelector('.app-topbar' ),
+			currentBar     = oldPage.querySelector('.app-topbar'),
+			currentTitle   = currentBar.querySelector('.app-title'),
 			currentContent = oldPage.querySelector('.app-content'),
-			newBar         =    page.querySelector('.app-topbar' ),
-			newContent     =    page.querySelector('.app-content');
+			newBar         = page.querySelector('.app-topbar'),
+			newTitle       = newBar.querySelector('.app-title'),
+			newContent     = page.querySelector('.app-content');
 
 		if (!currentBar || !newBar || !currentContent || !newContent) {
 			// proper iOS transition not possible, fallback to normal
@@ -748,18 +773,22 @@
 			return;
 		}
 
-		var count = 0;
+		if (currentTitle && newTitle) {
+			performNativeIOSTitleTransition(currentTitle, newTitle, (options.transition === 'slide-left'));
+		}
 
-		//TODO: iOS sliding titles
+		var count = 2;
 
 		Swapper(currentBar    , newBar    , 'fade-off', swapDone);
 		Swapper(currentContent, newContent, options   , swapDone);
 
 		function swapDone () {
-			if (++count !== 2) {
-				return;
+			if (--count === 0) {
+				cleanup();
 			}
+		}
 
+		function cleanup () {
 			page.appendChild(newBar    );
 			page.appendChild(newContent);
 			oldPage.appendChild(currentBar    );
@@ -767,7 +796,62 @@
 
 			Swapper(oldPage, page, 'instant');
 
-			callback();
+			setTimeout(function () {
+				callback();
+			}, 0);
+		}
+	}
+
+	function performNativeIOSTitleTransition (currentTitle, newTitle, reverse) {
+		var slideLength = window.innerWidth * 0.5,
+			oldStyles, newStyles;
+
+		// setTimeout so that titles are in DOM when styles are calculated
+		setTimeout(function () {
+			oldStyles = getStyles(currentTitle);
+			newStyles = getStyles(newTitle);
+
+			setInitialStyles(function () {
+				triggerAnimation();
+				setTimeout(clearStyles, 300);
+			});
+		}, 0);
+
+		function setInitialStyles (callback) {
+			setTransform(currentTitle, 'translate3d(0,0,0)');
+			currentTitle.style['opacity'] = '1';
+			setTransform(newTitle, 'translate3d('+(reverse ? slideLength : -slideLength)+'px,0,0)');
+			newTitle.style['opacity'] = '0';
+
+			// setTimeout to prevent animation of initial positions
+			setTimeout(function () {
+				var transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out';
+				setTransition(currentTitle, transition);
+				setTransition(newTitle    , transition);
+
+				setTimeout(function () {
+					callback();
+				}, 0);
+			}, 0);
+		}
+
+		function triggerAnimation () {
+			setTransform(currentTitle, 'translate3d('+(reverse ? -slideLength : slideLength)+'px,0,0)');
+			currentTitle.style['opacity'] = '0';
+			setTransform(newTitle, 'translate3d(0,0,0)');
+			newTitle.style['opacity']     = '1';
+		}
+
+		function clearStyles () {
+			setTransition(currentTitle, '');
+			setTransition(newTitle    , '');
+
+			setTimeout(function () {
+				setTransform(currentTitle, '');
+				currentTitle.style['opacity'] = oldStyles.opacity;
+				setTransform(newTitle, '');
+				newTitle.style['opacity'] = newStyles.opacity;
+			}, 0);
 		}
 	}
 
