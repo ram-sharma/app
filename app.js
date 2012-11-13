@@ -763,7 +763,7 @@
 			currentBar     = oldPage.querySelector('.app-topbar'),
 			currentContent = oldPage.querySelector('.app-content'),
 			newBar         = page.querySelector('.app-topbar'),
-			newContent     = page.querySelector('.app-content');
+			newContent     = page.querySelector('.app-content'),
 			currentTitle, newTitle;
 
 		if (currentBar) {
