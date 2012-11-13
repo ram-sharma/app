@@ -3,14 +3,15 @@
 PROJECT="app"
 LICENSE="LICENSE.txt"
 MAJOR_VERSION="1"
-MINOR_VERSION="7"
-BUG_VERSION="6"
+MINOR_VERSION="8"
+BUG_VERSION="0"
 AWS_BUCKET="cdn.kik.com"
 AWS_CFG="${HOME}/.s3cfg-kik"
 
 buildProject () {
-	buildJS      "app.js"       "app.js"
-	buildDebugJS "app-DEBUG.js" "app.js"
+	APP_JS="dependencies.js app.js"
+	buildJS      "app.js"       "${APP_JS}"
+	buildDebugJS "app-DEBUG.js" "${APP_JS}"
 	buildCSS     "app.css"      "app.css"
 	buildCSS     "default.css"  "app.css default.css"
 }
