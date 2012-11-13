@@ -773,9 +773,7 @@
 			return;
 		}
 
-		if (currentTitle && newTitle) {
-			performNativeIOSTitleTransition(currentTitle, newTitle, (options.transition === 'slide-left'));
-		}
+		performNativeIOSTitleTransition(currentTitle, newTitle, (options.transition === 'slide-left'));
 
 		var count = 2;
 
@@ -794,11 +792,10 @@
 			oldPage.appendChild(currentBar    );
 			oldPage.appendChild(currentContent);
 
-			Swapper(oldPage, page, 'instant');
+			oldPage.parentNode.insertBefore(page, oldPage);
+			oldPage.parentNode.removeChild(oldPage);
 
-			setTimeout(function () {
-				callback();
-			}, 0);
+			callback();
 		}
 	}
 
@@ -808,8 +805,12 @@
 
 		// setTimeout so that titles are in DOM when styles are calculated
 		setTimeout(function () {
-			oldStyles = getStyles(currentTitle);
-			newStyles = getStyles(newTitle);
+			if (currentTitle) {
+				oldStyles = getStyles(currentTitle);
+			}
+			if (newTitle) {
+				newStyles = getStyles(newTitle);
+			}
 
 			setInitialStyles(function () {
 				triggerAnimation();
@@ -818,16 +819,24 @@
 		}, 0);
 
 		function setInitialStyles (callback) {
-			setTransform(currentTitle, 'translate3d(0,0,0)');
-			currentTitle.style['opacity'] = '1';
-			setTransform(newTitle, 'translate3d('+(reverse ? slideLength : -slideLength)+'px,0,0)');
-			newTitle.style['opacity'] = '0';
+			if (currentTitle) {
+				setTransform(currentTitle, 'translate3d(0,0,0)');
+				currentTitle.style['opacity'] = '1';
+			}
+			if (newTitle) {
+				setTransform(newTitle, 'translate3d('+(reverse ? slideLength : -slideLength)+'px,0,0)');
+				newTitle.style['opacity'] = '0';
+			}
 
 			// setTimeout to prevent animation of initial positions
 			setTimeout(function () {
 				var transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out';
-				setTransition(currentTitle, transition);
-				setTransition(newTitle    , transition);
+				if (currentTitle) {
+					setTransition(currentTitle, transition);
+				}
+				if (newTitle) {
+					setTransition(newTitle, transition);
+				}
 
 				setTimeout(function () {
 					callback();
@@ -836,21 +845,33 @@
 		}
 
 		function triggerAnimation () {
-			setTransform(currentTitle, 'translate3d('+(reverse ? -slideLength : slideLength)+'px,0,0)');
-			currentTitle.style['opacity'] = '0';
-			setTransform(newTitle, 'translate3d(0,0,0)');
-			newTitle.style['opacity']     = '1';
+			if (currentTitle) {
+				setTransform(currentTitle, 'translate3d('+(reverse ? -slideLength : slideLength)+'px,0,0)');
+				currentTitle.style['opacity'] = '0';
+			}
+			if (newTitle) {
+				setTransform(newTitle, 'translate3d(0,0,0)');
+				newTitle.style['opacity'] = '1';
+			}
 		}
 
 		function clearStyles () {
-			setTransition(currentTitle, '');
-			setTransition(newTitle    , '');
+			if (currentTitle) {
+				setTransition(currentTitle, '');
+			}
+			if (newTitle) {
+				setTransition(newTitle, '');
+			}
 
 			setTimeout(function () {
-				setTransform(currentTitle, '');
-				currentTitle.style['opacity'] = oldStyles.opacity;
-				setTransform(newTitle, '');
-				newTitle.style['opacity'] = newStyles.opacity;
+				if (currentTitle) {
+					setTransform(currentTitle, '');
+					currentTitle.style['opacity'] = oldStyles.opacity;
+				}
+				if (newTitle) {
+					setTransform(newTitle, '');
+					newTitle.style['opacity'] = newStyles.opacity;
+				}
 			}, 0);
 		}
 	}
