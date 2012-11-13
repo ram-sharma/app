@@ -761,11 +761,17 @@
 	function performNativeIOSTransition (page, options, callback) {
 		var oldPage        = currentNode,
 			currentBar     = oldPage.querySelector('.app-topbar'),
-			currentTitle   = currentBar.querySelector('.app-title'),
 			currentContent = oldPage.querySelector('.app-content'),
 			newBar         = page.querySelector('.app-topbar'),
-			newTitle       = newBar.querySelector('.app-title'),
 			newContent     = page.querySelector('.app-content');
+			currentTitle, newTitle;
+
+		if (currentBar) {
+			currentTitle = currentBar.querySelector('.app-title');
+		}
+		if (newBar) {
+			newTitle = newBar.querySelector('.app-title');
+		}
 
 		if (!currentBar || !newBar || !currentContent || !newContent) {
 			// proper iOS transition not possible, fallback to normal
