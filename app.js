@@ -1444,6 +1444,20 @@
 
 
 
+	App.stickyButton = function (button, holdFunction) {
+		if ( !isNode(button) ) {
+			throw TypeError('button must be a DOM node, got ' + button);
+		}
+
+		if (typeof holdFunction !== 'function') {
+			throw TypeError('button handler must be a function, got ' + holdFunction);
+		}
+
+		stickyButton(button, holdFunction);
+	};
+
+
+
 	App.dialog = Dialog;
 
 
