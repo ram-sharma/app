@@ -375,10 +375,13 @@
 	}
 
 	function stickyButton (button, holdFunction) {
+		Clickable(button);
+
 		button.addEventListener('click', function () {
 			var lock        = false,
 				activeClass = button.getAttribute('data-clickable-class') || 'active',
 				value;
+
 			button.disabled = true;
 			button.className += ' ' + activeClass;
 
@@ -1459,8 +1462,6 @@
 
 
 	App.dialog = Dialog;
-
-
 
 
 
