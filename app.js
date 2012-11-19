@@ -807,9 +807,9 @@
 			oldPage.parentNode.insertBefore(page, oldPage);
 			oldPage.parentNode.removeChild(oldPage);
 
-			finishTitleTransition(function () {
-				callback();
-			});
+			finishTitleTransition();
+
+			callback();
 		}
 	}
 
@@ -861,7 +861,7 @@
 			}
 		}
 
-		function clearStyles (callback) {
+		function clearStyles () {
 			if (currentTitle) {
 				setTransition(currentTitle, '');
 			}
@@ -878,8 +878,6 @@
 					setTransform(newTitle, '');
 					newTitle.style['opacity'] = newStyles.opacity;
 				}
-
-				callback();
 			}, 0);
 		}
 	}
