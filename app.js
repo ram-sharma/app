@@ -592,6 +592,9 @@
 
 			finishPageGeneration(pageData[0], page, pageData[1], pageManager);
 
+			savePageScrollPosition(page);
+			savePageScrollStyle(page);
+
 			pageDatas.push([pageData[0], page, pageData[2], pageData[1], pageManager]);
 		});
 
