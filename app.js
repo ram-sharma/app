@@ -574,6 +574,9 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 
 			finishPageGeneration(pageData[0], page, pageData[1], pageManager);
 
+			savePageScrollPosition(page);
+			savePageScrollStyle(page);
+
 			pageDatas.push([pageData[0], page, pageData[2], pageData[1], pageManager]);
 		});
 
