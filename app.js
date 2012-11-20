@@ -245,12 +245,12 @@
 					back   = button.getAttribute('data-back');
 
 				if (back) {
-					stickyButton(button, function (callback) {
+					Clickable.sticky(button, function (callback) {
 						return navigateBack({}, callback);
 					});
 				}
 				else if (target) {
-					stickyButton(button, function (callback) {
+					Clickable.sticky(button, function (callback) {
 						return loadPage(target, {}, {}, callback);
 					});
 				}
@@ -372,44 +372,6 @@
 			var unpopulator = data[1];
 			unpopulator.call(pageManager, page, args);
 		});
-	}
-
-	function stickyButton (button, holdFunction) {
-		Clickable(button);
-
-		button.addEventListener('click', function () {
-			var lock        = false,
-				activeClass = button.getAttribute('data-clickable-class') || 'active',
-				value;
-
-			button.disabled = true;
-			button.className += ' ' + activeClass;
-
-			try {
-				value = holdFunction(cleanUp);
-			}
-			catch (err) {
-				if (window.console && window.console.error) {
-					window.console.error(err + '');
-				}
-
-				cleanUp();
-			}
-
-			if (value === false) {
-				cleanUp();
-			}
-
-			function cleanUp () {
-				if (lock) {
-					return;
-				}
-				lock = true;
-
-				button.disabled = false;
-				button.className = button.className.replace(new RegExp('\\b'+activeClass+'\\b', 'g'), '');
-			}
-		}, false);
 	}
 
 
