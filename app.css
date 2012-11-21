@@ -109,7 +109,7 @@ body {
 	position: relative;
 	background: #FFF;
 }
-.app-ios .app-scrollable * {
+.app-ios .app-scrollable > * {
 	/*
 		terrible hack to make elements render
 		properly in scrollable regions
