@@ -8,6 +8,7 @@
 		PAGE_HIDE_EVENT                   = 'appHide',
 		PAGE_BACK_EVENT                   = 'appBack',
 		PAGE_FORWARD_EVENT                = 'appForward',
+		PAGE_LAYOUT_EVENT                 = 'appLayout',
 		STACK_KEY                         = '__APP_JS_STACK__' + window.location.pathname,
 		DEFAULT_TRANSITION_IOS            = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID        = 'implode-out',
@@ -232,7 +233,7 @@
 		var page           = pages[pageName].cloneNode(true),
 			pagePopulators = populators[pageName] || [];
 
-		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT]);
+		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT, PAGE_LAYOUT_EVENT]);
 
 		setContentHeight(page);
 
@@ -281,11 +282,14 @@
 			setupScrollers(page);
 		}
 
+		firePageEvent(page, PAGE_LAYOUT_EVENT);
+
 		var topbar = page.querySelector('.app-topbar');
 
 		if (topbar) {
 			topbar.addEventListener('DOMNodeInsertedIntoDocument', function () {
 				fixPageTitle(this);
+				firePageEvent(page, PAGE_LAYOUT_EVENT);
 			}, false);
 		}
 
@@ -980,7 +984,10 @@
 
 	function setupListeners () {
 		function fixSizing () {
-			currentNode && setContentHeight(currentNode);
+			if (currentNode) {
+				setContentHeight(currentNode);
+				firePageEvent(currentNode, PAGE_LAYOUT_EVENT);
+			}
 		}
 		function triggerSizeFix () {
 			fixSizing();
