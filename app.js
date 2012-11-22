@@ -983,17 +983,26 @@
 	}
 
 	function setupListeners () {
-		function fixSizing () {
+		function fixContentHeight () {
 			if (currentNode) {
 				setContentHeight(currentNode);
+			}
+		}
+		function fixSizing () {
+			fixContentHeight();
+			if (currentNode) {
 				firePageEvent(currentNode, PAGE_LAYOUT_EVENT);
 			}
 		}
 		function triggerSizeFix () {
 			fixSizing();
-			setTimeout(fixSizing, 0);
-			setTimeout(fixSizing, 10);
-			setTimeout(fixSizing, 100);
+
+			// In an ideal world we wouldnt have to do this.
+			// Android client lies about its dimensions after
+			// events on occasion.
+			setTimeout(fixContentHeight, 0);
+			setTimeout(fixContentHeight, 10);
+			setTimeout(fixContentHeight, 100);
 		}
 
 		window.addEventListener('orientationchange', triggerSizeFix);
