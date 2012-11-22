@@ -406,8 +406,8 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 
 		handler(function () {
 			navLock = false;
-			setTimeout(processNavigationQueue, 0);
 			saveStack();
+			processNavigationQueue();
 		});
 
 		return true;
@@ -426,13 +426,15 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 
 	function loadPage (pageName, args, options, callback) {
 		navigate(function (unlock) {
-			var pageManager = {},
+			var oldNode     = currentNode,
+				pageManager = {},
 				page        = startPageGeneration(pageName, args, pageManager);
 
 			if ( !current ) {
 				App.restore = null;
 				document.body.appendChild(page);
-				setTimeout(finish, 0);
+				updatePageData();
+				finish();
 			}
 			else {
 				savePageScrollPosition(currentNode);
@@ -442,16 +444,18 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 					newOptions[key] = options[key];
 				}
 				performTransition(page, newOptions, finish);
+
+				updatePageData();
 			}
 
-			var oldNode = currentNode;
+			function updatePageData () {
+				current     = pageName;
+				currentNode = page;
+				stack.push([ pageName, page, options, args, pageManager ]);
 
-			current     = pageName;
-			currentNode = page;
-			stack.push([ pageName, page, options, args, pageManager ]);
-
-			if (oldNode) {
-				firePageEvent(oldNode, PAGE_FORWARD_EVENT);
+				if (oldNode) {
+					firePageEvent(oldNode, PAGE_FORWARD_EVENT);
+				}
 			}
 
 			function finish () {
@@ -598,7 +602,6 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 		if ( navQueue.length ) {
 			navigate( navQueue.shift() );
 		}
-
 	}
 
 
