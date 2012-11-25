@@ -490,7 +490,12 @@
 
 			var newOptions = {};
 			for (var key in oldOptions) {
-				newOptions[key] = oldOptions[key];
+				if (key === 'transition') {
+					newOptions[key] = REVERSE_TRANSITION[ oldOptions[key] ] || oldOptions[key];
+				}
+				else {
+					newOptions[key] = oldOptions[key];
+				}
 			}
 			for (var key in options) {
 				newOptions[key] = options[key];
@@ -713,9 +718,8 @@
 	}
 
 	function performTransition (page, options, callback, reverse) {
-		options.transition = options.transition || defaultTransition;
-		if (reverse) {
-			options.transition = REVERSE_TRANSITION[options.transition] || options.transition;
+		if ( !options.transition ) {
+			options.transition = (reverse ? reverseTransition : defaultTransition);
 		}
 
 		uiBlockedTask(function (unblockUI) {
