@@ -1297,6 +1297,13 @@
 		setDefaultTransition(transition);
 	};
 
+	App.getDefaultTransition = function () {
+		return {
+			front : defaultTransition ,
+			back  : reverseTransition
+		};
+	};
+
 
 
 	App.getStack = function () {
