@@ -390,8 +390,8 @@
 
 		handler(function () {
 			navLock = false;
-			setTimeout(processNavigationQueue, 0);
 			saveStack();
+			processNavigationQueue();
 		});
 
 		return true;
@@ -410,13 +410,15 @@
 
 	function loadPage (pageName, args, options, callback) {
 		navigate(function (unlock) {
-			var pageManager = {},
+			var oldNode     = currentNode,
+				pageManager = {},
 				page        = startPageGeneration(pageName, args, pageManager);
 
 			if ( !current ) {
 				App.restore = null;
 				document.body.appendChild(page);
-				setTimeout(finish, 0);
+				updatePageData();
+				finish();
 			}
 			else {
 				savePageScrollPosition(currentNode);
@@ -426,16 +428,17 @@
 					newOptions[key] = options[key];
 				}
 				performTransition(page, newOptions, finish);
+				//TODO: what if instant swap?
+				updatePageData();
 			}
 
-			var oldNode = currentNode;
-
-			current     = pageName;
-			currentNode = page;
-			stack.push([ pageName, page, options, args, pageManager ]);
-
-			if (oldNode) {
-				firePageEvent(oldNode, PAGE_FORWARD_EVENT);
+			function updatePageData () {
+				current     = pageName;
+				currentNode = page;
+				stack.push([ pageName, page, options, args, pageManager ]);
+				if (oldNode) {
+					firePageEvent(oldNode, PAGE_FORWARD_EVENT);
+				}
 			}
 
 			function finish () {
