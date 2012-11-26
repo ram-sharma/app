@@ -4,7 +4,7 @@
 	<title>Basic App</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<link rel="stylesheet" href="../app.css">
+	<link rel="stylesheet" href="../src/stylesheets/app.css">
 </head>
 
 
@@ -113,13 +113,17 @@
 
 		var link  = document.createElement('link');
 		link.rel = 'stylesheet';
-		link.href = '../'+style+'.css';
+		link.href = '../src/stylesheets/'+style+'.css';
 		document.querySelector('head').appendChild(link);
 	})(window, document);
 </script>
 
-<script src="../dependencies.js"></script>
-<script src="../app.js"></script>
+<script src="../src/lib/imageLoader.js"></script>
+<script src="../src/lib/swapper.js"    ></script>
+<script src="../src/lib/clickable.js"  ></script>
+<script src="../src/lib/dialog.js"     ></script>
+<script src="../src/lib/scrollable.js" ></script>
+<script src="../src/app.js"            ></script>
 
 <script>
 	App.populator('lists', function (page) {
