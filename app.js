@@ -1302,10 +1302,11 @@
 	};
 
 	App.getDefaultTransition = function () {
-		return {
-			front : defaultTransition ,
-			back  : reverseTransition
-		};
+		return defaultTransition;
+	};
+
+	App.getReverseTransition = function () {
+		return reverseTransition;
 	};
 
 
