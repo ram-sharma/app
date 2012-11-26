@@ -703,15 +703,12 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 
 		var oldPage = currentNode;
 
-		if (options.transition) {
-			if (reverse) {
-				options.transition = REVERSE_TRANSITION[options.transition] || options.transition;
-			}
-			Swapper(oldPage, page, options, cleanup);
-			return;
+		if ( !options.transition ) {
+			options.transition = defaultTransition;
 		}
-
-		options.transition = reverse ? reverseTransition : defaultTransition;
+		if (reverse) {
+			options.transition = REVERSE_TRANSITION[options.transition] || options.transition;
+		}
 
 		if ((platform !== 'ios') || ((options.transition !== 'slide-left') && (options.transition !== 'slide-right'))) {
 			Swapper(oldPage, page, options, cleanup);
