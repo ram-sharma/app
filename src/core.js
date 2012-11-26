@@ -1,4 +1,4 @@
-var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable) {
+var App = function (utils, Pages, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable) {
 	var PAGE_CLASS                        = 'app-page',
 		PAGE_NAME                         = 'data-page',
 		APP_IOS                           = 'app-ios',
@@ -46,7 +46,6 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 		};
 
 	var App          = {},
-		pages        = {},
 		populators   = {},
 		stack        = [],
 		navQueue     = [],
@@ -98,24 +97,10 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 			page, pageName, match;
 
 		for (var i=pageNodes.length; i--;) {
-			addPage( pageNodes[i] );
+			Pages.add( pageNodes[i] );
 		}
 
 		document.body.className += ' ' + APP_LOADED;
-	}
-
-	function addPage (page, pageName) {
-		if (pageName) {
-			page.setAttribute(PAGE_NAME, pageName);
-		}
-		else {
-			pageName = page.getAttribute(PAGE_NAME);
-		}
-
-		if ((typeof pageName === 'string') && (pageName.length !== 0)) {
-			page.parentNode.removeChild(page);
-			pages[pageName] = page.cloneNode(true);
-		}
 	}
 
 
@@ -123,11 +108,11 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 	function startPageGeneration (pageName, args, pageManager) {
 		init();
 
-		if ( !(pageName in pages) ) {
+		if ( !Pages.has(pageName) ) {
 			throw TypeError(pageName + ' is not a known page');
 		}
 
-		var page           = pages[pageName].cloneNode(true),
+		var page           = Pages.clone(pageName),
 			pagePopulators = populators[pageName] || [];
 
 		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT, PAGE_LAYOUT_EVENT]);
@@ -263,7 +248,7 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 	}
 
 	function finishPageDestruction (pageName, page, args, pageManager) {
-		if ( !(pageName in pages) ) {
+		if ( !Pages.has(pageName) ) {
 			throw TypeError(pageName + ' is not a known page');
 		}
 
@@ -352,7 +337,7 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 			}
 		});
 
-		if ( !(pageName in pages) ) {
+		if ( !Pages.has(pageName) ) {
 			return false;
 		}
 	}
@@ -954,12 +939,12 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 
 			init();
 
-			if ( !(lastPage[0] in pages) ) {
+			if ( !Pages.has(lastPage[0]) ) {
 				throw TypeError(lastPage[0] + ' is not a known page');
 			}
 
 			storedStack.forEach(function (pageData) {
-				if ( !(pageData[0] in pages) ) {
+				if ( !Pages.has(pageData[0]) ) {
 					throw TypeError(pageData[0] + ' is not a known page');
 				}
 			});
@@ -1002,7 +987,7 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 			throw TypeError('page template node must be a DOM node, got ' + page);
 		}
 
-		addPage(page, pageName);
+		Pages.add(page, pageName);
 	};
 
 
@@ -1357,4 +1342,4 @@ var App = function (utils, window, document, ImageLoader, Swapper, Clickable, Di
 	App._layout         = setupListeners();
 
 	return App;
-}(App._utils, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable);
+}(App._utils, App._Pages, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable);
