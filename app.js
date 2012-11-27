@@ -694,6 +694,9 @@ var Scrollable=function(h,q,t,C,s,k){var e=[],r=false,y=false,g=p(),o=!!g.name,A
 	function performTransition (page, options, callback, reverse) {
 		var clickBlocker = document.createElement('div');
 		clickBlocker.className = 'app-clickblocker';
+		clickBlocker.addEventListener('touchstart', function (e) {
+			e.preventDefault();
+		}, false);
 		document.body.appendChild(clickBlocker);
 
 		function cleanup () {
