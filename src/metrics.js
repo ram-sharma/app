@@ -28,7 +28,7 @@ App._metrics = function (window) {
 		]);
 	}
 
-	function addPageView (pageName) {
+	function addPageView (pageName, pageID) {
 		if ( !analyticsEnabled ) {
 			return;
 		}
@@ -37,15 +37,27 @@ App._metrics = function (window) {
 			window._gaq = [];
 		}
 
+		var pathname = '/' + pageName;
+
+		if (typeof pageID !== 'undefined') {
+			pathname += '/' + pageID;
+		}
+
 		window._gaq.push([
 			'_trackPageview' ,
-			'/' + pageName
+			pathname
 		]);
 	}
 
-	function watchPage (page, pageName) {
+	function watchPage (page, pageName, pageArgs) {
+		var data;
+
+		if ((typeof pageArgs === 'object') && (typeof pageArgs.id !== 'undefined')) {
+			data = pageArgs.id + '';
+		}
+
 		page.addEventListener('appShow', function () {
-			addPageView(pageName);
+			addPageView(pageName, data);
 		}, false);
 	}
 }(window);
