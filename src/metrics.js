@@ -28,15 +28,24 @@ App._metrics = function (window) {
 		]);
 	}
 
-	function watchPage (page, pageName, pageArgs) {
-		var data;
-
-		if ((typeof pageArgs === 'object') && (typeof pageArgs.id !== 'undefined')) {
-			data = pageArgs.id + '';
+	function addPageView (pageName) {
+		if ( !analyticsEnabled ) {
+			return;
 		}
 
+		if ( !window._gaq ) {
+			window._gaq = [];
+		}
+
+		window._gaq.push([
+			'_trackPageview' ,
+			'/' + pageName
+		]);
+	}
+
+	function watchPage (page, pageName) {
 		page.addEventListener('appShow', function () {
-			addEvent(pageName, data);
+			addPageView(pageName);
 		}, false);
 	}
 }(window);

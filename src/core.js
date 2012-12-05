@@ -117,7 +117,7 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 
 		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT, PAGE_LAYOUT_EVENT]);
 
-		metrics.watchPage(page, pageName, args);
+		metrics.watchPage(page, pageName);
 
 		setContentHeight(page);
 
