@@ -1,4 +1,4 @@
-var App = function (utils, Pages, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable) {
+var App = function (utils, Pages, metrics, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable) {
 	var PAGE_CLASS                        = 'app-page',
 		PAGE_NAME                         = 'data-page',
 		APP_IOS                           = 'app-ios',
@@ -116,6 +116,8 @@ var App = function (utils, Pages, window, document, ImageLoader, Swapper, Clicka
 			pagePopulators = populators[pageName] || [];
 
 		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT, PAGE_LAYOUT_EVENT]);
+
+		metrics.watchPage(page, pageName, args);
 
 		setContentHeight(page);
 
@@ -1323,6 +1325,12 @@ var App = function (utils, Pages, window, document, ImageLoader, Swapper, Clicka
 
 
 
+	App.enableGoogleAnalytics = function () {
+		metrics.enableGoogleAnalytics();
+	};
+
+
+
 	App.stickyButton = function (button, holdFunction) {
 		Clickable.sticky(button, holdFunction);
 	};
@@ -1342,4 +1350,4 @@ var App = function (utils, Pages, window, document, ImageLoader, Swapper, Clicka
 	App._layout         = setupListeners();
 
 	return App;
-}(App._utils, App._Pages, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable);
+}(App._utils, App._Pages, App._metrics, window, document, ImageLoader, Swapper, Clickable, Dialog, Scrollable);
