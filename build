@@ -9,7 +9,7 @@ AWS_BUCKET="cdn.kik.com"
 AWS_CFG="${HOME}/.s3cfg-kik"
 
 buildProject () {
-	APP_JS="src/lib/imageLoader.js src/lib/swapper.js src/lib/clickable.js src/lib/dialog.js src/lib/scrollable.js src/app.js src/utils.js src/pages.js src/stack.js src/core.js"
+	APP_JS="src/lib/imageLoader.js src/lib/swapper.js src/lib/clickable.js src/lib/dialog.js src/lib/scrollable.js src/app.js src/utils.js src/metrics.js src/pages.js src/stack.js src/core.js"
 	buildJS      "app.js"       "${APP_JS}"
 	buildDebugJS "app-DEBUG.js" "${APP_JS}"
 	buildCSS     "app.css"      "src/stylesheets/app.css"
