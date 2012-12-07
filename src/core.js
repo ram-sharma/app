@@ -1325,6 +1325,12 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 
 
 
+	App.saveStack = function () {
+		saveStack();
+	};
+
+
+
 	App.enableGoogleAnalytics = function () {
 		metrics.enableGoogleAnalytics();
 	};

@@ -12,22 +12,6 @@ App._metrics = function (window) {
 		analyticsEnabled = true;
 	}
 
-	function addEvent (name, value, nonUserInteraction) {
-		if ( !analyticsEnabled ) {
-			return;
-		}
-
-		if ( !window._gaq ) {
-			window._gaq = [];
-		}
-
-		window._gaq.push([
-			'_trackEvent',
-			'App.js', name, value,
-			!!nonUserInteraction
-		]);
-	}
-
 	function addPageView (pageName, pageID) {
 		if ( !analyticsEnabled ) {
 			return;
