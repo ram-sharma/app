@@ -572,6 +572,9 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		var clickBlocker = document.createElement('div');
 		clickBlocker.className = 'app-clickblocker';
 		document.body.appendChild(clickBlocker);
+		clickBlocker.addEventListener('touchstart', function (e) {
+			e.preventDefault();
+		}, false);
 
 		task(function () {
 			if (taskComplete) {
