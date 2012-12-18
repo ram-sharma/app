@@ -1,0 +1,253 @@
+/* Resets */
+
+html, body, div, form, p, ul, li, span, label, img {
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
+html, body {
+	height: 100%;
+	width: 100%;
+}
+body {
+	position: relative;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	text-rendering: optimizeLegibility;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	overflow: hidden;
+}
+.app-android {
+	font-family: "Roboto", sans-serif;
+}
+.clear {
+	clear: both;
+}
+
+
+
+/* Page */
+
+.app-clickblocker {
+	z-index: 9000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #FFF;
+	opacity: 0;
+}
+
+.app-page {
+	display: none;
+	position: relative;
+	height: 100%;
+	width: 100%;
+	background: #FFF;
+	overflow: hidden;
+}
+.app-loaded .app-page {
+	display: block;
+}
+
+
+
+/* Topbar */
+
+.app-topbar {
+	z-index: 3000;
+	position: relative;
+	height: 44px;
+	width: 100%;
+	background: #000;
+	color: #FFF;
+}
+.app-android .app-topbar {
+	height: 48px;
+}
+.app-topbar .app-button {
+	position: absolute;
+	top: 0;
+	padding: 0 8px;
+	height: 100%;
+	line-height: 44px;
+}
+.app-android .app-topbar .app-button {
+	line-height: 48px;
+}
+.app-topbar .app-button.left {
+	left: 0;
+}
+.app-topbar .app-button.right {
+	right: 0;
+}
+.app-topbar .app-title {
+	margin: 0 auto;
+	height: 100%;
+	width: 100%;
+	line-height: 44px;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.app-android .app-topbar .app-title {
+	line-height: 48px;
+}
+
+
+
+/* Content */
+
+.app-content {
+	z-index: 2000;
+	position: relative;
+	background: #FFF;
+}
+.app-ios .app-scrollable > * {
+	/*
+		terrible hack to make elements render
+		properly in scrollable regions
+	*/
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+.app-section {
+	position: relative;
+	margin: 8px;
+	border: 1px solid #AAA;
+}
+
+
+
+/* Lists */
+
+.app-list {
+	list-style: none;
+}
+.app-list > li,
+.app-list > li.app-button {
+	padding-left: 20px;
+	padding-right: 8px;
+	height: 43px;
+	border-bottom: 1px solid #AAA;
+	line-height: 43px;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.app-android .app-list > li,
+.app-android .app-list > li.app-button {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.app-section .app-list > li:last-child,
+.app-section .app-list > li.app-button:last-child {
+	border-bottom: none;
+}
+.app-list > label {
+	display: block;
+	padding-left: 12px;
+	height: 24px;
+	background: #000;
+	color: #FFF;
+	line-height: 24px;
+}
+.app-list > li + label {
+	margin-top: -1px;
+}
+
+
+
+/* Buttons */
+
+.app-content .app-button {
+	margin: 0 auto;
+	height: 40px;
+	border-bottom: 1px solid #AAA;
+	line-height: 40px;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.app-button:last-child {
+	border-bottom: none;
+}
+
+.app-content .app-button.green {
+	background: #7F7;
+}
+.app-content .app-button.red {
+	background: #F77;
+}
+.app-content .app-button.blue {
+	background: #77F;
+}
+
+
+
+/* Inputs */
+
+.app-input {
+	position: relative;
+	display: block;
+	padding: 10px 12px;
+	width: 100%;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid #AAA;
+	outline: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	line-height: 20px;
+	-webkit-appearance: none;
+}
+.app-section .app-input:last-child {
+	border-bottom: none;
+}
+.app-input,
+.app-input * {
+	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+}
+input.app-input {
+	height: 40px;
+}
+textarea.app-input {
+	height: 80px;
+	resize: none;
+}
+.app-input input,
+.app-input textarea {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: none;
+	border: none;
+	outline: none;
+	line-height: inherit;
+	resize: none;
+	-webkit-appearance: none;
+}
+.app-input input {
+	height: 20px;
+}
+.app-input textarea {
+	height: 60px;
+}

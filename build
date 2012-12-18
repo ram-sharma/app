@@ -1,0 +1,137 @@
+#!/bin/sh
+
+PROJECT="app"
+LICENSE="LICENSE.txt"
+MAJOR_VERSION="1"
+MINOR_VERSION="9"
+BUG_VERSION="1"
+AWS_BUCKET="cdn.kik.com"
+AWS_CFG="${HOME}/.s3cfg-kik"
+
+buildProject () {
+	APP_JS="src/lib/imageLoader.js src/lib/swapper.js src/lib/clickable.js src/lib/dialog.js src/lib/scrollable.js src/app.js src/utils.js src/metrics.js src/pages.js src/stack.js src/core.js"
+	buildJS      "app.js"       "${APP_JS}"
+	buildDebugJS "app-DEBUG.js" "${APP_JS}"
+	buildCSS     "app.css"      "src/stylesheets/app.css"
+	buildCSS     "default.css"  "src/stylesheets/app.css src/stylesheets/default.css"
+}
+
+
+
+
+
+
+if [ -z "${BUILD_NUMBER}" ] ; then
+	BUILD_NUMBER="SNAPSHOT"
+fi
+
+VERSION="${MAJOR_VERSION}.${MINOR_VERSION}.${BUG_VERSION}"
+DEV_VERSION="${MAJOR_VERSION}-DEV"
+BUILD_VERSION="${VERSION}.${BUILD_NUMBER}"
+
+BUILD_DIR="builds"
+BUILD_ZIP="${PROJECT}.zip"
+JS_COMPILER="yui-compressor --type js"
+CSS_COMPILER="yui-compressor --type css"
+
+S3CMD="s3cmd -c ${AWS_CFG}"
+NO_CACHE="--add-header=Cache-Control:no-cache"
+FULL_CACHE="--add-header=Cache-Control:max-age=31557600"
+
+clean () {
+	echo "Cleaning builds"
+	rm -rf "${BUILD_DIR}" "${BUILD_ZIP}"
+}
+
+createBuildDir () {
+	clean
+	mkdir -p "${BUILD_DIR}"
+}
+
+preprendLicense () {
+	tmpFile="${1}.tmp"
+	if [ -n "${LICENSE}" ] ; then
+		cat "${LICENSE}" "${1}" > "${tmpFile}"
+		mv "${tmpFile}" "${1}"
+	fi
+}
+
+buildJS () {
+	echo "Building ${1}"
+	fileName="${BUILD_DIR}/${1}"
+	cat ${2} | sed "s/^[ 	]*;;;.*$//" | sed "s/DEVBUILD/${VERSION}/" | ${JS_COMPILER} > "${fileName}"
+	preprendLicense "${fileName}"
+}
+
+buildDebugJS () {
+	echo "Building ${1}"
+	fileName="${BUILD_DIR}/${1}"
+	cat ${2} | sed "s/DEVBUILD/${VERSION}/" > "${fileName}"
+	preprendLicense "${fileName}"
+}
+
+buildCSS () {
+	echo "Building ${1}"
+	fileName="${BUILD_DIR}/${1}"
+	cat ${2} | ${CSS_COMPILER} > "${fileName}"
+	preprendLicense "${fileName}"
+}
+
+build () {
+	buildProject
+
+	echo "Building zip"
+	zip -r "${BUILD_ZIP}" "${BUILD_DIR}" >/dev/null
+}
+
+gzipDir () {
+	echo "Gziping files"
+	files="`find ${BUILD_DIR} -name '*' | sed 's/.*\/\..*//' | grep -I './'`"
+	for file in ${files}; do
+		cat "$file" | gzip -fc - | tee "$file" >/dev/null
+	done
+}
+
+deployToFolder () {
+	${S3CMD} put --recursive --acl-public --guess-mime-type --add-header "Content-Encoding:gzip" ${2} "${BUILD_DIR}/" "s3://${AWS_BUCKET}/${PROJECT}/${1}"
+}
+
+deploy () {
+	echo "Deploying build ${BUILD_VERSION}..."
+	gzipDir
+	deployToFolder "${BUILD_VERSION}/" "${FULL_CACHE}"
+	deployToFolder "${DEV_VERSION}/"   "${NO_CACHE}"
+}
+
+promote () {
+	echo "Promoting version ${VERSION}..."
+	gzipDir
+	deployToFolder "${VERSION}/"                        "${FULL_CACHE}"
+	deployToFolder "${MAJOR_VERSION}.${MINOR_VERSION}/" "${NO_CACHE}"
+	deployToFolder "${MAJOR_VERSION}/"                  "${NO_CACHE}"
+}
+
+if [ "$1" = "clean" ] ; then
+	clean &&
+	exit 0
+	exit 1
+elif [ "$1" = "deploy" ] ; then
+	createBuildDir &&
+	build &&
+	deploy &&
+	clean &&
+	exit 0
+	exit 1
+elif [ "$1" = "promote" ] ; then
+	createBuildDir &&
+	build &&
+	promote &&
+	clean &&
+	exit 0
+	exit 1
+else
+	createBuildDir &&
+	build &&
+	exit 0
+	exit 1
+fi

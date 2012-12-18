@@ -1,5 +1,5 @@
 /**
- * App.js v1.0.6
+ * App.js v1.8.0
  * Instant mobile web app creation
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
@@ -9,12 +9,17 @@
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
  *
- * clickable.js v1.0
+ * clickable.js v1.1.0
  * Seamless buttons for mobile devices
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
  *
- * scrollable.js v1.0
+ * dialog.js v1.1.0
+ * Modal dialogs for mobile web apps
+ * Copyright (c) 2012 Kik Interactive, http://kik.com
+ * Released under the MIT license
+ *
+ * scrollable.js v1.0.0
  * Seamless scrolling for mobile devices
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
