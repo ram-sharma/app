@@ -42,7 +42,9 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 			'slideoff-left'  : 'slideon-left'   ,
 			'slideoff-right' : 'slideon-right'  ,
 			'slideoff-up'    : 'slideon-up'     ,
-			'slideoff-down'  : 'slideon-down'
+			'slideoff-down'  : 'slideon-down'   ,
+			'glideon-right'  : 'glideoff-right' ,
+			'glideoff-right' : 'slideon-right'
 		};
 
 	var App          = {},
