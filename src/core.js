@@ -620,6 +620,7 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 			}
 
 			function cleanup () {
+				setContentHeight(currentNode);
 				unblockUI();
 				callback();
 			}
