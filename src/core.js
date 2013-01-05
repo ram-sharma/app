@@ -412,6 +412,101 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 
 
 
+	// function customLoadTransition (pageName, args, options, handlePartialTransition) {
+		//TODO
+		// function (setPosition, callback) {
+		// 	setPosition(0.5);
+		// 	setPosition(0.6);
+		// 	setPosition(0.7);
+		// 	setPosition(0.8);
+		// 	setPosition(0.9);
+
+		// 	finishTransition(function () {
+		// 		// finished
+		// 	});
+		// }
+	// }
+
+	function customBackTransition (handlePartialTransition) {
+		if ( Dialog.status() ) {
+			Dialog.close();
+			return;
+		}
+
+		var stackLength = stack.length;
+
+		var navigatedImmediately = navigate(function (unlock) {
+			if (stack.length < 2) {
+				unlock();
+				return;
+			}
+
+			var oldData = stack[stack.length - 1],
+				newData = stack[stack.length - 2],
+				oldPage = oldData[1],
+				newPage = newData[1],
+				options = oldData[2];
+
+			setContentHeight(newPage);
+
+			// startPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
+
+			restorePageScrollPosition(newPage);
+
+			var newOptions = {};
+			for (var key in options) {
+				if (key === 'transition') {
+					newOptions[key] = REVERSE_TRANSITION[ options[key] ] || options[key];
+				}
+				else {
+					newOptions[key] = options[key];
+				}
+			}
+
+			if ( !newOptions.transition ) {
+				newOptions.transition = reverseTransition;
+			}
+
+			uiBlockedTask(function (unblockUI) {
+				handlePartialTransition(oldPage, newPage, function (status) {
+					finishTransition(status, unblockUI);
+				});
+			});
+
+			function finishTransition (status, callback) {
+				if (status) {
+					stack.pop();
+
+					startPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
+
+					firePageEvent(oldPage, PAGE_BACK_EVENT);
+					restorePageScrollStyle(newPage);
+					firePageEvent(oldPage, PAGE_HIDE_EVENT);
+					firePageEvent(newPage, PAGE_SHOW_EVENT);
+
+					setTimeout(function () {
+						finishPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
+						unlock();
+						callback();
+					}, 0);
+
+					current     = newData[0];
+					currentNode = newPage;
+				}
+				else {
+					unlock();
+					callback();
+				}
+			}
+		});
+
+		if (navigatedImmediately && (stackLength < 2)) {
+			return false;
+		}
+	}
+
+
+
 	function fetchStack () {
 		return stack.slice().map(function (pageData) {
 			var pageName = pageData[0],
@@ -1127,6 +1222,74 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		}
 
 		return navigateBack(options, callback);
+	};
+
+
+
+	// App.customLoad = function (pageName, args, options, handleCustomTransition) {
+	// 	if (typeof pageName !== 'string') {
+	// 		throw TypeError('page name must be a string, got ' + pageName);
+	// 	}
+
+	// 	switch (typeof args) {
+	// 		case 'function':
+	// 			handleCustomTransition = args;
+	// 			args     = {};
+	// 			options  = {};
+	// 			break;
+
+	// 		case 'undefined':
+	// 			args = {};
+	// 			break;
+
+	// 		case 'string':
+	// 			options = args;
+	// 			args    = {};
+	// 			break;
+
+	// 		case 'object':
+	// 			break;
+
+	// 		default:
+	// 			throw TypeError('page arguments must be an object if defined, got ' + args);
+	// 	}
+
+	// 	switch (typeof options) {
+	// 		case 'function':
+	// 			handleCustomTransition = options;
+	// 			options  = {};
+	// 			break;
+
+	// 		case 'undefined':
+	// 			options = {};
+	// 			break;
+
+	// 		case 'string':
+	// 			options = { transition : options };
+	// 			break;
+
+	// 		case 'object':
+	// 			break;
+
+	// 		default:
+	// 			throw TypeError('options must be an object if defined, got ' + options);
+	// 	}
+
+	// 	if (typeof handleCustomTransition !== 'function') {
+	// 		throw TypeError('transition handler must be a function, got ' + handleCustomTransition);
+	// 	}
+
+	// 	customLoadTransition(pageName, args, options, handleCustomTransition);
+	// };
+
+
+
+	App.customBack = function (handleCustomTransition) {
+		if (typeof handleCustomTransition !== 'function') {
+			throw TypeError('transition handler must be a function, got ' + handleCustomTransition);
+		}
+
+		customBackTransition(handleCustomTransition);
 	};
 
 
