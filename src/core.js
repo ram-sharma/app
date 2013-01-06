@@ -44,7 +44,9 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 			'slideoff-up'    : 'slideon-up'     ,
 			'slideoff-down'  : 'slideon-down'   ,
 			'glideon-right'  : 'glideoff-right' ,
-			'glideoff-right' : 'slideon-right'
+			'glideoff-right' : 'slideon-right'  ,
+			'glideon-left'   : 'glideoff-left'  ,
+			'glideoff-left'  : 'slideon-left'
 		};
 
 	var App          = {},
