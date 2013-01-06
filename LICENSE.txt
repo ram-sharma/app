@@ -9,7 +9,7 @@
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
  *
- * clickable.js v1.1.0
+ * clickable.js v1.3.4
  * Seamless buttons for mobile devices
  * Copyright (c) 2012 Kik Interactive, http://kik.com
  * Released under the MIT license
