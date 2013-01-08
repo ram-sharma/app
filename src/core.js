@@ -522,6 +522,14 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		});
 	}
 
+	function fetchPage (index) {
+		var pageData = stack[index];
+
+		if (pageData) {
+			return pageData[1];
+		}
+	}
+
 	// you must manually save the stack if you choose to use this method
 	function removeFromStackNow (startIndex, endIndex) {
 		var deadPages = stack.splice(startIndex, endIndex - startIndex);
@@ -1368,6 +1376,27 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 
 	App.getStack = function () {
 		return fetchStack();
+	};
+
+	App.getPage = function (index) {
+		var stackSize = stack.length - 1;
+
+		switch (typeof index) {
+			case 'undefined':
+				index = stackSize;
+				break;
+			case 'number':
+				if (Math.abs(index) > stackSize) {
+					throw TypeError('absolute index cannot be greater than stack size, got ' + index);
+				}
+				if (index < 0) {
+					index = stackSize + index;
+				}
+				break;
+			default:
+				throw TypeError('page index must be a number if defined, got ' + index);
+		}
+		return fetchPage(index);
 	};
 
 
