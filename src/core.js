@@ -296,6 +296,12 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		return page;
 	}
 
+	function destroyPage (page) {
+		var pageName = page.getAttribute('data-page');
+		startPageDestruction(pageName, page, {}, {});
+		finishPageDestruction(pageName, page, {}, {});
+	}
+
 	function loadPage (pageName, args, options, callback) {
 		navigate(function (unlock) {
 			var oldNode     = currentNode,
@@ -476,29 +482,29 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 			});
 
 			function finishTransition (status, callback) {
-				if (status) {
-					stack.pop();
-
-					startPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
-
-					firePageEvent(oldPage, PAGE_BACK_EVENT);
-					restorePageScrollStyle(newPage);
-					firePageEvent(oldPage, PAGE_HIDE_EVENT);
-					firePageEvent(newPage, PAGE_SHOW_EVENT);
-
-					setTimeout(function () {
-						finishPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
-						unlock();
-						callback();
-					}, 0);
-
-					current     = newData[0];
-					currentNode = newPage;
-				}
-				else {
+				if ( !status ) {
 					unlock();
 					callback();
+					return;
 				}
+
+				stack.pop();
+
+				startPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
+
+				firePageEvent(oldPage, PAGE_BACK_EVENT);
+				restorePageScrollStyle(newPage);
+				firePageEvent(oldPage, PAGE_HIDE_EVENT);
+				firePageEvent(newPage, PAGE_SHOW_EVENT);
+
+				setTimeout(function () {
+					finishPageDestruction(oldData[0], oldData[1], oldData[3], oldData[4]);
+					unlock();
+					callback();
+				}, 0);
+
+				current     = newData[0];
+				currentNode = newPage;
 			}
 		});
 
@@ -1322,6 +1328,14 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		}
 
 		return generatePage(pageName, args);
+	};
+
+	App.destroy = function (page) {
+		if ( !utils.isNode(page) ) {
+			throw TypeError('page node must be a DOM node, got ' + page);
+		}
+
+		return destroyPage(page);
 	};
 
 
