@@ -9,6 +9,8 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		PAGE_BACK_EVENT                   = 'appBack',
 		PAGE_FORWARD_EVENT                = 'appForward',
 		PAGE_LAYOUT_EVENT                 = 'appLayout',
+		PAGE_ONLINE_EVENT                 = 'appOnline',
+		PAGE_OFFLINE_EVENT                = 'appOffline',
 		STACK_KEY                         = '__APP_JS_STACK__' + window.location.pathname,
 		DEFAULT_TRANSITION_IOS            = 'slide-left',
 		DEFAULT_TRANSITION_ANDROID        = 'implode-out',
@@ -119,7 +121,7 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		var page           = Pages.clone(pageName),
 			pagePopulators = populators[pageName] || [];
 
-		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT, PAGE_LAYOUT_EVENT]);
+		insureCustomEventing(page, [PAGE_SHOW_EVENT, PAGE_HIDE_EVENT, PAGE_BACK_EVENT, PAGE_FORWARD_EVENT, PAGE_LAYOUT_EVENT, PAGE_ONLINE_EVENT, PAGE_OFFLINE_EVENT]);
 
 		metrics.watchPage(page, pageName, args);
 
@@ -1017,6 +1019,17 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		window.addEventListener('resize'           , triggerSizeFix);
 		window.addEventListener('load'             , triggerSizeFix);
 		setTimeout(triggerSizeFix, 0);
+
+		document.body.addEventListener('online', function () {
+			if (currentNode) {
+				firePageEvent(currentNode, PAGE_ONLINE_EVENT);
+			}
+		}, false);
+		document.body.addEventListener('offline', function () {
+			if (currentNode) {
+				firePageEvent(currentNode, PAGE_OFFLINE_EVENT);
+			}
+		}, false);
 
 		return triggerSizeFix;
 	}
