@@ -1020,12 +1020,12 @@ var App = function (utils, metrics, Pages, window, document, ImageLoader, Swappe
 		window.addEventListener('load'             , triggerSizeFix);
 		setTimeout(triggerSizeFix, 0);
 
-		document.body.addEventListener('online', function () {
+		window.addEventListener('online', function () {
 			if (currentNode) {
 				firePageEvent(currentNode, PAGE_ONLINE_EVENT);
 			}
 		}, false);
-		document.body.addEventListener('offline', function () {
+		window.addEventListener('offline', function () {
 			if (currentNode) {
 				firePageEvent(currentNode, PAGE_OFFLINE_EVENT);
 			}
